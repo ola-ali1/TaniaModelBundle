@@ -1,0 +1,3 @@
+ibtikar_tania_model_homepage:
+    path:     /
+    defaults: { _controller: IbtikarTaniaModelBundle:Default:index }

@@ -1,0 +1,4 @@
+services:
+#    ibtikar_tania_model.example:
+#        class: Ibtikar\TaniaModelBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

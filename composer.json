@@ -1,0 +1,25 @@
+{
+    "name": "Ibtikar/TaniaModelBundle",
+    "type": "symfony-library",
+    "description": "",
+    "keywords": "",
+    "homepage": "https://github.com/Ibtikar/TaniaModelBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ibtikar"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Ibtikar\\TaniaModelBundle\\": ""
+        }
+    },
+    "extra": {
+        "installer-paths": {
+            "src/{$name}": ["Ibtikar/TaniaModelBundle"]
+        }
+    }
+}
