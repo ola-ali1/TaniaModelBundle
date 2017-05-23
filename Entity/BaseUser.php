@@ -205,7 +205,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Ibtikar\ShareEconomyUMSBundle\Entity\PhoneVerificationCode", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="Ibtikar\TaniaModelBundle\Entity\PhoneVerificationCode", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"id"="DESC"})
      * @ORM\JoinTable(name="users_verification_codes",
      *  joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
