@@ -30,7 +30,7 @@ class City
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Country", inversedBy="cities")
      */
-    protected $cities;
+    protected $country;
 
     /**
      *
@@ -39,11 +39,18 @@ class City
     protected $users;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Price",mappedBy="city")
+     */
+    protected $prices;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        parent::__construct();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -145,5 +152,39 @@ class City
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add price
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Price $price
+     *
+     * @return Price
+     */
+    public function addPrice(\Ibtikar\TaniaModelBundle\Entity\Price $price)
+    {
+        $this->prices[] = $price;
+
+        return $this;
+    }
+
+    /**
+     * Remove price
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Price $price
+     */
+    public function removePrice(\Ibtikar\TaniaModelBundle\Entity\Price $price)
+    {
+        $this->prices->removeElement($price);
+    }
+
+    /**
+     * Get prices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPrices()
+    {
+        return $this->prices;
     }
 }
