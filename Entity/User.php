@@ -40,11 +40,18 @@ class User extends BaseUser
     protected $city;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order",mappedBy="user")
+     */
+    protected $orders;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -126,5 +133,39 @@ class User extends BaseUser
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     *
+     * @return Order
+     */
+    public function addOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     */
+    public function removeOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

@@ -23,7 +23,10 @@ class Price
     protected $id;
 
     /**
-     * @ORM\Column(name="price", type="string")
+     * @var string
+     *
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
+     * @Assert\Type(type="numeric")
      */
     private $price;
 

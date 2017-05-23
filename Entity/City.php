@@ -45,12 +45,19 @@ class City
     protected $prices;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order",mappedBy="city")
+     */
+    protected $orders;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -186,5 +193,39 @@ class City
     public function getPrices()
     {
         return $this->prices;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     *
+     * @return Order
+     */
+    public function addOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     */
+    public function removeOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

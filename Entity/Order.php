@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="item")
+ * @ORM\Table(name="order")
  * @ORM\Entity()
  */
-class Item
+class Order
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
@@ -28,14 +28,18 @@ class Item
     private $name;
 
     /**
-     *
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Price",mappedBy="item")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\User", inversedBy="orders")
      */
-    protected $prices;
+    protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\City", inversedBy="orders")
+     */
+    protected $city;
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderItem",mappedBy="item")
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderItem",mappedBy="order")
      */
     protected $orderItems;
 
@@ -44,8 +48,16 @@ class Item
      */
     public function __construct()
     {
-        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * needed to disable the doctrine proxy __get as it trigger notice error
+     * @param string $name
+     */
+    public function __get($name)
+    {
+        throw new \Exception("Variable $name was not found");
     }
 
     /**
@@ -83,37 +95,27 @@ class Item
     }
 
     /**
-     * Add price
+     * Set user
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Price $price
+     * @param \Ibtikar\TaniaModelBundle\Entity\User $user
      *
-     * @return Price
+     * @return User
      */
-    public function addPrice(\Ibtikar\TaniaModelBundle\Entity\Price $price)
+    public function setUser(\Ibtikar\TaniaModelBundle\Entity\User $user = null)
     {
-        $this->prices[] = $price;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Remove price
+     * Get user
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Price $price
+     * @return \Ibtikar\TaniaModelBundle\Entity\User
      */
-    public function removePrice(\Ibtikar\TaniaModelBundle\Entity\Price $price)
+    public function getUser()
     {
-        $this->prices->removeElement($price);
-    }
-
-    /**
-     * Get prices
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPrices()
-    {
-        return $this->prices;
+        return $this->user;
     }
 
     /**
@@ -148,5 +150,29 @@ class Item
     public function getOrderItems()
     {
         return $this->orderItems;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\City $city
+     *
+     * @return City
+     */
+    public function setCity(\Ibtikar\TaniaModelBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\City
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
