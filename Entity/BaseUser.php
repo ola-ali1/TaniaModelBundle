@@ -24,7 +24,7 @@ use Ibtikar\TaniaModelBundle\Validator\Constraints\CustomEmail as AssertEmail;
 class BaseUser implements AdvancedUserInterface, EquatableInterface
 {
 
-    use \Ibtikar\ShareEconomyToolsBundle\Entity\TrackableTrait;
+    use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     const ROLE_ADMIN = 'ROLE_ADMIN';
