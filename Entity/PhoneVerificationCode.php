@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PhoneVerificationCode
 {
 
-    use \Ibtikar\ShareEconomyToolsBundle\Entity\TrackableTrait;
+    use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
     /**
      * @var integer
