@@ -33,7 +33,7 @@ class City
     private $nameEn;
 
     /**
-     * @ORM\Column(name="city_polygon", type="string")
+     * @ORM\Column(name="city_polygon", type="text")
      */
     private $cityPolygon;
 
