@@ -23,9 +23,29 @@ class City
     protected $id;
 
     /**
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="name_ar", type="string")
      */
-    private $name;
+    private $nameAr;
+
+    /**
+     * @ORM\Column(name="name_en", type="string")
+     */
+    private $nameEn;
+
+    /**
+     * @ORM\Column(name="city_polygon", type="string")
+     */
+    private $cityPolygon;
+
+    /**
+     * @ORM\Column(name="latitude", type="string")
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(name="longitude", type="string")
+     */
+    private $longitude;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Country", inversedBy="cities")
@@ -80,27 +100,123 @@ class City
     }
 
     /**
-     * Set name
+     * Set nameAr
      *
-     * @param string $name
+     * @param string $nameAr
      *
      * @return User
      */
-    public function setName($name)
+    public function setNameAr($nameAr)
     {
-        $this->name = $name;
+        $this->nameAr = $nameAr;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get nameAr
      *
      * @return string
      */
-    public function getName()
+    public function getNameAr()
     {
-        return $this->name;
+        return $this->nameAr;
+    }
+
+    /**
+     * Set nameEn
+     *
+     * @param string $nameEn
+     *
+     * @return User
+     */
+    public function setNameEn($nameEn)
+    {
+        $this->nameEn = $nameEn;
+
+        return $this;
+    }
+
+    /**
+     * Get nameEn
+     *
+     * @return string
+     */
+    public function getNameEn()
+    {
+        return $this->nameEn;
+    }
+
+    /**
+     * Set cityPolygon
+     *
+     * @param string $cityPolygon
+     *
+     * @return User
+     */
+    public function setCityPolygon($cityPolygon)
+    {
+        $this->cityPolygon = $cityPolygon;
+
+        return $this;
+    }
+
+    /**
+     * Get cityPolygon
+     *
+     * @return string
+     */
+    public function getCityPolygon()
+    {
+        return $this->cityPolygon;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param string $latitude
+     *
+     * @return User
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return string
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param string $longitude
+     *
+     * @return User
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return string
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 
     /**
