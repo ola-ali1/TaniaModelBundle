@@ -1,6 +1,6 @@
 {
     "name": "Ibtikar/TaniaModelBundle",
-    "type": "symfony-library",
+    "type": "laravel-library",
     "description": "",
     "keywords": "",
     "homepage": "https://github.com/Ibtikar/TaniaModelBundle",
