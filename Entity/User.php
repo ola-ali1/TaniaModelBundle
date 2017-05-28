@@ -36,6 +36,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\City", inversedBy="users")
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup"})
      */
     protected $city;
 
