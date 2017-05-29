@@ -30,6 +30,11 @@ class Item
     private $name;
 
     /**
+     * @ORM\Column(name="default_price", type="string")
+     */
+    private $defaultPrice;
+
+    /**
      *
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Price",mappedBy="item")
      */
@@ -249,6 +254,30 @@ class Item
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set defaultPrice
+     *
+     * @param string $defaultPrice
+     *
+     * @return User
+     */
+    public function setDefaultPrice($defaultPrice)
+    {
+        $this->defaultPrice = $defaultPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get defaultPrice
+     *
+     * @return string
+     */
+    public function getDefaultPrice()
+    {
+        return $this->defaultPrice;
     }
 
     /**
