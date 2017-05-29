@@ -19,7 +19,7 @@ use Ibtikar\TaniaModelBundle\Validator\Constraints\CustomEmail as AssertEmail;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields={"email"}, groups={"signup", "edit", "email"}, message="email_exist")
- * @UniqueEntity(fields={"phone"}, groups={"signup", "edit", "phone"}, message="phone_exist", repositoryMethod="findPhoneByUniqueCriteria")
+ * @UniqueEntity(fields={"phone"}, groups={"signup", "edit", "phone"}, message="phone_exist") 
  */
 class BaseUser implements AdvancedUserInterface, EquatableInterface
 {
