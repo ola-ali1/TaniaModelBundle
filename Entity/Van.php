@@ -2,6 +2,7 @@
 
 namespace Ibtikar\TaniaModelBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use Doctrine\ORM\Mapping as ORM;
 
