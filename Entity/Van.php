@@ -1,10 +1,10 @@
 <?php
 
 namespace Ibtikar\TaniaModelBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="van")
@@ -52,27 +52,6 @@ class Van
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     public $path;
-
-    /**
-     * Gets triggered only on insert
-
-     * @ORM\PrePersist
-     */
-    public function onPrePersist()
-    {
-        $this->created = new \DateTime("now");
-        $this->updated = new \DateTime("now");
-    }
-
-    /**
-     * Gets triggered every time on update
-
-     * @ORM\PreUpdate
-     */
-    public function onPreUpdate()
-    {
-        $this->updated = new \DateTime("now");
-    }
 
     /**
      * Sets file.
