@@ -36,7 +36,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\City", inversedBy="users")
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup"}) 
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup"})
      */
     protected $city;
 
@@ -45,6 +45,15 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order",mappedBy="user")
      */
     protected $orders;
+
+    public function __sleep() {
+        $classVars = get_object_vars($this);
+        // unset all object proxies not the collections
+        unset($classVars['city']);
+        unset($classVars['country']);
+        unset($classVars['file']);
+        return array_keys($classVars);
+    }
 
     /**
      * Constructor
