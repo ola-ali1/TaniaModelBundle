@@ -30,7 +30,7 @@ class Van
     private $totalCapacity;
 
     /**
-     * @ORM\Column(name="current_capacity", type="integer")
+     * @ORM\Column(name="current_capacity", type="integer", nullable=true)
      */
     private $currentCapacity;
 
