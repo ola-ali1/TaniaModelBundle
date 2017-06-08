@@ -35,6 +35,13 @@ class Item
     private $defaultPrice;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="shown", type="boolean", options={"default": true})
+     */
+    protected $shown = true;
+
+    /**
      *
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Price",mappedBy="item")
      */
@@ -325,5 +332,29 @@ class Item
     public function getOrderItems()
     {
         return $this->orderItems;
+    }
+
+    /**
+     * Set shown
+     *
+     * @param boolean $shown
+     *
+     * @return item
+     */
+    public function setShown($shown)
+    {
+        $this->shown = $shown;
+
+        return $this;
+    }
+
+    /**
+     * Get shown
+     *
+     * @return bool
+     */
+    public function getShown()
+    {
+        return $this->shown;
     }
 }
