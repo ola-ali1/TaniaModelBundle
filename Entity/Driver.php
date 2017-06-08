@@ -5,9 +5,11 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity()
+ * @UniqueEntity(fields={"username"}, groups={"username"}, message="username_exist")
  */
 class Driver extends User
 {
@@ -16,7 +18,7 @@ class Driver extends User
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", mappedBy="driver")
      */
     protected $orders;
-//stodo cascade
+
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
@@ -30,6 +32,16 @@ class Driver extends User
      * @Assert\Valid
      */
     protected $vans;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=100, nullable=true)
+     *
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"username"})
+     * @Assert\Length(min = 4, max = 12, groups={"username"}, maxMessage="username_length_not_valid", minMessage="username_length_not_valid")
+     */
+    private $username;
 
     /**
      * Constructor
@@ -109,4 +121,15 @@ class Driver extends User
         return $this->vans;
     }
 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
 }

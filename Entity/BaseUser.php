@@ -19,7 +19,7 @@ use Ibtikar\TaniaModelBundle\Validator\Constraints\CustomEmail as AssertEmail;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields={"email"}, groups={"signup", "edit", "email"}, message="email_exist")
- * @UniqueEntity(fields={"phone"}, groups={"signup", "edit", "phone"}, message="phone_exist") 
+ * @UniqueEntity(fields={"phone"}, groups={"signup", "edit", "phone"}, message="phone_exist")
  */
 class BaseUser implements AdvancedUserInterface, EquatableInterface
 {
@@ -177,6 +177,16 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @Assert\Length(min = 4, max = 25, groups={"signup", "edit", "joinrequest"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
      */
     protected $fullName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fullNameAr", type="string", length=190)
+     *
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit", "joinrequest"})
+     * @Assert\Length(min = 4, max = 25, groups={"signup", "edit", "joinrequest"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
+     */
+    protected $fullNameAr;
 
     /**
      * @var string
@@ -838,6 +848,31 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     {
         return $this->fullName;
     }
+
+    /**
+     * Set fullNameAr
+     *
+     * @param string $fullNameAr
+     *
+     * @return User
+     */
+    public function setFullNameAr($fullNameAr)
+    {
+        $this->fullNameAr = $fullNameAr;
+
+        return $this;
+    }
+
+    /**
+     * Get fullNameAr
+     *
+     * @return string
+     */
+    public function getFullNameAr()
+    {
+        return $this->fullNameAr;
+    }
+
 
     /**
      * Set phone
