@@ -183,7 +183,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="fullNameAr", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit", "joinrequest"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"edit"})
      * @Assert\Length(min = 4, max = 25, groups={"signup", "edit", "joinrequest"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
      */
     protected $fullNameAr;
