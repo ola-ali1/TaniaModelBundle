@@ -67,6 +67,9 @@ class Item
      */
     public $path;
 
+    public function __toString() {
+        return $this->name;
+    }
     /**
      * Sets file.
      *
