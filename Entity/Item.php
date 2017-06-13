@@ -266,7 +266,7 @@ class Item
      */
     public function getDefaultPrice()
     {
-        return $this->defaultPrice + 0;
+        return $this->defaultPrice;
     }
 
     /**
@@ -359,5 +359,15 @@ class Item
     public function getShown()
     {
         return $this->shown;
+    }
+
+    /**
+     * Get defaultPrice without useless decimal points
+     *
+     * @return string
+     */
+    public function getItemPrice()
+    {
+        return $this->defaultPrice + 0;
     }
 }
