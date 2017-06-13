@@ -30,7 +30,7 @@ class Item
     private $name;
 
     /**
-     * @ORM\Column(name="default_price", type="string")
+     * @ORM\Column(name="default_price",type="decimal", precision=10, scale=2)
      */
     private $defaultPrice;
 
