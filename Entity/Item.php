@@ -266,7 +266,7 @@ class Item
      */
     public function getDefaultPrice()
     {
-        return $this->defaultPrice;
+        return $this->defaultPrice + 0;
     }
 
     /**
