@@ -9,9 +9,10 @@ class ItemRepository extends EntityRepository
     function getItemsNotAssignedToVan($vanId)
     {
         return $this->createQueryBuilder('i')
-            ->select('i')
+            ->select('i, vanItems.id')
             ->leftJoin('i.vanItems', 'vanItems','WITH','vanItems.van = :vanId')
-            ->setParameters(':vanId', $vanId)
+            ->andWhere('vanItems.id is NULL')
+            ->setParameter(':vanId', $vanId)
             ->getQuery()
             ->getResult();
 
