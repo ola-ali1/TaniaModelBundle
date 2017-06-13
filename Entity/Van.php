@@ -32,11 +32,6 @@ class Van
     private $totalCapacity;
 
     /**
-     * @ORM\Column(name="current_capacity", type="integer")
-     */
-    private $currentCapacity;
-
-    /**
      * @ORM\Column(name="van_number", type="string")
      * @Assert\NotBlank(message="fill_mandatory_field")
      */
@@ -68,31 +63,6 @@ class Van
     {
         return $this->id;
     }
-
-    /**
-     * Set currentCapacity
-     *
-     * @param string $currentCapacity
-     *
-     * @return Van
-     */
-    public function setCurrentCapacity($currentCapacity)
-    {
-        $this->currentCapacity = $currentCapacity;
-
-        return $this;
-    }
-
-    /**
-     * Get currentCapacity
-     *
-     * @return string
-     */
-    public function getCurrentCapacity()
-    {
-        return $this->currentCapacity;
-    }
-
 
     /**
      * Set totalCapacity

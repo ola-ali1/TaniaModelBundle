@@ -40,6 +40,11 @@ class VanItem
      */
     private $capacity;
 
+    /**
+     * @ORM\Column(name="current_capacity", type="integer")
+     */
+    private $currentCapacity;
+
 
     /**
      * Constructor
@@ -129,5 +134,29 @@ class VanItem
     public function getCapacity()
     {
         return $this->capacity;
+    }
+
+    /**
+     * Set currentCapacity
+     *
+     * @param string $currentCapacity
+     *
+     * @return VanItem
+     */
+    public function setCurrentCapacity($currentCapacity)
+    {
+        $this->currentCapacity = $currentCapacity;
+
+        return $this;
+    }
+
+    /**
+     * Get currentCapacity
+     *
+     * @return string
+     */
+    public function getCurrentCapacity()
+    {
+        return $this->currentCapacity;
     }
 }
