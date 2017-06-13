@@ -41,7 +41,7 @@ class VanItem
     private $capacity;
 
     /**
-     * @ORM\Column(name="current_capacity", type="integer")
+     * @ORM\Column(name="current_capacity", type="integer", options={"default": 0})
      */
     private $currentCapacity;
 
