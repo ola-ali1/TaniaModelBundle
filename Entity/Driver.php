@@ -50,7 +50,7 @@ class Driver extends User
     {
         parent::__construct();
         $this->orders = new ArrayCollection();
-        $this->vans = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->vans = new ArrayCollection();
     }
 
     /**

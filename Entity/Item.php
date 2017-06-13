@@ -5,10 +5,11 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="item")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\ItemRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Item
@@ -52,6 +53,12 @@ class Item
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderItem",mappedBy="item")
      */
     protected $orderItems;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanItem",mappedBy="item", cascade={"persist"})
+     */
+    protected $vanItems;
 
     /**
      * @Assert\Image(
@@ -207,8 +214,9 @@ class Item
      */
     public function __construct()
     {
-        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->prices = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
+        $this->vanItems = new ArrayCollection();
     }
 
     /**
@@ -369,5 +377,46 @@ class Item
     public function getItemPrice()
     {
         return $this->defaultPrice + 0;
+    }
+    
+    /**
+     * Add vanItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\VanItem $vanItem
+     *
+     * @return Item
+     */
+    public function addVanItem(\Ibtikar\TaniaModelBundle\Entity\VanItem $vanItem)
+    {
+        $this->vanItems[] = $vanItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove vanItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\VanItem $vanItem
+     */
+    public function removeVanItem(\Ibtikar\TaniaModelBundle\Entity\VanItem $vanItem)
+    {
+        $this->vanItems->removeElement($vanItem);
+    }
+
+    /**
+     * Get vanItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVanItems()
+    {
+        return $this->vanItems;
+    }
+
+    private $itemPhoto;
+
+    public function getItemPhoto()
+    {
+        return $this->getWebPath();
     }
 }
