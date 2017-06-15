@@ -44,6 +44,13 @@ class Driver extends User
     private $username;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="average_rate", type="decimal", precision=4, scale=2, nullable=true)
+     */
+    private $averageRate;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -131,5 +138,30 @@ class Driver extends User
         $this->username = $username;
 
         return $this;
+    }
+
+
+    /**
+     * Set averageRate
+     *
+     * @param string $averageRate
+     *
+     * @return Driver
+     */
+    public function setAverageRate($averageRate)
+    {
+        $this->averageRate = $averageRate;
+
+        return $this;
+    }
+
+    /**
+     * Get averageRate
+     *
+     * @return string
+     */
+    public function getAverageRate()
+    {
+        return $this->averageRate;
     }
 }
