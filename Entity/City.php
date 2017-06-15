@@ -71,6 +71,14 @@ class City
     protected $orders;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return "$this->nameAr";
+    }
+
+    /**
      * Constructor
      */
     public function __construct()
