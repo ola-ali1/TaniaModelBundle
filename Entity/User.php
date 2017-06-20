@@ -2,6 +2,8 @@
 
 namespace Ibtikar\TaniaModelBundle\Entity;
 
+use Ibtikar\ShareEconomyPayFortBundle\Entity\PfPaymentMethodHolderInterface;
+use Ibtikar\ShareEconomyPayFortBundle\Entity\PfPaymentMethodHolderTrait;
 use Ibtikar\TaniaModelBundle\Entity\BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,10 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User extends BaseUser
+class User extends BaseUser implements PfPaymentMethodHolderInterface
 {
 
-
+    use PfPaymentMethodHolderTrait;
+    
     public static $roleList = array(
         'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN',
         'ROLE_ADMIN' => 'ROLE_ADMIN',
