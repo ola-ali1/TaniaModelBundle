@@ -6,11 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
+use Ibtikar\TaniaModelBundle\Validator\Constraints as TaniaAssert;
 
 /**
  * @ORM\Table(name="item")
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\ItemRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @TaniaAssert\UniqueCityItemPrice
  */
 class Item
 {
@@ -45,6 +47,8 @@ class Item
     /**
      *
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Price",mappedBy="item")
+     *
+     * @Assert\Valid
      */
     protected $prices;
 
@@ -378,7 +382,7 @@ class Item
     {
         return $this->defaultPrice + 0;
     }
-    
+
     /**
      * Add vanItem
      *

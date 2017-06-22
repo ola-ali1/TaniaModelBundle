@@ -2,3 +2,8 @@ services:
 #    ibtikar_tania_model.example:
 #        class: Ibtikar\TaniaModelBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    validator.unique_city_item_price:
+            class: Ibtikar\TaniaModelBundle\Validator\Constraints\UniqueCityItemPriceValidator
+            arguments: ["@request_stack", "@translator"]
+            tags:
+                - { name: validator.constraint_validator, alias: uniqueCityItemPrice }
