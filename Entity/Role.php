@@ -39,13 +39,14 @@ class Role
     /**
      * @var array
      *
+     * @Assert\NotBlank(message="You must have at least 1 Permission")
      * @Assert\Count(
      *      min = "1",
      *      minMessage = "You must have at least 1 Permission"
      * )
      * @ORM\Column(name="permissions", type="array")
      */
-    private $permissions;
+    private $permissions = array();
 
     /**
      * Get id
