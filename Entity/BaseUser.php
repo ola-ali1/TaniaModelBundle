@@ -18,8 +18,8 @@ use Ibtikar\TaniaModelBundle\Validator\Constraints\CustomEmail as AssertEmail;
  *
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"email"}, groups={"signup", "edit", "email"}, message="email_exist")
- * @UniqueEntity(fields={"phone"}, groups={"signup", "edit", "phone"}, message="phone_exist")
+ * @UniqueEntity(fields={"email"}, groups={"signup", "edit", "email", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, message="email_exist")
+ * @UniqueEntity(fields={"phone"}, groups={"signup", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, message="phone_exist")
  */
 class BaseUser implements AdvancedUserInterface, EquatableInterface
 {
@@ -45,8 +45,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="email", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
-     * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"signup", "edit"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"signup", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      */
     protected $email;
 
@@ -61,10 +61,10 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     /**
      * @var string $userPassword
      *
-     * @Assert\NotBlank(groups={"signup", "changePassword", "resetPassword"}, message="fill_mandatory_field")
-     * @Assert\Length(min = 6, max = 12, groups={"signup", "changePassword", "resetPassword"}, maxMessage="password_not_valid_max", minMessage="password_not_valid_min")
-     * @Assert\Regex(pattern="/[a-zA-Zأ-ي]/", message="password_not_valid_no_text", groups={"signup", "changePassword", "resetPassword"})
-     * @Assert\Regex(pattern="/[0-9٠-٩]/", message="password_not_valid_no_number", groups={"signup", "changePassword", "resetPassword"})
+     * @Assert\NotBlank(groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_admin_create"}, message="fill_mandatory_field")
+     * @Assert\Length(min = 6, max = 12, groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, maxMessage="password_not_valid_max", minMessage="password_not_valid_min")
+     * @Assert\Regex(pattern="/[a-zA-Zأ-ي]/", message="password_not_valid_no_text", groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\Regex(pattern="/[0-9٠-٩]/", message="password_not_valid_no_number", groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      */
     protected $userPassword;
 
@@ -72,8 +72,6 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=190)
-     *
-     * @Assert\NotBlank
      */
     protected $password;
 
@@ -173,8 +171,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="fullName", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit", "joinrequest"})
-     * @Assert\Length(min = 4, max = 25, groups={"signup", "edit", "joinrequest"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit", "joinrequest", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\Length(min = 4, max = 25, groups={"signup", "edit", "joinrequest", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
      */
     protected $fullName;
 
@@ -193,8 +191,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="phone", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "phone", "edit", "joinrequest"})
-     * @Assert\Regex("/^[+-]?\d+$/", groups={"edit"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "phone", "edit", "joinrequest", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\Regex("/^[+-]?\d+$/", groups={"edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      */
     protected $phone;
 
@@ -1066,22 +1064,4 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
         return $this->phoneVerificationCodes;
     }
 
-    /**
-     * Get roles
-     *
-     * @return array
-     */
-    public function getAdminRoles()
-    {
-        return implode(',' , $this->roles);
-    }
-
-    /**
-     * @return type
-     */
-    public static function getRolesList()
-    {
-        return array();
-
-    }
 }

@@ -18,13 +18,6 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface
 {
 
     use PfPaymentMethodHolderTrait;
-    
-    public static $roleList = array(
-        'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN',
-        'ROLE_ADMIN' => 'ROLE_ADMIN',
-        'ROLE_FINANCE' => 'ROLE_FINANCE',
-        'ROLE_SUPPORT' => 'ROLE_SUPPORT'
-    );
 
     /**
      * @Assert\Regex("/ar|en/")
@@ -42,6 +35,12 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup"})
      */
     protected $city;
+
+    /**
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"backend_admin_create", "backend_admin_edit"})
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Role")
+     */
+    private $role;
 
     /**
      *
@@ -180,5 +179,40 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set role
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Role $role
+     *
+     * @return User
+     */
+    public function setRole(\Ibtikar\TaniaModelBundle\Entity\Role $role = null)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\Role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRoles()
+    {
+        if ($this->role) {
+            return array_merge($this->role->getPermissions(), parent::getRoles());
+        }
+        return parent::getRoles();
     }
 }
