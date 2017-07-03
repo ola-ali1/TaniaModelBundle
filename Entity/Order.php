@@ -14,6 +14,13 @@ class Order implements PfTransactionInvoiceInterface
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
+    public static $paymentMethodList = array(
+        '1' => 'Cash',
+        '2' => 'SADAD',
+        '3' => 'Online With Card Id',
+        '4' => 'Balance'
+    );
+
     /**
      * @var int
      *
@@ -32,6 +39,11 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\City", inversedBy="orders")
      */
     protected $city;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Shift", inversedBy="orders")
+     */
+    protected $shift;
 
     /**
      *
@@ -54,11 +66,18 @@ class Order implements PfTransactionInvoiceInterface
     private $pfPayed = false;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="payment_method", type="string", length=190)
+     * @ORM\Column(name="payment_method", type="integer")
      */
     private $paymentMethod;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="note", type="text")
+     */
+    private $note;
 
     /**
      * @var Ibtikar\ShareEconomyPayFortBundle\Entity\PfPaymentMethod
@@ -298,6 +317,30 @@ class Order implements PfTransactionInvoiceInterface
     public function getPaymentMethod()
     {
         return $this->paymentMethod;
+    }
+
+    /**
+     * Set note
+     *
+     * @param string $note
+     *
+     * @return Order
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
     }
 
     /**
