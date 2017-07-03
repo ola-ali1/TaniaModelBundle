@@ -1005,6 +1005,19 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
         if ($this->id !== $user->getId()) {
             return false;
         }
+
+        if ($user instanceof BaseUser) {
+            // Check that the roles are the same, in any order
+            $isEqual = count($this->getRoles()) == count($user->getRoles());
+            if ($isEqual) {
+                foreach($this->getRoles() as $role) {
+                    $isEqual = $isEqual && in_array($role, $user->getRoles());
+                }
+            }
+
+            return $isEqual;
+        }
+        
         return true;
     }
 
