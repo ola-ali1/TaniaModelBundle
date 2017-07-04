@@ -75,7 +75,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var text
      *
-     * @ORM\Column(name="note", type="text")
+     * @ORM\Column(name="note", type="text", nullable=true)
      */
     private $note;
 
