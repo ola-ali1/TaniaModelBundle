@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="order")
+ * @ORM\Table(name="`order`")
  * @ORM\Entity()
  */
 class Order implements PfTransactionInvoiceInterface
@@ -66,9 +66,9 @@ class Order implements PfTransactionInvoiceInterface
     private $pfPayed = false;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="payment_method", type="integer")
+     * @ORM\Column(name="payment_method", type="string")
      */
     private $paymentMethod;
 
@@ -100,7 +100,7 @@ class Order implements PfTransactionInvoiceInterface
     public function __construct()
     {
         $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pfTransactions = new ArrayCollection();
+        $this->pfTransactions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -202,6 +202,30 @@ class Order implements PfTransactionInvoiceInterface
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Set shift
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Shift $shift
+     *
+     * @return Shift
+     */
+    public function setShift(\Ibtikar\TaniaModelBundle\Entity\Shift $shift = null)
+    {
+        $this->shift = $shift;
+
+        return $this;
+    }
+
+    /**
+     * Get shift
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\Shift
+     */
+    public function getShift()
+    {
+        return $this->shift;
     }
 
     /**
