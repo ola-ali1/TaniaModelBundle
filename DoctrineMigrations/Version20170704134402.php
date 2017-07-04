@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170601020753 extends AbstractMigration
+class Version20170704134402 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -18,7 +18,7 @@ class Version20170601020753 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE van CHANGE current_capacity current_capacity INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE `order` CHANGE note note LONGTEXT DEFAULT NULL');
     }
 
     /**
@@ -29,6 +29,6 @@ class Version20170601020753 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE van CHANGE current_capacity current_capacity INT NOT NULL');
+        $this->addSql('ALTER TABLE `order` CHANGE note note LONGTEXT NOT NULL COLLATE utf8mb4_general_ci');
     }
 }
