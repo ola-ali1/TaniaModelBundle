@@ -32,7 +32,7 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\City", inversedBy="users")
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
      */
     protected $city;
 
@@ -42,6 +42,38 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface
      */
     private $role;
 
+    /**
+     * @var string $neighborhood
+     *
+     * @ORM\Column(name="neighborhood", type="string", length=100, nullable=true)
+     * @Assert\Length(min = 4, max = 15, groups={"signup", "edit"}, maxMessage="neighborhood_length_not_valid", minMessage="neighborhood_length_not_valid")
+     */
+    protected $neighborhood;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=400, nullable=true)
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
+     * @Assert\Length(min = 4, max = 300, groups={"signup", "edit"}, maxMessage="address_length_not_valid", minMessage="address_length_not_valid")
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
+     */
+    private $latitude;
     /**
      *
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order",mappedBy="user")
@@ -214,5 +246,101 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface
             return array_merge($this->role->getPermissions(), parent::getRoles());
         }
         return parent::getRoles();
+    }
+
+    /**
+     * Set neighborhood
+     *
+     * @param string $neighborhood
+     *
+     * @return User
+     */
+    public function setNeighborhood($neighborhood)
+    {
+        $this->neighborhood = $neighborhood;
+
+        return $this;
+    }
+
+    /**
+     * Get neighborhood
+     *
+     * @return string
+     */
+    public function getNeighborhood()
+    {
+        return $this->neighborhood;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return User
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param string $longitude
+     *
+     * @return User
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return string
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param string $latitude
+     *
+     * @return User
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return string
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
     }
 }
