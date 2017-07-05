@@ -80,6 +80,13 @@ class Order implements PfTransactionInvoiceInterface
     private $note;
 
     /**
+     * @var text
+     *
+     * @ORM\Column(name="receiving_date", type="text", nullable=true)
+     */
+    private $receivingDate;
+
+    /**
      * @var Ibtikar\ShareEconomyPayFortBundle\Entity\PfPaymentMethod
      *
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
@@ -365,6 +372,30 @@ class Order implements PfTransactionInvoiceInterface
     public function getNote()
     {
         return $this->note;
+    }
+
+    /**
+     * Set receivingDate
+     *
+     * @param string $receivingDate
+     *
+     * @return Order
+     */
+    public function setReceivingDate($receivingDate)
+    {
+        $this->receivingDate = $receivingDate;
+
+        return $this;
+    }
+
+    /**
+     * Get receivingDate
+     *
+     * @return string
+     */
+    public function getReceivingDate()
+    {
+        return $this->receivingDate;
     }
 
     /**
