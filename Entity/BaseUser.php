@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Ibtikar\TaniaModelBundle\Validator\Constraints\CustomEmail as AssertEmail;
+use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -225,6 +226,12 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     protected $phoneVerificationCodes;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\UserAddress", mappedBy="user", cascade="persist")
+     */
+    protected $addresses;
+
+    /**
      * @var string $image
      *
      * @ORM\Column(name="image", type="string", length=20, nullable=true)
@@ -249,7 +256,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     public function __construct()
     {
         $this->salt = md5(uniqid(rand()));
-        $this->phoneVerificationCodes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->phoneVerificationCodes = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
 
     public function __toString()
@@ -1017,7 +1025,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
 
             return $isEqual;
         }
-        
+
         return true;
     }
 
@@ -1075,6 +1083,42 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     public function getPhoneVerificationCodes()
     {
         return $this->phoneVerificationCodes;
+    }
+
+    /**
+     * Add userAddress
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\UserAddress $address
+     *
+     * @return Van
+     */
+    public function addAddress(\Ibtikar\TaniaModelBundle\Entity\UserAddress $address)
+    {
+        $this->addresses[] = $address;
+
+        $address->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove vanItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\VanItem $vanItem
+     */
+    public function removeVanItem(\Ibtikar\TaniaModelBundle\Entity\VanItem $vanItem)
+    {
+        $this->vanItems->removeElement($vanItem);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
     }
 
 }
