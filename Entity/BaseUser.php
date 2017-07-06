@@ -54,7 +54,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     /**
      * @var string $oldPassword
      *
-     * @Assert\NotBlank(groups={"changePassword"})
+     * @Assert\NotBlank(groups={"changePassword"}, message="fill_mandatory_field"))
      * @SecurityAssert\UserPassword(groups={"changePassword"})
      */
     protected $oldPassword;
