@@ -343,4 +343,14 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface
     {
         return $this->latitude;
     }
+
+    public function getUserAddresses()
+    {
+        $addresses[] = array('title' => '', 'address' => $this->address, 'longitude' => $this->longitude, 'latitude' => $this->latitude);
+
+        foreach($this->addresses as $address)
+            $addresses[] = array('title' => $address->getTitle(), 'address' => $address->getAddress(), 'longitude' => $address->getLongitude(), 'latitude' => $address->getLatitude());
+
+        return $addresses;
+    }
 }
