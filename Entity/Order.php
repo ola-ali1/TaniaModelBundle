@@ -21,6 +21,11 @@ class Order implements PfTransactionInvoiceInterface
         '4' => 'Balance'
     );
 
+    public static $statuses = array(
+        'delivered' => 'delivered', // the request finished
+    );
+
+
     /**
      * @var int
      *
@@ -34,6 +39,11 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\User", inversedBy="orders")
      */
     protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Driver", inversedBy="orders")
+     */
+    protected $driver;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\City", inversedBy="orders")
@@ -100,6 +110,41 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\Column(name="amountDue", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $amountDue;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="driver_rate", type="decimal", precision=4, scale=2, nullable=true,options={"comment":"value set by user for rating partner"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"rate"})
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 5,
+     *      minMessage = "invalid_rate",
+     *      maxMessage = "invalid_rate",
+     *      groups={"rate"}
+     * )
+     * @Assert\Type(
+     *     type="integer",
+     *     message="invalid_rate",
+     *      groups={"rate"}
+     * )
+     */
+    private $driverRate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="driver_rate_comment", type="string", length=190, nullable=true,options={"comment":"value set by user for rating partner"})
+     * @Assert\Length(min = 3, max = 140, groups={"rate"}, maxMessage="comment_length_not_valid", minMessage="comment_length_not_valid", groups={"rate"})
+     */
+    private $driverRateComment;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=190)
+     */
+    private $status;
 
     /**
      * Constructor
@@ -421,4 +466,102 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->amountDue;
     }
+
+    /**
+     * Set driverRate
+     *
+     * @param string $driverRate
+     *
+     * @return Order
+     */
+    public function setDriverRate($driverRate)
+    {
+        $this->driverRate = $driverRate;
+
+        return $this;
+    }
+
+    /**
+     * Get driverRate
+     *
+     * @return string
+     */
+    public function getDriverRate()
+    {
+        return $this->driverRate;
+    }
+
+    /**
+     * Set driverRateComment
+     *
+     * @param string $driverRateComment
+     *
+     * @return RequestOrder
+     */
+    public function setDriverRateComment($driverRateComment)
+    {
+        $this->driverRateComment = $driverRateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get driverRateComment
+     *
+     * @return string
+     */
+    public function getDriverRateComment()
+    {
+        return $this->driverRateComment;
+    }
+
+    /**
+     * Set driver
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Driver $driver
+     *
+     * @return Driver
+     */
+    public function setDriver(\Ibtikar\TaniaModelBundle\Entity\Driver $driver = null)
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
+
+    /**
+     * Get driver
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\Driver
+     */
+    public function getDriver()
+    {
+        return $this->driver;
+    }
+
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Order
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
 }

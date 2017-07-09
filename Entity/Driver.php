@@ -46,9 +46,9 @@ class Driver extends User
     /**
      * @var string
      *
-     * @ORM\Column(name="average_rate", type="decimal", precision=4, scale=2, nullable=true)
+     * @ORM\Column(name="partner_rate", type="decimal", precision=4, scale=2, nullable=true)
      */
-    private $averageRate;
+    private $partnerRate;
 
     /**
      * Constructor
@@ -142,26 +142,26 @@ class Driver extends User
 
 
     /**
-     * Set averageRate
+     * Set partnerRate
      *
-     * @param string $averageRate
+     * @param string $partnerRate
      *
      * @return Driver
      */
-    public function setAverageRate($averageRate)
+    public function setPartnerRate($partnerRate)
     {
-        $this->averageRate = $averageRate;
+        $this->partnerRate = $partnerRate;
 
         return $this;
     }
 
     /**
-     * Get averageRate
+     * Get partnerRate
      *
      * @return string
      */
-    public function getAverageRate()
+    public function getPartnerRate()
     {
-        return $this->averageRate;
+        return $this->partnerRate;
     }
 }
