@@ -46,6 +46,11 @@ class Order implements PfTransactionInvoiceInterface
     protected $driver;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Van")
+     */
+    protected $van;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\City", inversedBy="orders")
      */
     protected $city;
@@ -558,4 +563,60 @@ class Order implements PfTransactionInvoiceInterface
         return $this->status;
     }
 
+    /**
+     * Set van
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Van $van
+     *
+     * @return Van
+     */
+    public function setVan(\Ibtikar\TaniaModelBundle\Entity\Van $van = null)
+    {
+        $this->van = $van;
+
+        return $this;
+    }
+
+    /**
+     * Get driver
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\Van
+     */
+    public function getVan()
+    {
+        return $this->van;
+    }
+
+
+    public function getDriverName()
+    {
+        if ($this->driver)
+            return $this->driver->getFullName();
+
+        return '';
+    }
+
+    public function getDriverNameAr()
+    {
+        if ($this->driver)
+            return $this->driver->getFullNameAr();
+
+        return '';
+    }
+
+    public function getDriverPhone()
+    {
+        if ($this->driver)
+            return $this->driver->getPhone();
+
+        return '';
+    }
+
+    public function getVanNumber()
+    {
+        if ($this->van)
+            return $this->van->getVanNumber();
+
+        return '';
+    }
 }
