@@ -32,16 +32,16 @@ class Shift
     /**
      * @var string
      *
-     * @ORM\Column(name="from", type="string")
+     * @ORM\Column(name="`from`", type="datetime")
      */
-    private $from = '00:00 AM';
+    private $from;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="to", type="string")
+     * @ORM\Column(name="`to`", type="datetime")
      */
-    private $to = '00:00 AM';
+    private $to;
 
     /**
      *
