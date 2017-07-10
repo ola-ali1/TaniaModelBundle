@@ -1,7 +1,8 @@
 services:
-#    ibtikar_tania_model.example:
-#        class: Ibtikar\TaniaModelBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    user_device_notification:
+        class: Ibtikar\TaniaModelBundle\Service\UserDeviceNotification
+        arguments: ["@doctrine.orm.entity_manager", "@firebase_cloud_messaging"]
+
     validator.unique_city_item_price:
             class: Ibtikar\TaniaModelBundle\Validator\Constraints\UniqueCityItemPriceValidator
             arguments: ["@request_stack", "@translator"]
