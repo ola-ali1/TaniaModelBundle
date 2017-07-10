@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="`order`")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OrderRepository")
  */
 class Order implements PfTransactionInvoiceInterface
 {
@@ -114,30 +114,24 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="driver_rate", type="decimal", precision=4, scale=2, nullable=true,options={"comment":"value set by user for rating partner"})
+     * @ORM\Column(name="rate", type="decimal", precision=4, scale=2, nullable=true,options={"comment":"value set by user for rating order"})
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"rate"})
-     * @Assert\Range(
-     *      min = 1,
-     *      max = 5,
-     *      minMessage = "invalid_rate",
-     *      maxMessage = "invalid_rate",
-     *      groups={"rate"}
-     * )
-     * @Assert\Type(
-     *     type="integer",
-     *     message="invalid_rate",
-     *      groups={"rate"}
+     * @Assert\Regex(
+     *     pattern="/^[1-5]$/",
+     *     match=true,
+     *     message = "invalid_rate",
+     *     groups = {"rate"}
      * )
      */
-    private $driverRate;
+    private $rate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="driver_rate_comment", type="string", length=190, nullable=true,options={"comment":"value set by user for rating partner"})
+     * @ORM\Column(name="rate_comment", type="string", length=190, nullable=true,options={"comment":"value set by user for rating order"})
      * @Assert\Length(min = 3, max = 140, groups={"rate"}, maxMessage="comment_length_not_valid", minMessage="comment_length_not_valid", groups={"rate"})
      */
-    private $driverRateComment;
+    private $rateComment;
 
     /**
      * @var string
@@ -468,51 +462,51 @@ class Order implements PfTransactionInvoiceInterface
     }
 
     /**
-     * Set driverRate
+     * Set rate
      *
-     * @param string $driverRate
+     * @param string $rate
      *
      * @return Order
      */
-    public function setDriverRate($driverRate)
+    public function setRate($rate)
     {
-        $this->driverRate = $driverRate;
+        $this->rate = $rate;
 
         return $this;
     }
 
     /**
-     * Get driverRate
+     * Get rate
      *
      * @return string
      */
-    public function getDriverRate()
+    public function getRate()
     {
-        return $this->driverRate;
+        return $this->rate;
     }
 
     /**
-     * Set driverRateComment
+     * Set rateComment
      *
-     * @param string $driverRateComment
+     * @param string $rateComment
      *
      * @return RequestOrder
      */
-    public function setDriverRateComment($driverRateComment)
+    public function setRateComment($rateComment)
     {
-        $this->driverRateComment = $driverRateComment;
+        $this->rateComment = $rateComment;
 
         return $this;
     }
 
     /**
-     * Get driverRateComment
+     * Get rateComment
      *
      * @return string
      */
-    public function getDriverRateComment()
+    public function getRateComment()
     {
-        return $this->driverRateComment;
+        return $this->rateComment;
     }
 
     /**
