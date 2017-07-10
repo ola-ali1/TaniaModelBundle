@@ -173,7 +173,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pfTransactions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->status = $this::$statuses['placed'];
+        $this->setStatus($this::$statuses['placed']);
     }
 
     /**
