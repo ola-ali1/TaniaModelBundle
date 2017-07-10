@@ -46,9 +46,9 @@ class Driver extends User
     /**
      * @var string
      *
-     * @ORM\Column(name="partner_rate", type="decimal", precision=4, scale=2, nullable=true)
+     * @ORM\Column(name="driver_rate", type="decimal", precision=4, scale=2, nullable=true)
      */
-    private $partnerRate;
+    private $driverRate;
 
     /**
      * Constructor
@@ -142,26 +142,26 @@ class Driver extends User
 
 
     /**
-     * Set partnerRate
+     * Set driverRate
      *
-     * @param string $partnerRate
+     * @param string $driverRate
      *
      * @return Driver
      */
-    public function setPartnerRate($partnerRate)
+    public function setDriverRate($driverRate)
     {
-        $this->partnerRate = $partnerRate;
+        $this->driverRate = $driverRate;
 
         return $this;
     }
 
     /**
-     * Get partnerRate
+     * Get driverRate
      *
      * @return string
      */
-    public function getPartnerRate()
+    public function getDriverRate()
     {
-        return $this->partnerRate;
+        return $this->driverRate;
     }
 }

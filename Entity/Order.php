@@ -25,9 +25,10 @@ class Order implements PfTransactionInvoiceInterface
         'placed' => 'placed',
         'verified' => 'verified',
         'delivering' => 'delivering',
-        'delivered' => 'delivered',
+        'delivered' => 'delivered', // the request finished
+        'returned' => 'returned',
         'closed' => 'closed',
-        'canceled' => 'canceled'
+        'cancelled' => 'cancelled'
     );
 
     public static $statusCategories = array(
@@ -508,7 +509,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getRate()
     {
-        return $this->rate;
+        return $this->rate + 0;
     }
 
     /**
@@ -661,6 +662,27 @@ class Order implements PfTransactionInvoiceInterface
     {
         if ($this->van)
             return $this->van->getVanNumber();
+
+        return '';
+    }
+
+    public function getStatuses()
+    {
+        return self::$statuses;
+    }
+
+    public function getUserName()
+    {
+        if ($this->user)
+            return $this->user->getFullName();
+
+        return '';
+    }
+
+    public function getDriverEmail()
+    {
+        if ($this->driver)
+            return $this->driver->getEmail();
 
         return '';
     }
