@@ -18,4 +18,19 @@ class OrderRepository extends EntityRepository
 
         return $query;
     }
+
+    public function getListOrders($userId, $category, $page){
+        $limit = 10;
+        $query = $this->createQueryBuilder('o')
+                ->select('o')
+                ->andWhere("o.user = :user")
+                ->andWhere("o.category = :category")
+                ->setMaxResults($limit)
+                ->setFirstResult(($page -1)* $limit)
+                ->setParameters(array('user'=> $userId, 'category' => $category))
+                ->getQuery()
+                ->getResult();
+
+        return $query;
+    }
 }
