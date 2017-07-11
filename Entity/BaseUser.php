@@ -46,8 +46,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="email", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
-     * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"signup", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"signup", "edit","edit-profile", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      */
     protected $email;
 
@@ -172,8 +172,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="fullName", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
-     * @Assert\Length(min = 4, max = 25, groups={"signup", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\Length(min = 4, max = 25, groups={"signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
      */
     protected $fullName;
 
@@ -192,8 +192,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="phone", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "phone", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
-     * @Assert\Regex("/^[+-]?\d+$/", groups={"edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "phone","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\Regex("/^[+-]?\d+$/", groups={"edit", "edit-profile","backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      */
     protected $phone;
 
@@ -250,6 +250,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @Assert\NotBlank(groups={"image-required"})
      * @Assert\Image(minWidth=300, minHeight=300, mimeTypes={"image/jpg", "image/jpeg", "image/pjpeg", "image/png"}, groups={"image", "Default", "edit"})
      * @Assert\Image(maxSize="1M", groups={"edit"})
+     * @Assert\Image(maxSize="1M",maxSizeMessage="File size must be less than 1mb",minWidth=300, minHeight=300,minWidthMessage="Image dimension must be more than 300*300", minHeightMessage="Image dimension must be more than 300*300", mimeTypes={"image/jpg", "image/jpeg", "image/pjpeg", "image/png"}, mimeTypesMessage="picture not correct.", groups={"edit-profile"})
      */
     protected $file;
 
