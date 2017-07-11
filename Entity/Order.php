@@ -31,6 +31,14 @@ class Order implements PfTransactionInvoiceInterface
         'cancelled' => 'cancelled'
     );
 
+    public static $statusCategories = array(
+        'placed' => 'current',
+        'verified' => 'current',
+        'delivering' => 'current',
+        'delivered' => 'past',
+        'closed' => 'past',
+        'canceled' => 'past'
+    );
 
     /**
      * @var int
@@ -159,12 +167,20 @@ class Order implements PfTransactionInvoiceInterface
     private $status;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="category", type="string", length=190)
+     */
+    private $category;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pfTransactions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setStatus($this::$statuses['placed']);
     }
 
     /**
@@ -562,7 +578,7 @@ class Order implements PfTransactionInvoiceInterface
     public function setStatus($status)
     {
         $this->status = $status;
-
+        $this->setCategory($this::$statusCategories[$status]);
         return $this;
     }
 
@@ -574,6 +590,30 @@ class Order implements PfTransactionInvoiceInterface
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     *
+     * @return Order
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**
