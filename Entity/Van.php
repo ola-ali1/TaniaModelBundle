@@ -44,6 +44,11 @@ class Van
      */
     protected $vanItems;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanDriver",mappedBy="van", cascade={"persist"})
+     */
+    protected $vanDrivers;
 
     /**
      * Constructor
@@ -51,6 +56,7 @@ class Van
     public function __construct()
     {
         $this->vanItems = new ArrayCollection();
+        $this->vanDrivers = new ArrayCollection();
     }
 
 
@@ -148,6 +154,42 @@ class Van
     public function getVanItems()
     {
         return $this->vanItems;
+    }
+
+    /**
+     * Add vanDriver
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver
+     *
+     * @return Van
+     */
+    public function addVanDriver(\Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver)
+    {
+        $this->vanDrivers[] = $vanDriver;
+
+        $vanDriver->setVan($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove vanDriver
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\VanDrivers $vanDriver
+     */
+    public function removeVanDriver(\Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver)
+    {
+        $this->vanDrivers->removeElement($vanDriver);
+    }
+
+    /**
+     * Get vanDrivers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVanDrivers()
+    {
+        return $this->vanDrivers;
     }
 
 
