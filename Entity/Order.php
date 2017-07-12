@@ -111,6 +111,13 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var text
      *
+     * @ORM\Column(name="close_reason", type="text", nullable=true)
+     */
+    private $closeReason;
+
+    /**
+     * @var text
+     *
      * @ORM\Column(name="receiving_date", type="text", nullable=true)
      */
     private $receivingDate;
@@ -692,5 +699,29 @@ class Order implements PfTransactionInvoiceInterface
             return $this->driver->getEmail();
 
         return '';
+    }
+
+    /**
+     * Set closeReason
+     *
+     * @param string $closeReason
+     *
+     * @return Order
+     */
+    public function setCloseReason($closeReason)
+    {
+        $this->closeReason = $closeReason;
+
+        return $this;
+    }
+
+    /**
+     * Get closeReason
+     *
+     * @return string
+     */
+    public function getCloseReason()
+    {
+        return $this->closeReason;
     }
 }
