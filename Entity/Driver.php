@@ -20,18 +20,10 @@ class Driver extends User
     protected $orders;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Ibtikar\TaniaModelBundle\Entity\Van", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\OrderBy({"id"="DESC"})
-     * @ORM\JoinTable(name="van_drivers",
-     *  joinColumns={@ORM\JoinColumn(name="driver_id", referencedColumnName="id", onDelete="CASCADE")},
-     *  inverseJoinColumns={@ORM\JoinColumn(name="van_id", referencedColumnName="id", onDelete="CASCADE")}
-     * )
-     *
-     * @Assert\Valid
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanDriver",mappedBy="driver", cascade={"persist"})
      */
-    protected $vans;
+    protected $vanDrivers;
 
     /**
      * @var string
@@ -57,7 +49,7 @@ class Driver extends User
     {
         parent::__construct();
         $this->orders = new ArrayCollection();
-        $this->vans = new ArrayCollection();
+        $this->vanDrivers = new ArrayCollection();
     }
 
     /**
@@ -95,37 +87,39 @@ class Driver extends User
     }
 
     /**
-     * Add van
+     * Add vanDriver
      *
-     * @param Van $van
+     * @param \Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver
      *
-     * @return Driver
+     * @return Van
      */
-    public function addVan(Van $van)
+    public function addVanDriver(\Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver)
     {
-        $this->vans[] = $van;
+        $this->vanDrivers[] = $vanDriver;
+
+        $vanDriver->setDriver($this);
 
         return $this;
     }
 
     /**
-     * Remove van
+     * Remove vanDriver
      *
-     * @param Van van
+     * @param \Ibtikar\TaniaModelBundle\Entity\VanDrivers $vanDriver
      */
-    public function removeVan(Van $van)
+    public function removeVanDriver(\Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver)
     {
-        $this->vans->removeElement($van);
+        $this->vanDrivers->removeElement($vanDriver);
     }
 
     /**
-     * Get vans
+     * Get vanDrivers
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getVans()
+    public function getVanDrivers()
     {
-        return $this->vans;
+        return $this->vanDrivers;
     }
 
     public function getUsername()
