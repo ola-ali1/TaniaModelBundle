@@ -26,6 +26,12 @@ class Driver extends User
     protected $vanDrivers;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\DriverCityArea",mappedBy="driver", cascade={"persist"})
+     */
+    protected $driverCityAreas;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=100, nullable=true)
@@ -50,6 +56,7 @@ class Driver extends User
         parent::__construct();
         $this->orders = new ArrayCollection();
         $this->vanDrivers = new ArrayCollection();
+        $this->driverCityAreas = new ArrayCollection();
     }
 
     /**
@@ -120,6 +127,42 @@ class Driver extends User
     public function getVanDrivers()
     {
         return $this->vanDrivers;
+    }
+
+    /**
+     * Add driverCityArea
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\DriverCityArea $driverCityArea
+     *
+     * @return Van
+     */
+    public function addDriverCityArea(\Ibtikar\TaniaModelBundle\Entity\DriverCityArea $driverCityArea)
+    {
+        $this->driverCityAreas[] = $driverCityArea;
+
+        $driverCityArea->setDriver($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove driverCityArea
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\DriverCityArea $driverCityArea
+     */
+    public function removeDriverCityArea(\Ibtikar\TaniaModelBundle\Entity\DriverCityArea $driverCityArea)
+    {
+        $this->driverCityAreas->removeElement($driverCityArea);
+    }
+
+    /**
+     * Get driverCityAreas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDriverCityAreas()
+    {
+        return $this->driverCityAreas;
     }
 
     public function getUsername()
