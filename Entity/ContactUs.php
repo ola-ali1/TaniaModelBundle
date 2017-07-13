@@ -203,4 +203,20 @@ class ContactUs
     {
         return $this->getType() ? $this->getType()->getTitleEn() : "---";
     }
+
+    public function getUserName()
+    {
+        if($this->user)
+            return $this->getUser()->getFullName();
+
+        return;
+    }
+
+    public function getOrderId()
+    {
+        if($this->order)
+            return $this->getOrder()->getId();
+
+        return;
+    }
 }
