@@ -81,6 +81,13 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      */
     protected $orders;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="locationLastUpdateTime", type="datetime", nullable=true)
+     */
+    protected $locationLastUpdateTime;
+
     public function __sleep() {
         $classVars = get_object_vars($this);
         // unset all object proxies not the collections
@@ -353,5 +360,39 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
             $addresses[] = array('title' => $address->getTitle(), 'address' => $address->getAddress(), 'longitude' => $address->getLongitude(), 'latitude' => $address->getLatitude());
 
         return $addresses;
+    }
+
+    /**
+     * Set locationLastUpdateTime
+     *
+     * @param \DateTime $locationLastUpdateTime
+     *
+     * @return User
+     */
+    public function setLocationLastUpdateTime($locationLastUpdateTime)
+    {
+        $this->locationLastUpdateTime = $locationLastUpdateTime;
+
+        return $this;
+    }
+
+    /**
+     * Get locationLastUpdateTime
+     *
+     * @return \DateTime
+     */
+    public function getLocationLastUpdateTime()
+    {
+        return $this->locationLastUpdateTime;
+    }
+
+    /**
+     * Remove address
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\UserAddress $address
+     */
+    public function removeAddress(\Ibtikar\TaniaModelBundle\Entity\UserAddress $address)
+    {
+        $this->addresses->removeElement($address);
     }
 }
