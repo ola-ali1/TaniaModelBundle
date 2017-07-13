@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUserInterface
 {
+    public static $paymentMethods = array('cash' => 'cash', 'balance' => 'balance', 'credit' => 'credit');
 
     use PfPaymentMethodHolderTrait;
 
@@ -363,14 +364,45 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     }
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_method", type="string", length=20, nullable = true)
+     */
+    private $paymentMethod;
+
+
+    /**
+     * Set paymentMethod
+     *
+     * @param string $paymentMethod
+     *
+     * @return Order
+     */
+    public function setPaymentMethod($paymentMethod)
+    {
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentMethod
+     *
+     * @return string
+     */
+    public function getPaymentMethod()
+    {
+        return $this->paymentMethod;
+    }
+
+    /**
      * Set locationLastUpdateTime
      *
      * @param \DateTime $locationLastUpdateTime
      *
      * @return User
      */
-    public function setLocationLastUpdateTime($locationLastUpdateTime)
-    {
+    public function setLocationLastUpdateTime($locationLastUpdateTime) {
         $this->locationLastUpdateTime = $locationLastUpdateTime;
 
         return $this;

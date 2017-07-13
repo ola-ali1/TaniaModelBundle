@@ -656,6 +656,13 @@ class Order implements PfTransactionInvoiceInterface
 
         return '';
     }
+    public function getDriverImage()
+    {
+        if ($this->driver)
+            return $this->driver->getWebPath();
+
+        return '';
+    }
 
     public function getDriverPhone()
     {

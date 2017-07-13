@@ -64,6 +64,21 @@ class CityArea
     private $city;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\DriverCityArea",mappedBy="cityArea", cascade={"persist"})
+     */
+    protected $driverCityAreas;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->driverCityAreas = new ArrayCollection();
+    }
+
+    /**
      * @return string
      */
     public function __toString()
@@ -195,5 +210,41 @@ class CityArea
     public function getPolygon()
     {
         return $this->polygon;
+    }
+
+    /**
+     * Add driverCityArea
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\DriverCityArea $driverCityArea
+     *
+     * @return Van
+     */
+    public function addDriverCityArea(\Ibtikar\TaniaModelBundle\Entity\DriverCityArea $driverCityArea)
+    {
+        $this->driverCityAreas[] = $driverCityArea;
+
+        $driverCityArea->setDriver($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove driverCityArea
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\DriverCityArea $driverCityArea
+     */
+    public function removeDriverCityArea(\Ibtikar\TaniaModelBundle\Entity\DriverCityArea $driverCityArea)
+    {
+        $this->driverCityAreas->removeElement($driverCityArea);
+    }
+
+    /**
+     * Get driverCityAreas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDriverCityAreas()
+    {
+        return $this->driverCityAreas;
     }
 }
