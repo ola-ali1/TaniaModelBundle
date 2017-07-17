@@ -5,7 +5,7 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * CityArea
  *
@@ -74,7 +74,6 @@ class CityArea
      */
     public function __construct()
     {
-        parent::__construct();
         $this->driverCityAreas = new ArrayCollection();
     }
 
