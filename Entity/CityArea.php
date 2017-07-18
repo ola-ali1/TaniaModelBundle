@@ -83,7 +83,6 @@ class CityArea
      */
     public function __construct()
     {
-     //   parent::__construct();
         $this->driverCityAreas = new ArrayCollection();
     }
 
