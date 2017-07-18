@@ -8,10 +8,12 @@ use Ibtikar\GoogleServicesBundle\Entity\DeviceUserInterface;
 use Ibtikar\TaniaModelBundle\Entity\BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="entityClass", type="string")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
@@ -97,6 +99,13 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
         unset($classVars['file']);
         return array_keys($classVars);
     }
+
+    /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     /**
      * Constructor
@@ -427,4 +436,29 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     {
         $this->addresses->removeElement($address);
     }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return this
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getdeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
 }
