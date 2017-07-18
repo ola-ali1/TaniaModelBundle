@@ -5,13 +5,15 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * CityArea
  *
  * @UniqueEntity(fields={"nameAr"}, groups={"create", "edit"})
  * @UniqueEntity(fields={"nameEn"}, groups={"create", "edit"})
- *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ORM\Table(name="city_area")
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\CityAreaRepository")
  */
@@ -70,11 +72,17 @@ class CityArea
     protected $driverCityAreas;
 
     /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    protected $deletedAt;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        parent::__construct();
         $this->driverCityAreas = new ArrayCollection();
     }
 
@@ -247,4 +255,29 @@ class CityArea
     {
         return $this->driverCityAreas;
     }
+
+    /**
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     *
+     * @return this
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getdeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
 }
