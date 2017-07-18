@@ -14,11 +14,16 @@ class Order implements PfTransactionInvoiceInterface
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
+    CONST CASH = 1;
+    CONST SADAD = 2;
+    CONST CREDIT = 3;
+    CONST BALANCE = 4;
+
     public static $paymentMethodList = array(
-        '1' => 'Cash',
-        '2' => 'SADAD',
-        '3' => 'Online With Card Id',
-        '4' => 'Balance'
+        self::CASH => 'Cash',
+        self::SADAD => 'SADAD',
+        self::CREDIT => 'Online With Card Id',
+        self::BALANCE => 'Balance'
     );
 
     public static $statuses = array(
@@ -173,6 +178,12 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $category;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destination_verification_code", type="string", length=20, nullable=false)
+     */
+    private $destinationVerificationCode;
     /**
      * Constructor
      */
@@ -724,4 +735,29 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->closeReason;
     }
+
+    /**
+     * Set destinationVerificationCode
+     *
+     * @param string $destinationVerificationCode
+     *
+     * @return RequestOrder
+     */
+    public function setDestinationVerificationCode($destinationVerificationCode)
+    {
+        $this->destinationVerificationCode = $destinationVerificationCode;
+
+        return $this;
+    }
+
+    /**
+     * Get destinationVerificationCode
+     *
+     * @return string
+     */
+    public function getDestinationVerificationCode()
+    {
+        return $this->destinationVerificationCode;
+    }
+
 }
