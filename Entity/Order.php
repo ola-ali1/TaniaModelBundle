@@ -14,35 +14,26 @@ class Order implements PfTransactionInvoiceInterface
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
-    CONST CASH = 1;
-    CONST SADAD = 2;
-    CONST CREDIT = 3;
-    CONST BALANCE = 4;
-
     public static $paymentMethodList = array(
-        self::CASH => 'Cash',
-        self::SADAD => 'SADAD',
-        self::CREDIT => 'Online With Card Id',
-        self::BALANCE => 'Balance'
+        'CASH' => 'Cash',
+        'SADAD' => 'SADAD',
+        'CREDIT' => 'Online With Card Id',
+        'BALANCE' => 'Balance'
     );
 
     public static $statuses = array(
         'placed' => 'placed',
         'verified' => 'verified',
         'delivering' => 'delivering',
-        'delivered' => 'delivered', // the request finished
+        'delivered' => 'delivered',
         'returned' => 'returned',
         'closed' => 'closed',
         'cancelled' => 'cancelled'
     );
 
     public static $statusCategories = array(
-        'placed' => 'current',
-        'verified' => 'current',
-        'delivering' => 'current',
-        'delivered' => 'past',
-        'closed' => 'past',
-        'canceled' => 'past'
+        'current'   => array('placed', 'verified', 'delivering'),
+        'past'      => array('delivered', 'closed', 'cancelled')
     );
 
     /**
@@ -78,6 +69,20 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Shift", inversedBy="orders")
      */
     protected $shift;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="`shift_from`", type="datetime")
+     */
+    private $shiftFrom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="`shift_to`", type="datetime")
+     */
+    private $shiftTo;
 
     /**
      *
@@ -138,6 +143,67 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="fort_id", type="string", length=190, nullable=true)
+     *
+     */
+    private $fortId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="card_number", type="string", length=20, nullable=true)
+     *
+     */
+    private $cardNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="expiry_date", type="string", length=10, nullable=true)
+     *
+     */
+    private $expiryDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="merchant_reference", type="string", length=50, nullable=true)
+     *
+     */
+    private $merchantReference;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token_name", type="string", length=190, nullable=true)
+     *
+     */
+    private $tokenName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_option", type="string", length=50, nullable=true)
+     */
+    private $paymentOption;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="payment_value", type="string", length=50, nullable=true)
+     */
+    private $paymentValue;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_default", type="boolean", options={"default": true})
+     */
+    private $isDefault = false;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="amountDue", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $amountDue;
@@ -174,16 +240,54 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="category", type="string", length=190)
+     * @ORM\Column(name="destination_verification_code", type="string", length=20, nullable=true)
      */
-    private $category;
+    private $destinationVerificationCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="destination_verification_code", type="string", length=20, nullable=false)
+     * @ORM\Column(name="title", type="string", length=100, nullable=true)
+     * @Assert\Length(min = 4, max = 20, maxMessage="addressTitle_length_not_valid", minMessage="addressTitle_length_not_valid")
      */
-    private $destinationVerificationCode;
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=400, nullable=true)
+     * @Assert\Length(min = 4, max = 300, maxMessage="address_length_not_valid", minMessage="address_length_not_valid")
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(name="van_number", type="string", nullable=true)
+     */
+    private $vanNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=100, nullable=true)
+     *
+     * @Assert\Length(min = 4, max = 12, groups={"username"}, maxMessage="username_length_not_valid", minMessage="username_length_not_valid")
+     */
+    private $driverUsername;
+
     /**
      * Constructor
      */
@@ -589,7 +693,6 @@ class Order implements PfTransactionInvoiceInterface
     public function setStatus($status)
     {
         $this->status = $status;
-        $this->setCategory($this::$statusCategories[$status]);
         return $this;
     }
 
@@ -601,30 +704,6 @@ class Order implements PfTransactionInvoiceInterface
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     *
-     * @return Order
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->category;
     }
 
     /**
@@ -667,6 +746,15 @@ class Order implements PfTransactionInvoiceInterface
 
         return '';
     }
+
+    public function getDriverRate()
+    {
+        if ($this->driver)
+            return $this->driver->getDriverRate();
+
+        return 0;
+    }
+
     public function getDriverImage()
     {
         if ($this->driver)
@@ -679,14 +767,6 @@ class Order implements PfTransactionInvoiceInterface
     {
         if ($this->driver)
             return $this->driver->getPhone();
-
-        return '';
-    }
-
-    public function getVanNumber()
-    {
-        if ($this->van)
-            return $this->van->getVanNumber();
 
         return '';
     }
@@ -760,4 +840,375 @@ class Order implements PfTransactionInvoiceInterface
         return $this->destinationVerificationCode;
     }
 
+    /**
+     * Set shiftFrom
+     *
+     * @param string $shiftFrom
+     *
+     * @return ShiftFrom
+     */
+    public function setShiftFrom($shiftFrom)
+    {
+        $this->shiftFrom = $shiftFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get shiftFrom
+     *
+     * @return string
+     */
+    public function getShiftFrom()
+    {
+        return $this->shiftFrom;
+    }
+
+    /**
+     * Set shiftTo
+     *
+     * @param string $shiftTo
+     *
+     * @return ShiftTo
+     */
+    public function setShiftTo($shiftTo)
+    {
+        $this->shiftTo = $shiftTo;
+
+        return $this;
+    }
+
+    /**
+     * Get shiftTo
+     *
+     * @return string
+     */
+    public function getShiftTo()
+    {
+        return $this->shiftTo;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return UserAddress
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param string $longitude
+     *
+     * @return UserAddress
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return string
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param string $latitude
+     *
+     * @return UserAddress
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return string
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return UserAddress
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getDriverUsername()
+    {
+        return $this->driverUsername;
+    }
+
+    public function setDriverUsername($driverUsername)
+    {
+        $this->driverUsername = $driverUsername;
+
+        return $this;
+    }
+
+    /**
+     * Set vanNumber
+     *
+     * @param string $vanNumber
+     *
+     * @return Van
+     */
+    public function setVanNumber($vanNumber)
+    {
+        $this->vanNumber = $vanNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get vanNumber
+     *
+     * @return string
+     */
+    public function getVanNumber()
+    {
+        return $this->vanNumber;
+    }
+
+    /**
+     * Set cardNumber
+     *
+     * @param string $cardNumber
+     *
+     * @return Order
+     */
+    public function setCardNumber($cardNumber)
+    {
+        $this->cardNumber = $cardNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get cardNumber
+     *
+     * @return string
+     */
+    public function getCardNumber()
+    {
+        return $this->cardNumber;
+    }
+
+    /**
+     * Set expiryDate
+     *
+     * @param string $expiryDate
+     *
+     * @return Order
+     */
+    public function setExpiryDate($expiryDate)
+    {
+        $this->expiryDate = $expiryDate;
+
+        return $this;
+    }
+
+    /**
+     * Get expiryDate
+     *
+     * @return string
+     */
+    public function getExpiryDate()
+    {
+        return $this->expiryDate;
+    }
+
+    /**
+     * Set merchantReference
+     *
+     * @param string $merchantReference
+     *
+     * @return Order
+     */
+    public function setMerchantReference($merchantReference)
+    {
+        $this->merchantReference = $merchantReference;
+
+        return $this;
+    }
+
+    /**
+     * Get merchantReference
+     *
+     * @return string
+     */
+    public function getMerchantReference()
+    {
+        return $this->merchantReference;
+    }
+
+    /**
+     * Set tokenName
+     *
+     * @param string $tokenName
+     *
+     * @return Order
+     */
+    public function setTokenName($tokenName)
+    {
+        $this->tokenName = $tokenName;
+
+        return $this;
+    }
+
+    /**
+     * Get tokenName
+     *
+     * @return string
+     */
+    public function getTokenName()
+    {
+        return $this->tokenName;
+    }
+
+    /**
+     * Set paymentOption
+     *
+     * @param string $paymentOption
+     *
+     * @return Order
+     */
+    public function setPaymentOption($paymentOption)
+    {
+        $this->paymentOption = $paymentOption;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentOption
+     *
+     * @return string
+     */
+    public function getPaymentOption()
+    {
+        return $this->paymentOption;
+    }
+
+    /**
+     * Set paymentValue
+     *
+     * @param string $paymentValue
+     *
+     * @return Order
+     */
+    public function setPaymentValue($paymentValue)
+    {
+        $this->paymentValue = $paymentValue;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentValue
+     *
+     * @return string
+     */
+    public function getPaymentValue()
+    {
+        return $this->paymentValue;
+    }
+
+    /**
+     * Set isDefault
+     *
+     * @param boolean $isDefault
+     *
+     * @return Order
+     */
+    public function setIsDefault($isDefault)
+    {
+        $this->isDefault = $isDefault;
+
+        return $this;
+    }
+
+    /**
+     * Get isDefault
+     *
+     * @return boolean
+     */
+    public function getIsDefault()
+    {
+        return $this->isDefault;
+    }
+
+    /**
+     * Set fortId
+     *
+     * @param string $fortId
+     *
+     * @return Order
+     */
+    public function setFortId($fortId)
+    {
+        $this->fortId = $fortId;
+
+        return $this;
+    }
+
+    /**
+     * Get fortId
+     *
+     * @return string
+     */
+    public function getFortId()
+    {
+        return $this->fortId;
+    }
 }

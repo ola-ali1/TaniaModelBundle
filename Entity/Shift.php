@@ -32,6 +32,13 @@ class Shift
     /**
      * @var string
      *
+     * @ORM\Column(name="shift_ar", type="string")
+     */
+    private $shiftAr;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="`from`", type="datetime")
      */
     private $from;
@@ -89,6 +96,30 @@ class Shift
     public function getShift()
     {
         return $this->shift;
+    }
+
+    /**
+     * Set shiftAr
+     *
+     * @param string $shiftAr
+     *
+     * @return Shift
+     */
+    public function setShiftAr($shiftAr)
+    {
+        $this->shiftAr = $shiftAr;
+
+        return $this;
+    }
+
+    /**
+     * Get shiftAr
+     *
+     * @return string
+     */
+    public function getShiftAr()
+    {
+        return $this->shiftAr;
     }
 
     /**

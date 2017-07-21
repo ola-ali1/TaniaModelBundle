@@ -3,6 +3,7 @@
 namespace Ibtikar\TaniaModelBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Ibtikar\TaniaModelBundle\Entity\Order;
 
 class OrderRepository extends EntityRepository
 {
@@ -24,10 +25,10 @@ class OrderRepository extends EntityRepository
         $query = $this->createQueryBuilder('o')
                 ->select('o')
                 ->andWhere("o.user = :user")
-                ->andWhere("o.category = :category")
+                ->andWhere("o.status in (:statuses)")
                 ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
-                ->setParameters(array('user'=> $userId, 'category' => $category))
+                ->setParameters(array('user'=> $userId, 'statuses' => Order::$statusCategories[$category]))
                 ->getQuery()
                 ->getResult();
 

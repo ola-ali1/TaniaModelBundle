@@ -177,7 +177,6 @@ class Driver extends User
         return $this;
     }
 
-
     /**
      * Set driverRate
      *
