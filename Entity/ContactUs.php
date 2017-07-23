@@ -15,6 +15,7 @@ class ContactUs
 {
 
     public static $contactTypes = array(
+        'driver-contact' => 'driver-contact',
         'suggestion' => 'suggestion',
         'complain' => 'complain'
     );
