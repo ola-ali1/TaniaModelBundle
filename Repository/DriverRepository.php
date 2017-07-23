@@ -11,7 +11,7 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
     {
         return $this->createQueryBuilder('d')
                 ->where('d.username = :username')
-                ->andWhere('d INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Driver')
+                ->orWhere('d.phone = :username')
                 ->setParameter('username', $username)
                 ->getQuery()
                 ->getOneOrNullResult();
