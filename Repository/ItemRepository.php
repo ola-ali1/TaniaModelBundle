@@ -17,4 +17,16 @@ class ItemRepository extends EntityRepository
             ->getResult();
 
     }
+
+    function getVanItems($vanId)
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i')
+            ->innerJoin('i.vanItems', 'vanItems','WITH','vanItems.van = :vanId')
+            ->setParameter(':vanId', $vanId)
+            ->andWhere('i.shown = 1')
+            ->getQuery()
+            ->getResult();
+
+    }
 }
