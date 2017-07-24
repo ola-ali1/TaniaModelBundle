@@ -56,6 +56,11 @@ class Order implements PfTransactionInvoiceInterface
     protected $driver;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\CityArea", inversedBy="orders")
+     */
+    protected $cityArea;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Van")
      */
     protected $van;
@@ -300,7 +305,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="driver_fullName", type="string", length=190)
+     * @ORM\Column(name="driver_fullName", type="string", length=190, nullable=true)
      *
      */
     protected $driverFullName;
@@ -1321,5 +1326,29 @@ class Order implements PfTransactionInvoiceInterface
     public function getDriverRate()
     {
         return $this->driverRate;
+    }
+
+    /**
+     * Set cityArea
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\CityArea $cityArea
+     *
+     * @return Order
+     */
+    public function setCityArea(\Ibtikar\TaniaModelBundle\Entity\CityArea $cityArea = null)
+    {
+        $this->cityArea = $cityArea;
+
+        return $this;
+    }
+
+    /**
+     * Get cityArea
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\CityArea
+     */
+    public function getCityArea()
+    {
+        return $this->cityArea;
     }
 }

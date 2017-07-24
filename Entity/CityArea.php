@@ -67,6 +67,12 @@ class CityArea
 
     /**
      *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order",mappedBy="cityArea")
+     */
+    protected $orders;
+
+    /**
+     *
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\DriverCityArea",mappedBy="cityArea", cascade={"persist"})
      */
     protected $driverCityAreas;
@@ -280,4 +286,38 @@ class CityArea
         return $this->deletedAt;
     }
 
+
+    /**
+     * Add order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     *
+     * @return CityArea
+     */
+    public function addOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     */
+    public function removeOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

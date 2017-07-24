@@ -49,6 +49,13 @@ class Driver extends User
     private $driverRate;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="status", type="boolean", options={"default": true})
+     */
+    protected $status = true;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -199,5 +206,29 @@ class Driver extends User
     public function getDriverRate()
     {
         return $this->driverRate;
+    }
+
+    /**
+     * Set status
+     *
+     * @param boolean $status
+     *
+     * @return Driver
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return boolean
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }
