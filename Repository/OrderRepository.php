@@ -34,4 +34,19 @@ class OrderRepository extends EntityRepository
 
         return $query;
     }
+
+    public function getDriverListOrders($driverId, $category, $page){
+        $limit = 10;
+        $query = $this->createQueryBuilder('o')
+                ->select('o')
+                ->andWhere("o.driver = :driver")
+                ->andWhere("o.status in (:statuses)")
+                ->setMaxResults($limit)
+                ->setFirstResult(($page -1)* $limit)
+                ->setParameters(array('driver'=> $driverId, 'statuses' => Order::$statusCategories[$category]))
+                ->getQuery()
+                ->getResult();
+
+        return $query;
+    }
 }
