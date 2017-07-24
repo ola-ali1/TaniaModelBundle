@@ -288,6 +288,46 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $driverUsername;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="driver_phone", type="string", length=100, nullable=true)
+     *
+     */
+    private $driverPhone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="driver_fullName", type="string", length=190)
+     *
+     */
+    protected $driverFullName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="driver_fullNameAr", type="string", length=190, nullable=true)
+     *
+     */
+    protected $driverFullNameAr;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="driver_image", type="string", length=300, nullable=true)
+     *
+     */
+    protected $driverImage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="driver_rate", type="decimal", precision=4, scale=2, nullable=true)
+     */
+    private $driverRate;
+
     /**
      * Constructor
      */
@@ -730,47 +770,6 @@ class Order implements PfTransactionInvoiceInterface
         return $this->van;
     }
 
-
-    public function getDriverName()
-    {
-        if ($this->driver)
-            return $this->driver->getFullName();
-
-        return '';
-    }
-
-    public function getDriverNameAr()
-    {
-        if ($this->driver)
-            return $this->driver->getFullNameAr();
-
-        return '';
-    }
-
-    public function getDriverRate()
-    {
-        if ($this->driver)
-            return $this->driver->getDriverRate();
-
-        return 0;
-    }
-
-    public function getDriverImage()
-    {
-        if ($this->driver)
-            return $this->driver->getWebPath();
-
-        return '';
-    }
-
-    public function getDriverPhone()
-    {
-        if ($this->driver)
-            return $this->driver->getPhone();
-
-        return '';
-    }
-
     public function getStatuses()
     {
         return self::$statuses;
@@ -780,14 +779,6 @@ class Order implements PfTransactionInvoiceInterface
     {
         if ($this->user)
             return $this->user->getFullName();
-
-        return '';
-    }
-
-    public function getDriverEmail()
-    {
-        if ($this->driver)
-            return $this->driver->getEmail();
 
         return '';
     }
@@ -1210,5 +1201,125 @@ class Order implements PfTransactionInvoiceInterface
     public function getFortId()
     {
         return $this->fortId;
+    }
+
+    /**
+     * Set driverPhone
+     *
+     * @param string $driverPhone
+     *
+     * @return Order
+     */
+    public function setDriverPhone($driverPhone)
+    {
+        $this->driverPhone = $driverPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get driverPhone
+     *
+     * @return string
+     */
+    public function getDriverPhone()
+    {
+        return $this->driverPhone;
+    }
+
+    /**
+     * Set driverFullName
+     *
+     * @param string $driverFullName
+     *
+     * @return Order
+     */
+    public function setDriverFullName($driverFullName)
+    {
+        $this->driverFullName = $driverFullName;
+
+        return $this;
+    }
+
+    /**
+     * Get driverFullName
+     *
+     * @return string
+     */
+    public function getDriverFullName()
+    {
+        return $this->driverFullName;
+    }
+
+    /**
+     * Set driverFullNameAr
+     *
+     * @param string $driverFullNameAr
+     *
+     * @return Order
+     */
+    public function setDriverFullNameAr($driverFullNameAr)
+    {
+        $this->driverFullNameAr = $driverFullNameAr;
+
+        return $this;
+    }
+
+    /**
+     * Get driverFullNameAr
+     *
+     * @return string
+     */
+    public function getDriverFullNameAr()
+    {
+        return $this->driverFullNameAr;
+    }
+
+    /**
+     * Set driverImage
+     *
+     * @param string $driverImage
+     *
+     * @return Order
+     */
+    public function setDriverImage($driverImage)
+    {
+        $this->driverImage = $driverImage;
+
+        return $this;
+    }
+
+    /**
+     * Get driverImage
+     *
+     * @return string
+     */
+    public function getDriverImage()
+    {
+        return $this->driverImage;
+    }
+
+    /**
+     * Set driverRate
+     *
+     * @param string $driverRate
+     *
+     * @return Order
+     */
+    public function setDriverRate($driverRate)
+    {
+        $this->driverRate = $driverRate;
+
+        return $this;
+    }
+
+    /**
+     * Get driverRate
+     *
+     * @return string
+     */
+    public function getDriverRate()
+    {
+        return $this->driverRate;
     }
 }
