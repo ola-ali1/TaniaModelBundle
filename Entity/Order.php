@@ -252,6 +252,21 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="destination_verification_code_counter", type="integer", length=20, nullable=true, options={"default": 0})
+     */
+    private $destinationVerificationCodeCounter = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destination_verification_code_date", type="string", length=10, nullable=true)
+     *
+     */
+    private $destinationVerificationCodeDate;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="title", type="string", length=100, nullable=true)
      * @Assert\Length(min = 4, max = 20, maxMessage="addressTitle_length_not_valid", minMessage="addressTitle_length_not_valid")
      */
@@ -1350,5 +1365,53 @@ class Order implements PfTransactionInvoiceInterface
     public function getCityArea()
     {
         return $this->cityArea;
+    }
+
+    /**
+     * Set destinationVerificationCodeCounter
+     *
+     * @param integer $destinationVerificationCodeCounter
+     *
+     * @return Order
+     */
+    public function setDestinationVerificationCodeCounter($destinationVerificationCodeCounter)
+    {
+        $this->destinationVerificationCodeCounter = $destinationVerificationCodeCounter;
+
+        return $this;
+    }
+
+    /**
+     * Get destinationVerificationCodeCounter
+     *
+     * @return integer
+     */
+    public function getDestinationVerificationCodeCounter()
+    {
+        return $this->destinationVerificationCodeCounter;
+    }
+
+    /**
+     * Set destinationVerificationCodeDate
+     *
+     * @param string $destinationVerificationCodeDate
+     *
+     * @return Order
+     */
+    public function setDestinationVerificationCodeDate($destinationVerificationCodeDate)
+    {
+        $this->destinationVerificationCodeDate = $destinationVerificationCodeDate;
+
+        return $this;
+    }
+
+    /**
+     * Get destinationVerificationCodeDate
+     *
+     * @return string
+     */
+    public function getDestinationVerificationCodeDate()
+    {
+        return $this->destinationVerificationCodeDate;
     }
 }
