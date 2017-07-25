@@ -21,7 +21,7 @@ class ItemRepository extends EntityRepository
     function getVanItems($vanId)
     {
         return $this->createQueryBuilder('i')
-            ->select('i')
+            ->select('i as item, vanItems.currentCapacity, vanItems.capacity')
             ->innerJoin('i.vanItems', 'vanItems','WITH','vanItems.van = :vanId')
             ->setParameter(':vanId', $vanId)
             ->andWhere('i.shown = 1')
