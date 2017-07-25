@@ -16,4 +16,13 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
                 ->getQuery()
                 ->getOneOrNullResult();
     }
+
+    public function getTopDrivers($topRates)
+    {
+        return $this->createQueryBuilder('d')
+                ->where('d.driverRate in :topRates')
+                ->setParameter('topRates', $topRates)
+                ->getQuery()
+                ->getResult();
+    }
 }
