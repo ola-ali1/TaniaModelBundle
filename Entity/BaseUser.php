@@ -249,7 +249,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @Assert\NotBlank(groups={"image-required"})
      * @Assert\Image(minWidth=300, minHeight=300, mimeTypes={"image/jpg", "image/jpeg", "image/pjpeg", "image/png"}, groups={"image", "Default", "edit"})
-     * @Assert\Image(maxSize="1M", groups={"edit"})
+     * @Assert\Image(maxSize="1M", groups={"edit", "image"})
      * @Assert\Image(maxSize="1M",maxSizeMessage="File size must be less than 1mb",minWidth=300, minHeight=300,minWidthMessage="Image dimension must be more than 300*300", minHeightMessage="Image dimension must be more than 300*300", mimeTypes={"image/jpg", "image/jpeg", "image/pjpeg", "image/png"}, mimeTypesMessage="picture not correct.", groups={"edit-profile"})
      */
     protected $file;
