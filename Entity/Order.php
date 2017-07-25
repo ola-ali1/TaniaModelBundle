@@ -14,11 +14,16 @@ class Order implements PfTransactionInvoiceInterface
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
+    CONST CASH = 'CASH';
+    CONST SADAD = 'SADAD';
+    CONST BALANCE = 'BALANCE';
+    CONST CREDIT = 'CREDIT';
+
     public static $paymentMethodList = array(
-        'CASH' => 'Cash',
-        'SADAD' => 'SADAD',
-        'CREDIT' => 'Online With Card Id',
-        'BALANCE' => 'Balance'
+        self::CASH => 'Cash',
+        self::SADAD => 'SADAD',
+        self::CREDIT => 'Online With Card Id',
+        self::BALANCE => 'Balance'
     );
 
     public static $statuses = array(
