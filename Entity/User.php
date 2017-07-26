@@ -85,6 +85,13 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     protected $orders;
 
     /**
+     * @var string $deviceType
+     *
+     * @ORM\Column(name="device_type", type="string", length=10, nullable=true)
+     */
+    protected $deviceType;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="locationLastUpdateTime", type="datetime", nullable=true)
@@ -461,4 +468,27 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
         return $this->deletedAt;
     }
 
+    /**
+     * Set deviceType
+     *
+     * @param string $deviceType
+     *
+     * @return User
+     */
+    public function setDeviceType($deviceType)
+    {
+        $this->deviceType = $deviceType;
+
+        return $this;
+    }
+
+    /**
+     * Get deviceType
+     *
+     * @return string
+     */
+    public function getDeviceType()
+    {
+        return $this->paymentMethod;
+    }
 }

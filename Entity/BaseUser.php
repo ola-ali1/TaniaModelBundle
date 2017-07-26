@@ -32,6 +32,9 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     const ROLE_CUSTOMER = 'ROLE_CUSTOMER';
     const ROLE_SERVICE_PROVIDER = 'ROLE_SERVICE_PROVIDER';
 
+    const IOS_USER_TYPE = 'ios';
+    const ANDROID_USER_TYPE = 'android';
+
     /**
      * @var int
      *
