@@ -231,4 +231,16 @@ class Driver extends User
     {
         return $this->status;
     }
+
+    /**
+     * Get status
+     *
+     * @return boolean
+     */
+    public function getVanNumber()
+    {
+        if(count($this->vanDrivers)> 0)
+            return $this->vanDrivers[0]->getVanNumber();
+        return '';
+    }
 }
