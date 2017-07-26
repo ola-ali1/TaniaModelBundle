@@ -21,13 +21,13 @@ class Driver extends User
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanDriver",mappedBy="driver", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanDriver",mappedBy="driver", cascade={"persist", "remove"})
      */
     protected $vanDrivers;
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\DriverCityArea",mappedBy="driver", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\DriverCityArea",mappedBy="driver", cascade={"persist", "remove"})
      */
     protected $driverCityAreas;
 
