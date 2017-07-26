@@ -66,6 +66,7 @@ class Order implements PfTransactionInvoiceInterface
     protected $cityArea;
 
     /**
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Van")
      */
     protected $van;
