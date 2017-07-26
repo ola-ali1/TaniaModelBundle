@@ -281,7 +281,7 @@ class CityArea
      *
      * @return \DateTime
      */
-    public function getdeletedAt()
+    public function getDeletedAt()
     {
         return $this->deletedAt;
     }
