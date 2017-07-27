@@ -301,6 +301,20 @@ class Order implements PfTransactionInvoiceInterface
     private $latitude;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="starting_longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     */
+    private $startingLongitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="starting_latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     */
+    private $startingLatitude;
+
+    /**
      * @ORM\Column(name="van_number", type="string", nullable=true)
      */
     private $vanNumber;
@@ -975,6 +989,54 @@ class Order implements PfTransactionInvoiceInterface
     public function getLatitude()
     {
         return $this->latitude;
+    }
+
+    /**
+     * Set startingLongitude
+     *
+     * @param string $startingLongitude
+     *
+     * @return UserAddress
+     */
+    public function setStartingLongitude($startingLongitude)
+    {
+        $this->startingLongitude = $startingLongitude;
+
+        return $this;
+    }
+
+    /**
+     * Get startingLongitude
+     *
+     * @return string
+     */
+    public function getStartingLongitude()
+    {
+        return $this->startingLongitude;
+    }
+
+    /**
+     * Set startingLatitude
+     *
+     * @param string $startingLatitude
+     *
+     * @return UserAddress
+     */
+    public function setStartingLatitude($startingLatitude)
+    {
+        $this->startingLatitude = $startingLatitude;
+
+        return $this;
+    }
+
+    /**
+     * Get startingLatitude
+     *
+     * @return string
+     */
+    public function getStartingLatitude()
+    {
+        return $this->startingLatitude;
     }
 
     /**
