@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="van")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\VanRepository")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"vanNumber"}, message="vanNumber_exist")
  */

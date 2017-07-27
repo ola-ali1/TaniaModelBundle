@@ -27,4 +27,12 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
                 ->getQuery()
                 ->getResult();
     }
+
+    public function getDriversCount()
+    {
+        return $this->createQueryBuilder('d')
+		->select('COUNT(d.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
 }

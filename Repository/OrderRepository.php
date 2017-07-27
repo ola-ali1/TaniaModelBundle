@@ -49,4 +49,34 @@ class OrderRepository extends EntityRepository
 
         return $query;
     }
+
+    public function getYearlyOrdersCount($year = NULL)
+    {
+        $start = date('Y-01-01 00:00:00');
+        $end = date('Y-12-31 23:59:59');
+
+        return $this->createQueryBuilder('o')
+		->select('COUNT(o.id)')
+                ->andWhere('o.createdAt >= :start')
+                ->andWhere('o.createdAt <= :end')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end)
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
+
+    public function getYearlyTotalRevenue($year = NULL)
+    {
+        $start = date('Y-01-01 00:00:00');
+        $end = date('Y-12-31 23:59:59');
+
+        return $this->createQueryBuilder('o')
+		->select('SUM(o.amountDue)')
+                ->andWhere('o.createdAt >= :start')
+                ->andWhere('o.createdAt <= :end')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end)
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
 }
