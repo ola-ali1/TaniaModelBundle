@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Constraints AS Assert;
 /**
  * Reason
  *
- * @ORM\Table(name="close_reason")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RejectionReasonRepository")
+ * @ORM\Table(name="reason")
+ * @ORM\Entity()
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
-class CloseReason
+class Reason
 {
 
     use \Ibtikar\ShareEconomyToolsBundle\Entity\TrackableTrait;
@@ -77,7 +77,7 @@ class CloseReason
      *
      * @param string $reasonAr
      *
-     * @return CloseReason
+     * @return Reason
      */
     public function setReasonAr($reasonAr)
     {
