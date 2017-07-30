@@ -823,6 +823,14 @@ class Order implements PfTransactionInvoiceInterface
         return '';
     }
 
+    public function getUserPhone()
+    {
+        if ($this->user)
+            return $this->user->getPhone();
+
+        return '';
+    }
+
     /**
      * Set closeReason
      *
