@@ -755,6 +755,17 @@ class Order implements PfTransactionInvoiceInterface
     public function setDriver(\Ibtikar\TaniaModelBundle\Entity\Driver $driver = null)
     {
         $this->driver = $driver;
+        $this->setDriverFullName($driver->getFullName());
+        $this->setDriverFullNameAr($driver->getFullNameAr());
+        if ($driver->getImage()) {
+            $this->setDriverImage($driver->getWebPath());
+        }
+        $this->setDriverPhone($driver->getPhone());
+        $this->setDriverRate($driver->getDriverRate());
+        $this->setDriverUsername($driver->getUsername());
+        foreach ($driver->getVanDrivers() as $van) {
+            $this->setVan($van);
+        }
 
         return $this;
     }
@@ -803,6 +814,7 @@ class Order implements PfTransactionInvoiceInterface
     public function setVan(\Ibtikar\TaniaModelBundle\Entity\Van $van = null)
     {
         $this->van = $van;
+        $this->setVanNumber($van->getVanNumber());
 
         return $this;
     }
