@@ -29,6 +29,7 @@ class OrderRepository extends EntityRepository
                 ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('user'=> $userId, 'statuses' => Order::$statusCategories[$category]))
+                ->orderBy('o.id', 'DESC')
                 ->getQuery()
                 ->getResult();
 
@@ -44,6 +45,7 @@ class OrderRepository extends EntityRepository
                 ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('driver'=> $driverId, 'statuses' => Order::$statusCategories[$category]))
+                ->orderBy('o.id', 'DESC')
                 ->getQuery()
                 ->getResult();
 
