@@ -74,8 +74,10 @@ class OrderRepository extends EntityRepository
 		->select('SUM(o.amountDue)')
                 ->andWhere('o.createdAt >= :start')
                 ->andWhere('o.createdAt <= :end')
+                ->andWhere('o.status = :delivered')
                 ->setParameter('start', $start)
                 ->setParameter('end', $end)
+                ->setParameter('delivered', Order::$statuses['delivered'])
                 ->getQuery()
                 ->getSingleScalarResult();
     }

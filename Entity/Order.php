@@ -37,7 +37,7 @@ class Order implements PfTransactionInvoiceInterface
     );
 
     public static $statusCategories = array(
-        'current'   => array('placed', 'verified', 'delivering'),
+        'current'   => array('placed', 'verified', 'delivering', 'returned'),
         'past'      => array('delivered', 'closed', 'cancelled')
     );
 
@@ -826,6 +826,14 @@ class Order implements PfTransactionInvoiceInterface
     {
         if ($this->user)
             return $this->user->getFullName();
+
+        return '';
+    }
+
+    public function getUserPhone()
+    {
+        if ($this->user)
+            return $this->user->getPhone();
 
         return '';
     }
