@@ -137,6 +137,13 @@ class Order implements PfTransactionInvoiceInterface
     private $closeReason;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="return_reason", type="string", length=190, nullable=true)
+     */
+    private $returnReason;
+
+    /**
      * @var text
      *
      * @ORM\Column(name="receiving_date", type="text", nullable=true)
@@ -1482,4 +1489,29 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->destinationVerificationCodeDate;
     }
+
+    /**
+     * Set returnReason
+     *
+     * @param string $returnReason
+     *
+     * @return Order
+     */
+    public function setReturnReason($returnReason)
+    {
+        $this->returnReason = $returnReason;
+
+        return $this;
+    }
+
+    /**
+     * Get returnReason
+     *
+     * @return string
+     */
+    public function getReturnReason()
+    {
+        return $this->returnReason;
+    }
+
 }
