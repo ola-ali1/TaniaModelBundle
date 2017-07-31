@@ -40,7 +40,7 @@ class Van
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanItem",mappedBy="van", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanItem",mappedBy="van", cascade={"persist", "remove"})
      */
     protected $vanItems;
 
