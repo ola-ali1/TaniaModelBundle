@@ -35,6 +35,15 @@ class Balance
     private $balance;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, options={"default": 0})
+     * @Assert\NotBlank
+     * @Assert\Type(type="numeric")
+     */
+    private $price;
+
+    /**
      * Get id
      *
      * @return int
@@ -49,7 +58,7 @@ class Balance
      *
      * @param string $balance
      *
-     * @return BareedoBalance
+     * @return Balance
      */
     public function setBalance($balance)
     {
@@ -66,5 +75,29 @@ class Balance
     public function getBalance()
     {
         return $this->balance;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     *
+     * @return Balance
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }
