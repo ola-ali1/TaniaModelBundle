@@ -763,8 +763,8 @@ class Order implements PfTransactionInvoiceInterface
         $this->setDriverPhone($driver->getPhone());
         $this->setDriverRate($driver->getDriverRate());
         $this->setDriverUsername($driver->getUsername());
-        foreach ($driver->getVanDrivers() as $van) {
-            $this->setVan($van);
+        foreach ($driver->getVanDrivers() as $vanDriver) {
+            $this->setVan($vanDriver->getVan());
         }
 
         return $this;
