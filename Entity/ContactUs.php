@@ -213,6 +213,22 @@ class ContactUs
         return;
     }
 
+    public function getUserEmail()
+    {
+        if($this->user)
+            return $this->getUser()->getEmail();
+
+        return;
+    }
+
+    public function getUserPhone()
+    {
+        if($this->user)
+            return $this->getUser()->getPhone();
+
+        return;
+    }
+
     public function getOrderId()
     {
         if($this->order)
