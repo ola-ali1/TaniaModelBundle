@@ -25,8 +25,11 @@ class OrderRepository extends EntityRepository
         $query = $this->createQueryBuilder('o')
                 ->select('o')
                 ->andWhere("o.user = :user")
-                ->andWhere("o.status in (:statuses)")
-                ->setMaxResults($limit)
+                ->andWhere("o.status in (:statuses)");
+        if($category == 'current'){
+            $query = $query->andWhere("o.status = 'returned'");
+        }
+        $query = $query->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('user'=> $userId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')
@@ -41,8 +44,11 @@ class OrderRepository extends EntityRepository
         $query = $this->createQueryBuilder('o')
                 ->select('o')
                 ->andWhere("o.driver = :driver")
-                ->andWhere("o.status in (:statuses)")
-                ->setMaxResults($limit)
+                ->andWhere("o.status in (:statuses)");
+        if($category == 'past'){
+            $query = $query->andWhere("o.status = 'returned'");
+        }
+        $query = $query->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('driver'=> $driverId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')
