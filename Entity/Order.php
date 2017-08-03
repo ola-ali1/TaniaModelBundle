@@ -37,7 +37,7 @@ class Order implements PfTransactionInvoiceInterface
     );
 
     public static $statusCategories = array(
-        'current'   => array('placed', 'verified', 'delivering', 'returned'),
+        'current'   => array('placed', 'verified', 'delivering'),
         'past'      => array('delivered', 'closed', 'cancelled')
     );
 
