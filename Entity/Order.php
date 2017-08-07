@@ -1544,4 +1544,22 @@ class Order implements PfTransactionInvoiceInterface
             return $this->getCityArea()->getId();
         }
     }
+
+    /**
+     * @return boolean
+     */
+    public function isOrderAssignableToOfflineDrivers()
+    {
+        $orderShift = $this->getShift();
+        if ($orderShift) {
+            $orderShiftStartTime = new \DateTime($orderShift->getFrom()->format('H:i:s'));
+            $orderShiftEndTime = new \DateTime($orderShift->getTo()->format('H:i:s'));
+            $orderDate = new \DateTime('@' . $this->getReceivingDate());
+            $currentTime = new \DateTime();
+            if ($orderDate->format('d') === $currentTime->format('d') && $currentTime >= $orderShiftStartTime && $currentTime <= $orderShiftEndTime) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
