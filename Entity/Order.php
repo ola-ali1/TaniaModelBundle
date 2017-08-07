@@ -1534,4 +1534,14 @@ class Order implements PfTransactionInvoiceInterface
         return $this->returnReason;
     }
 
+    /**
+     * Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
+     * @return null|integer
+     */
+    public function getCityAreaId()
+    {
+        if ($this->getCityArea()) {
+            return $this->getCityArea()->getId();
+        }
+    }
 }
