@@ -35,6 +35,11 @@ class Item
     private $name;
 
     /**
+     * @ORM\Column(name="code", type="string")
+     */
+    private $code;
+
+    /**
      * @ORM\Column(name="default_price",type="decimal", precision=10, scale=2)
      */
     private $defaultPrice;
@@ -264,6 +269,30 @@ class Item
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return User
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**
