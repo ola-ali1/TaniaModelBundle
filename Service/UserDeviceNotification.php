@@ -62,7 +62,7 @@ class UserDeviceNotification
                     $this->firebaseCloudMessagingService->sendNotificationToDevice($userDevice->getToken(), $title, $body, $data, $userDevice->getBadgeNumber());
                 }
                 if ($userDevice->getType() === 'android') {
-                    $this->firebaseCloudMessagingService->sendMessageToDevice($userDevice->getToken(), $data);
+                    $this->firebaseCloudMessagingService->sendMessageToDevice($userDevice->getToken(), array_merge($data, array('title' => $title, 'body' => $body)));
                 }
             }
             $this->em->flush();
