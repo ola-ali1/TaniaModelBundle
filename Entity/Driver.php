@@ -14,6 +14,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Driver extends User
 {
 
+    public static $statuses = array('0' => 'offline', '1' => 'online');
+
     /**
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", mappedBy="driver")
      */
@@ -243,4 +245,23 @@ class Driver extends User
             return $this->vanDrivers[0]->getVanNumber();
         return '';
     }
+
+    /**
+     *
+     * @return array
+     */
+    public function getStatuses()
+    {
+        return self::$statuses;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getStatusString()
+    {
+        return self::$statuses[$this->status ? '1' : '0'];
+    }
+
 }
