@@ -41,8 +41,10 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
     {
         $today = date('Y-m-d H:i:s', strtotime('today midnight'));
         return $this->createQueryBuilder('d')
-		->select('d.id, d.longitude, d.latitude, d.fullName, d.fullNameAr, count(o.id) as ordersCount, currentOrder.longitude as orderLongitude, currentOrder.latitude as orderLatitude')
+		->select('v.vanNumber, d.id, d.longitude, d.latitude, d.fullName, d.fullNameAr, count(o.id) as ordersCount, currentOrder.longitude as orderLongitude, currentOrder.latitude as orderLatitude')
                 ->leftJoin('d.driverOrders', 'o', 'WITH', 'o.createdAt >= :today')
+                ->leftJoin('d.vanDrivers', 'vd')
+                ->leftJoin('vd.van', 'v')
                 ->leftJoin('d.driverOrders', 'currentOrder', 'WITH', 'currentOrder.status = :delivering')
                 ->setParameter('today', $today)
                 ->setParameter('delivering', Order::$statuses['delivering'])
