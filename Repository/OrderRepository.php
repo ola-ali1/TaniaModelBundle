@@ -27,7 +27,7 @@ class OrderRepository extends EntityRepository
                 ->andWhere("o.user = :user")
                 ->andWhere("o.status in (:statuses)");
         if($category == 'current'){
-            $query = $query->andWhere("o.status = 'returned'");
+            $query = $query->orWhere("o.status = 'returned'");
         }
         $query = $query->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
@@ -46,7 +46,7 @@ class OrderRepository extends EntityRepository
                 ->andWhere("o.driver = :driver")
                 ->andWhere("o.status in (:statuses)");
         if($category == 'past'){
-            $query = $query->andWhere("o.status = 'returned'");
+            $query = $query->orWhere("o.status = 'returned'");
         }
         $query = $query->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
