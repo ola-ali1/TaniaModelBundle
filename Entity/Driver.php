@@ -17,7 +17,7 @@ class Driver extends User
     /**
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", mappedBy="driver")
      */
-    protected $orders;
+    protected $driverOrders;
 
     /**
      *
@@ -61,7 +61,7 @@ class Driver extends User
     public function __construct()
     {
         parent::__construct();
-        $this->orders = new ArrayCollection();
+        $this->driverOrders = new ArrayCollection();
         $this->vanDrivers = new ArrayCollection();
         $this->driverCityAreas = new ArrayCollection();
     }
@@ -75,7 +75,7 @@ class Driver extends User
      */
     public function addOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
     {
-        $this->orders[] = $order;
+        $this->driverOrders[] = $order;
 
         return $this;
     }
@@ -87,17 +87,17 @@ class Driver extends User
      */
     public function removeOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
     {
-        $this->orders->removeElement($order);
+        $this->driverOrders->removeElement($order);
     }
 
     /**
-     * Get orders
+     * Get driverOrders
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getOrders()
+    public function getDriverOrders()
     {
-        return $this->orders;
+        return $this->driverOrders;
     }
 
     /**

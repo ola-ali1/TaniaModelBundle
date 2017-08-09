@@ -56,7 +56,7 @@ class Order implements PfTransactionInvoiceInterface
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Driver", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Driver", inversedBy="driverOrders")
      */
     protected $driver;
 
