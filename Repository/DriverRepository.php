@@ -49,6 +49,8 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
                 ->setParameter('today', $today)
                 ->setParameter('delivering', Order::$statuses['delivering'])
                 ->where('d.status = '.TRUE)
+                ->andWhere('d.longitude != 0')
+                ->andWhere('d.latitude != 0')
                 ->groupBy('d.id')
                 ->getQuery()
                 ->getResult();
