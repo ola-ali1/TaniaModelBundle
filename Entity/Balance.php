@@ -28,11 +28,20 @@ class Balance
     /**
      * @var string
      *
-     * @ORM\Column(name="balance", type="decimal", precision=10, scale=2, options={"default": 0})
+     * @ORM\Column(name="points", type="integer")
      * @Assert\NotBlank
      * @Assert\Type(type="numeric")
      */
-    private $balance;
+    private $points;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=190)
+     * @Assert\NotBlank
+     * @Assert\Length(max = 100)
+     */
+    private $name;
 
     /**
      * @var string
@@ -54,27 +63,27 @@ class Balance
     }
 
     /**
-     * Set balance
+     * Set points
      *
-     * @param string $balance
+     * @param string $points
      *
      * @return Balance
      */
-    public function setBalance($balance)
+    public function setPoints($points)
     {
-        $this->balance = $balance;
+        $this->points = $points;
 
         return $this;
     }
 
     /**
-     * Get balance
+     * Get points
      *
      * @return string
      */
-    public function getBalance()
+    public function getPoints()
     {
-        return $this->balance;
+        return $this->points;
     }
 
     /**
@@ -99,5 +108,29 @@ class Balance
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Balance
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
