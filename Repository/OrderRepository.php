@@ -27,10 +27,7 @@ class OrderRepository extends EntityRepository
                 ->andWhere("o.user = :user");
         if($category == 'current'){
             $query = $query->andWhere(
-                            $query->expr()->orX(
-                                $qb->expr()->in('o.status', '(:statuses)'),
-                                $qb->expr()->eq('o.status', 'returned')
-                            )
+                            $query->expr()->orX("o.status in (:statuses)","o.status = 'returned'")
                     );
         }
         else{
@@ -53,10 +50,7 @@ class OrderRepository extends EntityRepository
                 ->andWhere("o.driver = :driver");
         if($category == 'past'){
             $query = $query->andWhere(
-                            $query->expr()->orX(
-                                $qb->expr()->in('o.status', '(:statuses)'),
-                                $qb->expr()->eq('o.status', 'returned')
-                            )
+                            $query->expr()->orX("o.status in (:statuses)","o.status = 'returned'")
                     );
         }
         else{
