@@ -24,10 +24,17 @@ class OrderRepository extends EntityRepository
         $limit = 10;
         $query = $this->createQueryBuilder('o')
                 ->select('o')
-                ->andWhere("o.user = :user")
-                ->andWhere("o.status in (:statuses)");
+                ->andWhere("o.user = :user");
         if($category == 'current'){
-            $query = $query->orWhere("o.status = 'returned'");
+            $query = $query->andWhere(
+                            $query->expr()->orX(
+                                $qb->expr()->in('o.status', '(:statuses)'),
+                                $qb->expr()->eq('o.status', 'returned')
+                            )
+                    );
+        }
+        else{
+            $query = $query->andWhere('o.status in (:statuses)');
         }
         $query = $query->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
@@ -43,10 +50,17 @@ class OrderRepository extends EntityRepository
         $limit = 10;
         $query = $this->createQueryBuilder('o')
                 ->select('o')
-                ->andWhere("o.driver = :driver")
-                ->andWhere("o.status in (:statuses)");
+                ->andWhere("o.driver = :driver");
         if($category == 'past'){
-            $query = $query->orWhere("o.status = 'returned'");
+            $query = $query->andWhere(
+                            $query->expr()->orX(
+                                $qb->expr()->in('o.status', '(:statuses)'),
+                                $qb->expr()->eq('o.status', 'returned')
+                            )
+                    );
+        }
+        else{
+            $query = $query->andWhere('o.status in (:statuses)');
         }
         $query = $query->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
