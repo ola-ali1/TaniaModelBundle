@@ -33,7 +33,8 @@ class OrderRepository extends EntityRepository
         else{
             $query = $query->andWhere('o.status in (:statuses)');
         }
-        $query = $query->setMaxResults($limit)
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('user'=> $userId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')
@@ -56,7 +57,8 @@ class OrderRepository extends EntityRepository
         else{
             $query = $query->andWhere('o.status in (:statuses)');
         }
-        $query = $query->setMaxResults($limit)
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('driver'=> $driverId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')
