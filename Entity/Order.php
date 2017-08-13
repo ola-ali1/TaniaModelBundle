@@ -5,7 +5,7 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransactionInvoiceInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction;
 /**
  * @ORM\Table(name="`order`")
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OrderRepository")
@@ -1561,5 +1561,25 @@ class Order implements PfTransactionInvoiceInterface
             }
         }
         return true;
+    }
+
+    /**
+     * check if it is possible to create new transaction for this invoice or not
+     * @return boolean
+     */
+    public function canCreateNewTransaction()
+    {
+        $return = true;
+
+        if ($this->getPfTransactions()) {
+            foreach ($this->getPfTransactions() as $transaction) {
+                if ($transaction->getCurrentStatus() != PfTransaction::STATUS_FAIL) {
+                    $return = false;
+                    break;
+                }
+            }
+        }
+
+        return $return;
     }
 }
