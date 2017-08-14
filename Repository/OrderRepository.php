@@ -13,6 +13,7 @@ class OrderRepository extends EntityRepository
                 ->select('AVG(o.rate) AS rate_average')
                 ->andWhere("o.driver = :driver")
                 ->andWhere("o.rate IS NOT NULL")
+                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
                 ->setParameter('driver', $driverId)
                 ->getQuery()
                 ->getSingleScalarResult();
@@ -77,6 +78,7 @@ class OrderRepository extends EntityRepository
 		->select('COUNT(o.id)')
                 ->andWhere('o.createdAt >= :start')
                 ->andWhere('o.createdAt <= :end')
+                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
                 ->setParameter('start', $start)
                 ->setParameter('end', $end)
                 ->getQuery()
@@ -93,6 +95,7 @@ class OrderRepository extends EntityRepository
                 ->andWhere('o.createdAt >= :start')
                 ->andWhere('o.createdAt <= :end')
                 ->andWhere('o.status = :delivered')
+                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
                 ->setParameter('start', $start)
                 ->setParameter('end', $end)
                 ->setParameter('delivered', Order::$statuses['delivered'])
