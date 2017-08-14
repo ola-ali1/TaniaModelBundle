@@ -43,10 +43,10 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
         $tomorrow = strtotime('tomorrow midnight');
         return $this->createQueryBuilder('d')
 		->select('v.vanNumber, d.id, d.longitude, d.latitude, d.fullName, d.fullNameAr, count(o.id) as ordersCount, currentOrder.longitude as orderLongitude, currentOrder.latitude as orderLatitude')
-                ->leftJoin('d.driverOrders', 'o', 'WITH', 'o.receivingDate >= :today and o.receivingDate < :tomorrow')
+                ->leftJoin('d.driverOrders', 'o', 'WITH', 'o.receivingDate >= :today and o.receivingDate < :tomorrow AND o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order')
                 ->leftJoin('d.vanDrivers', 'vd')
                 ->leftJoin('vd.van', 'v')
-                ->leftJoin('d.driverOrders', 'currentOrder', 'WITH', 'currentOrder.status = :delivering')
+                ->leftJoin('d.driverOrders', 'currentOrder', 'WITH', 'currentOrder.status = :delivering AND currentOrder INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order')
                 ->setParameters(['today' => $today, 'tomorrow' => $tomorrow])
                 ->setParameter('delivering', Order::$statuses['delivering'])
                 ->where('d.status = '.TRUE)
