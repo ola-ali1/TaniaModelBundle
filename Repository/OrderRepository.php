@@ -24,12 +24,17 @@ class OrderRepository extends EntityRepository
         $limit = 10;
         $query = $this->createQueryBuilder('o')
                 ->select('o')
-                ->andWhere("o.user = :user")
-                ->andWhere("o.status in (:statuses)");
+                ->andWhere("o.user = :user");
         if($category == 'current'){
-            $query = $query->orWhere("o.status = 'returned'");
+            $query = $query->andWhere(
+                            $query->expr()->orX("o.status in (:statuses)","o.status = 'returned'")
+                    );
         }
-        $query = $query->setMaxResults($limit)
+        else{
+            $query = $query->andWhere('o.status in (:statuses)');
+        }
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('user'=> $userId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')
@@ -43,12 +48,17 @@ class OrderRepository extends EntityRepository
         $limit = 10;
         $query = $this->createQueryBuilder('o')
                 ->select('o')
-                ->andWhere("o.driver = :driver")
-                ->andWhere("o.status in (:statuses)");
+                ->andWhere("o.driver = :driver");
         if($category == 'past'){
-            $query = $query->orWhere("o.status = 'returned'");
+            $query = $query->andWhere(
+                            $query->expr()->orX("o.status in (:statuses)","o.status = 'returned'")
+                    );
         }
-        $query = $query->setMaxResults($limit)
+        else{
+            $query = $query->andWhere('o.status in (:statuses)');
+        }
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('driver'=> $driverId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')

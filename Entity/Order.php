@@ -5,8 +5,10 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransactionInvoiceInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction;
 /**
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="entityClass", type="string")
  * @ORM\Table(name="`order`")
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OrderRepository")
  */
@@ -1554,12 +1556,36 @@ class Order implements PfTransactionInvoiceInterface
         if ($orderShift) {
             $orderShiftStartTime = new \DateTime($orderShift->getFrom()->format('H:i:s'));
             $orderShiftEndTime = new \DateTime($orderShift->getTo()->format('H:i:s'));
-            $orderDate = new \DateTime('@' . $this->getReceivingDate());
-            $currentTime = new \DateTime();
-            if ($orderDate->format('d') === $currentTime->format('d') && $currentTime >= $orderShiftStartTime && $currentTime <= $orderShiftEndTime) {
-                return false;
+            try {
+                $orderDate = new \DateTime('@' . $this->getReceivingDate());
+                $currentTime = new \DateTime();
+                if ($orderDate->format('d') === $currentTime->format('d') && $currentTime >= $orderShiftStartTime && $currentTime <= $orderShiftEndTime) {
+                    return false;
+                }
+            } catch (\Exception $e) {
+
             }
         }
         return true;
+    }
+
+    /**
+     * check if it is possible to create new transaction for this invoice or not
+     * @return boolean
+     */
+    public function canCreateNewTransaction()
+    {
+        $return = true;
+
+        if ($this->getPfTransactions()) {
+            foreach ($this->getPfTransactions() as $transaction) {
+                if ($transaction->getCurrentStatus() != PfTransaction::STATUS_FAIL) {
+                    $return = false;
+                    break;
+                }
+            }
+        }
+
+        return $return;
     }
 }
