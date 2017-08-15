@@ -22,6 +22,12 @@ class BalanceRequest extends Order
      */
     protected $points;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="balance_name", type="string", length=190)
+     */
+    private $balanceName;
 
     /**
      * @var string
@@ -80,4 +86,27 @@ class BalanceRequest extends Order
     }
 
 
+    /**
+     * Set balanceName
+     *
+     * @param string $balanceName
+     *
+     * @return BalanceRequest
+     */
+    public function setBalanceName($balanceName)
+    {
+        $this->name = $balanceName;
+
+        return $this;
+    }
+
+    /**
+     * Get balanceName
+     *
+     * @return string
+     */
+    public function getBalanceName()
+    {
+        return $this->balanceName;
+    }
 }

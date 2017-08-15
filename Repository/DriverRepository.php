@@ -39,20 +39,20 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
 
     public function getMapDrivers()
     {
-        $today = date('Y-m-d H:i:s', strtotime('today midnight'));
-        $tomorrow = date('Y-m-d H:i:s', strtotime('tomorrow midnight'));
+        $today = strtotime('today midnight');
+        $tomorrow = strtotime('tomorrow midnight');
         return $this->createQueryBuilder('d')
 		->select('v.vanNumber, d.id, d.longitude, d.latitude, d.fullName, d.fullNameAr, count(o.id) as ordersCount, currentOrder.longitude as orderLongitude, currentOrder.latitude as orderLatitude')
-                ->leftJoin('d.driverOrders', 'o', 'WITH', 'o.receivingDate >= :today and o.receivingDate < :tomorrow')
+                ->leftJoin('d.driverOrders', 'o', 'WITH', 'o.receivingDate >= :today and o.receivingDate < :tomorrow AND o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order')
                 ->leftJoin('d.vanDrivers', 'vd')
                 ->leftJoin('vd.van', 'v')
-                ->leftJoin('d.driverOrders', 'currentOrder', 'WITH', 'currentOrder.status = :delivering')
+                ->leftJoin('d.driverOrders', 'currentOrder', 'WITH', 'currentOrder.status = :delivering AND currentOrder INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order')
                 ->setParameters(['today' => $today, 'tomorrow' => $tomorrow])
                 ->setParameter('delivering', Order::$statuses['delivering'])
                 ->where('d.status = '.TRUE)
                 ->andWhere('d.longitude != 0')
                 ->andWhere('d.latitude != 0')
-                ->groupBy('d.id')
+                ->groupBy('d.id, vd.id')
                 ->getQuery()
                 ->getResult();
     }

@@ -98,6 +98,14 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      */
     protected $locationLastUpdateTime;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="isSynced", type="boolean",  options={"default": 0}, nullable=true)
+     */
+    protected $isSynced;
+
+
     public function __sleep() {
         $classVars = get_object_vars($this);
         // unset all object proxies not the collections
@@ -490,5 +498,29 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     public function getDeviceType()
     {
         return $this->paymentMethod;
+    }
+
+        /**
+     * Set applicationLanguage
+     *
+     * @param string $isSynced
+     *
+     * @return User
+     */
+    public function setIsSynced($isSynced)
+    {
+        $this->isSynced = $isSynced;
+
+        return $this;
+    }
+
+    /**
+     * Get $isSynced
+     *
+     * @return string
+     */
+    public function getIsSynced()
+    {
+        return $this->isSynced;
     }
 }

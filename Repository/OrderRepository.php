@@ -13,6 +13,7 @@ class OrderRepository extends EntityRepository
                 ->select('AVG(o.rate) AS rate_average')
                 ->andWhere("o.driver = :driver")
                 ->andWhere("o.rate IS NOT NULL")
+                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
                 ->setParameter('driver', $driverId)
                 ->getQuery()
                 ->getSingleScalarResult();
@@ -27,16 +28,14 @@ class OrderRepository extends EntityRepository
                 ->andWhere("o.user = :user");
         if($category == 'current'){
             $query = $query->andWhere(
-                            $query->expr()->orX(
-                                $qb->expr()->in('o.status', '(:statuses)'),
-                                $qb->expr()->eq('o.status', 'returned')
-                            )
+                            $query->expr()->orX("o.status in (:statuses)","o.status = 'returned'")
                     );
         }
         else{
             $query = $query->andWhere('o.status in (:statuses)');
         }
-        $query = $query->setMaxResults($limit)
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('user'=> $userId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')
@@ -53,16 +52,14 @@ class OrderRepository extends EntityRepository
                 ->andWhere("o.driver = :driver");
         if($category == 'past'){
             $query = $query->andWhere(
-                            $query->expr()->orX(
-                                $qb->expr()->in('o.status', '(:statuses)'),
-                                $qb->expr()->eq('o.status', 'returned')
-                            )
+                            $query->expr()->orX("o.status in (:statuses)","o.status = 'returned'")
                     );
         }
         else{
             $query = $query->andWhere('o.status in (:statuses)');
         }
-        $query = $query->setMaxResults($limit)
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('driver'=> $driverId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')
@@ -81,6 +78,7 @@ class OrderRepository extends EntityRepository
 		->select('COUNT(o.id)')
                 ->andWhere('o.createdAt >= :start')
                 ->andWhere('o.createdAt <= :end')
+                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
                 ->setParameter('start', $start)
                 ->setParameter('end', $end)
                 ->getQuery()
@@ -97,6 +95,7 @@ class OrderRepository extends EntityRepository
                 ->andWhere('o.createdAt >= :start')
                 ->andWhere('o.createdAt <= :end')
                 ->andWhere('o.status = :delivered')
+                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
                 ->setParameter('start', $start)
                 ->setParameter('end', $end)
                 ->setParameter('delivered', Order::$statuses['delivered'])
