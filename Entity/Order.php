@@ -1552,10 +1552,9 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function isOrderAssignableToOfflineDrivers()
     {
-        $orderShift = $this->getShift();
-        if ($orderShift) {
-            $orderShiftStartTime = new \DateTime($orderShift->getFrom()->format('H:i:s'));
-            $orderShiftEndTime = new \DateTime($orderShift->getTo()->format('H:i:s'));
+        if ($this->getShiftFrom() && $this->getShiftTo()) {
+            $orderShiftStartTime = new \DateTime($this->getShiftFrom()->format('H:i:s'));
+            $orderShiftEndTime = new \DateTime($this->getShiftTo()->format('H:i:s'));
             try {
                 $orderDate = new \DateTime('@' . $this->getReceivingDate());
                 $currentTime = new \DateTime();

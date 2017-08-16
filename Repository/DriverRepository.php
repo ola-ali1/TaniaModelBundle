@@ -52,7 +52,7 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
                 ->where('d.status = '.TRUE)
                 ->andWhere('d.longitude != 0')
                 ->andWhere('d.latitude != 0')
-                ->groupBy('d.id, vd.id')
+                ->groupBy('d.id, vd.id, currentOrder.id')
                 ->getQuery()
                 ->getResult();
     }
