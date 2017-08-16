@@ -99,6 +99,13 @@ class Item
      */
     private $nameEn;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="isSynced", type="boolean",  options={"default": 0}, nullable=true)
+     */
+    protected $isSynced;
+
     public function __toString() {
         return $this->name;
     }
@@ -515,6 +522,30 @@ class Item
     public function getNameEn()
     {
         return $this->nameEn;
+    }
+
+    /**
+     * Set applicationLanguage
+     *
+     * @param string $isSynced
+     *
+     * @return User
+     */
+    public function setIsSynced($isSynced)
+    {
+        $this->isSynced = $isSynced;
+
+        return $this;
+    }
+
+    /**
+     * Get $isSynced
+     *
+     * @return string
+     */
+    public function getIsSynced()
+    {
+        return $this->isSynced;
     }
 
 
