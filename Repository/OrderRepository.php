@@ -58,8 +58,7 @@ class OrderRepository extends EntityRepository
         else{
             $query = $query->andWhere('o.status in (:statuses)');
         }
-        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
-                ->setMaxResults($limit)
+        $query = $query->setMaxResults($limit)
                 ->setFirstResult(($page -1)* $limit)
                 ->setParameters(array('driver'=> $driverId, 'statuses' => Order::$statusCategories[$category]))
                 ->orderBy('o.id', 'DESC')
