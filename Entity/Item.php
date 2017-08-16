@@ -92,6 +92,17 @@ class Item
      */
     protected $deletedAt;
 
+
+    /**
+     * @ORM\Column(name="reference_code", type="string")
+     */
+    private $referenceCode;
+
+    /**
+     * @ORM\Column(name="name_en", type="string")
+     */
+    private $nameEn;
+    
     public function __toString() {
         return $this->name;
     }
@@ -485,5 +496,54 @@ class Item
     {
         return $this->deletedAt;
     }
+
+    /**
+     * Set reference code
+     *
+     * @param string $referenceCode
+     *
+     * @return Article
+     */
+    public function setReferenceCode($referenceCode)
+    {
+        $this->referenceCode = $referenceCode;
+
+        return $this;
+    }
+
+    /**
+     * Get reference code
+     *
+     * @return string
+     */
+    public function getReferenceCode()
+    {
+        return $this->referenceCode;
+    }
+
+    /**
+     * Set reference code
+     *
+     * @param string $referenceCode
+     *
+     * @return Article
+     */
+    public function setNameEn($nameEn)
+    {
+        $this->nameEn = $nameEn;
+
+        return $this;
+    }
+
+    /**
+     * Get reference code
+     *
+     * @return string
+     */
+    public function getNameEn()
+    {
+        return $this->nameEn;
+    }
+
 
 }
