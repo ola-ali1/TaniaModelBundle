@@ -34,10 +34,6 @@ class Item
      */
     private $name;
 
-    /**
-     * @ORM\Column(name="code", type="string")
-     */
-    private $code;
 
     /**
      * @ORM\Column(name="default_price",type="decimal", precision=10, scale=2)
@@ -102,7 +98,14 @@ class Item
      * @ORM\Column(name="name_en", type="string")
      */
     private $nameEn;
-    
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="isSynced", type="boolean",  options={"default": 0}, nullable=true)
+     */
+    protected $isSynced;
+
     public function __toString() {
         return $this->name;
     }
@@ -280,30 +283,6 @@ class Item
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set code
-     *
-     * @param string $code
-     *
-     * @return User
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    /**
-     * Get code
-     *
-     * @return string
-     */
-    public function getCode()
-    {
-        return $this->code;
     }
 
     /**
@@ -522,9 +501,9 @@ class Item
     }
 
     /**
-     * Set reference code
+     * Set Name En
      *
-     * @param string $referenceCode
+     * @param string name En
      *
      * @return Article
      */
@@ -536,13 +515,37 @@ class Item
     }
 
     /**
-     * Get reference code
+     * Get name En
      *
      * @return string
      */
     public function getNameEn()
     {
         return $this->nameEn;
+    }
+
+    /**
+     * Set applicationLanguage
+     *
+     * @param string $isSynced
+     *
+     * @return User
+     */
+    public function setIsSynced($isSynced)
+    {
+        $this->isSynced = $isSynced;
+
+        return $this;
+    }
+
+    /**
+     * Get $isSynced
+     *
+     * @return string
+     */
+    public function getIsSynced()
+    {
+        return $this->isSynced;
     }
 
 
