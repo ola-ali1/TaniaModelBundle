@@ -113,15 +113,6 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      */
     private $balance = 0;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="actual_balance", type="decimal", precision=10, scale=2, options={"default": 0})
-     * @Assert\Type(type="numeric")
-     */
-    private $actualBalance = 0;
-
-
     public function __sleep() {
         $classVars = get_object_vars($this);
         // unset all object proxies not the collections
@@ -562,29 +553,5 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     public function getBalance()
     {
         return $this->balance;
-    }
-
-    /**
-     * Set actualBalance
-     *
-     * @param string $actualBalance
-     *
-     * @return User
-     */
-    public function setActualBalance($actualBalance)
-    {
-        $this->actualBalance = $actualBalance;
-
-        return $this;
-    }
-
-    /**
-     * Get balance
-     *
-     * @return string
-     */
-    public function getActualBalance()
-    {
-        return $this->actualBalance;
     }
 }
