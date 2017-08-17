@@ -17,7 +17,7 @@ class BalanceRequest extends Order
     /**
      * @var string
      *
-     * @ORM\Column(name="points", type="integer")
+     * @ORM\Column(name="points", type="decimal", precision=10, scale=2, options={"default": 0})
      * @Assert\Type(type="numeric")
      */
     protected $points;

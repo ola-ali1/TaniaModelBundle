@@ -105,6 +105,22 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      */
     protected $isSynced;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="balance", type="decimal", precision=10, scale=2, options={"default": 0})
+     * @Assert\Type(type="numeric")
+     */
+    private $balance = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="actual_balance", type="decimal", precision=10, scale=2, options={"default": 0})
+     * @Assert\Type(type="numeric")
+     */
+    private $actualBalance = 0;
+
 
     public function __sleep() {
         $classVars = get_object_vars($this);
@@ -522,5 +538,53 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     public function getIsSynced()
     {
         return $this->isSynced;
+    }
+
+    /**
+     * Set balance
+     *
+     * @param string $balance
+     *
+     * @return User
+     */
+    public function setBalance($balance)
+    {
+        $this->balance = $balance;
+
+        return $this;
+    }
+
+    /**
+     * Get balance
+     *
+     * @return string
+     */
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+
+    /**
+     * Set actualBalance
+     *
+     * @param string $actualBalance
+     *
+     * @return User
+     */
+    public function setActualBalance($actualBalance)
+    {
+        $this->actualBalance = $actualBalance;
+
+        return $this;
+    }
+
+    /**
+     * Get balance
+     *
+     * @return string
+     */
+    public function getActualBalance()
+    {
+        return $this->actualBalance;
     }
 }

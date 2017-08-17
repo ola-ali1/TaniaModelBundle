@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170816140558 extends AbstractMigration
+class Version20170816143404 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -18,7 +18,8 @@ class Version20170816140558 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE item DROP code');
+        $this->addSql('ALTER TABLE `order` CHANGE points points NUMERIC(10, 2) DEFAULT \'0\'');
+        $this->addSql('ALTER TABLE user CHANGE balance balance NUMERIC(10, 2) DEFAULT \'0\' NOT NULL, CHANGE actual_balance actual_balance NUMERIC(10, 2) DEFAULT \'0\' NOT NULL');
     }
 
     /**
@@ -29,6 +30,7 @@ class Version20170816140558 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE item ADD code VARCHAR(255) NOT NULL COLLATE utf8mb4_general_ci');
+        $this->addSql('ALTER TABLE `order` CHANGE points points INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE user CHANGE balance balance INT NOT NULL, CHANGE actual_balance actual_balance INT NOT NULL');
     }
 }
