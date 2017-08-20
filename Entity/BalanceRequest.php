@@ -95,7 +95,7 @@ class BalanceRequest extends Order
      */
     public function setBalanceName($balanceName)
     {
-        $this->name = $balanceName;
+        $this->balanceName = $balanceName;
 
         return $this;
     }
