@@ -66,7 +66,7 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="longitude", type="float", options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
      */
     private $longitude;
@@ -74,7 +74,7 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="latitude", type="float", options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
      */
     private $latitude;
