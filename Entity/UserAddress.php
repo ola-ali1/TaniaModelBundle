@@ -46,7 +46,7 @@ class UserAddress
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="longitude", type="decimal", precision=14, scale=14, options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
      */
     private $longitude;
@@ -54,7 +54,7 @@ class UserAddress
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="latitude", type="decimal", precision=14, scale=14, options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
      */
     private $latitude;
