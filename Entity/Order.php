@@ -298,28 +298,28 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=14, scale=14, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
      */
     private $longitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=14, scale=14, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
      */
     private $latitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="starting_longitude", type="decimal", precision=14, scale=14, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="starting_longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
      */
     private $startingLongitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="starting_latitude", type="decimal", precision=14, scale=14, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="starting_latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
      */
     private $startingLatitude;
 
