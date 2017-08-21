@@ -30,7 +30,7 @@ class UserAddress
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
-     * @Assert\Length(min = 4, max = 20, maxMessage="addressTitle_length_not_valid", minMessage="addressTitle_length_not_valid")
+     * @Assert\Length(min = 3, max = 20, maxMessage="addressTitle_length_not_valid", minMessage="addressTitle_length_not_valid")
      */
     private $title;
 
