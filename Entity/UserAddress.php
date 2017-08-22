@@ -30,7 +30,7 @@ class UserAddress
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
-     * @Assert\Length(min = 4, max = 20, maxMessage="addressTitle_length_not_valid", minMessage="addressTitle_length_not_valid")
+     * @Assert\Length(min = 3, max = 20, maxMessage="addressTitle_length_not_valid", minMessage="addressTitle_length_not_valid")
      */
     private $title;
 
@@ -46,7 +46,7 @@ class UserAddress
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="longitude", type="float", options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
      */
     private $longitude;
@@ -54,7 +54,7 @@ class UserAddress
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="latitude", type="float", options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
      */
     private $latitude;

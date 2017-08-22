@@ -66,7 +66,7 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     /**
      * @var string
      *
-     * @ORM\Column(name="longitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="longitude", type="float", options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
      */
     private $longitude;
@@ -74,7 +74,7 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     /**
      * @var string
      *
-     * @ORM\Column(name="latitude", type="decimal", precision=10, scale=7, options={"default": 0}, nullable=true)
+     * @ORM\Column(name="latitude", type="float", options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
      */
     private $latitude;
@@ -386,10 +386,10 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
 
     public function getUserAddresses()
     {
-        $addresses[] = array('id' => 0, 'title' => '', 'address' => $this->address, 'longitude' => $this->longitude, 'latitude' => $this->latitude);
+        $addresses[] = array('id' => 0, 'title' => '', 'address' => $this->address, 'longitude' => (DOUBLE)$this->longitude, 'latitude' => (DOUBLE)$this->latitude);
 
         foreach($this->addresses as $address)
-            $addresses[] = array('id' => $address->getId(), 'title' => $address->getTitle(), 'address' => $address->getAddress(), 'longitude' => $address->getLongitude(), 'latitude' => $address->getLatitude());
+            $addresses[] = array('id' => $address->getId(), 'title' => $address->getTitle(), 'address' => $address->getAddress(), 'longitude' => (DOUBLE)$address->getLongitude(), 'latitude' => (DOUBLE)$address->getLatitude());
 
         return $addresses;
     }
