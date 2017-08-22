@@ -10,6 +10,7 @@ use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="entityClass", type="string")
  * @ORM\Table(name="`order`")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OrderRepository")
  */
 class Order implements PfTransactionInvoiceInterface
@@ -1617,5 +1618,14 @@ class Order implements PfTransactionInvoiceInterface
     public function getIsSynced()
     {
         return $this->isSynced;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->isSynced= false;
     }
 }

@@ -548,5 +548,14 @@ class Item
         return $this->isSynced;
     }
 
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->isSynced= false;
+    }
+
 
 }
