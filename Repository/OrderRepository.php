@@ -101,4 +101,26 @@ class OrderRepository extends EntityRepository
                 ->getQuery()
                 ->getSingleScalarResult();
     }
+
+    /**
+     * Get orders created at rang from and to date
+     * mainly created for the tania's integration
+     *
+     * @param datetime $fromDate
+     * @param datetime $toDate
+     * @return Orders list
+     */
+    public function getOrdersCreatedAt($fromDate, $toDate){
+        $query = $this->createQueryBuilder('o');
+
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->andWhere('o.createdAt >= :start')
+                ->andWhere('o.createdAt <= :end')
+                ->setParameters(['start' => $fromDate->format('Y-m-d H:i:s'),'end' => $toDate->format('Y-m-d H:i:s')])
+                ->orderBy('o.id', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+        return $query;
+    }
 }

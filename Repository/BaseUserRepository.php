@@ -53,4 +53,23 @@ class BaseUserRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->_em->getRepository('AppBundle:User')->findBy($criteria);
     }
+
+    /**
+     * Get users created at rang from and to date
+     * mainly created for the tania's integration
+     *
+     * @param datetime $fromDate
+     * @param datetime $toDate
+     * @return list users
+     */
+    public function getUsersCreatedAt($fromDate, $toDate)
+    {
+        return $this->createQueryBuilder('u')
+                ->andWhere('u.createdAt >= :start')
+                ->andWhere('u.createdAt <= :end')
+                ->setParameters(['start' => $fromDate->format('Y-m-d H:i:s'),'end' => $toDate->format('Y-m-d H:i:s')])
+                ->getQuery()
+                ->getResult();
+    }
+
 }
