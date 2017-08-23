@@ -36,7 +36,8 @@ class Order implements PfTransactionInvoiceInterface
         'delivered' => 'delivered',
         'returned' => 'returned',
         'closed' => 'closed',
-        'cancelled' => 'cancelled'
+        'cancelled' => 'cancelled',
+        'transaction pending' => 'transaction pending'
     );
 
     public static $statusCategories = array(
