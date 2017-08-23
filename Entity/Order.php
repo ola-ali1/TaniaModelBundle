@@ -147,6 +147,13 @@ class Order implements PfTransactionInvoiceInterface
     private $returnReason;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="skip_reason", type="string", length=190, nullable=true)
+     */
+    private $skipReason;
+
+    /**
      * @var text
      *
      * @ORM\Column(name="receiving_date", type="text", nullable=true)
@@ -1627,5 +1634,30 @@ class Order implements PfTransactionInvoiceInterface
     public function preUpdate()
     {
         $this->isSynced= false;
+    }
+
+
+    /**
+     * Set returnReason
+     *
+     * @param string $returnReason
+     *
+     * @return Order
+     */
+    public function setSkipReason($skipReason)
+    {
+        $this->skipReason = $skipReason;
+
+        return $this;
+    }
+
+    /**
+     * Get returnReason
+     *
+     * @return string
+     */
+    public function getSkipReason()
+    {
+        return $this->skipReason;
     }
 }
