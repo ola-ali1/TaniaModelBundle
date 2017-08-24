@@ -6,6 +6,7 @@ use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransactionInvoiceInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 /**
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="entityClass", type="string")
@@ -1632,9 +1633,11 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function preUpdate()
+    public function prePersist($event)
     {
-        $this->isSynced= false;
+        if ( $event->hasChangedField('isAsynced') == true ) {
+            $this->isSynced= false;
+        }
     }
 
 

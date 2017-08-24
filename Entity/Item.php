@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ibtikar\TaniaModelBundle\Validator\Constraints as TaniaAssert;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
@@ -552,9 +553,17 @@ class Item
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function preUpdate()
+    public function prePersist($event)
     {
-        $this->isSynced= false;
+        if ($event instanceof  PreUpdateEventArgs ) {
+            if ( $event->hasChangedField('isAsynced') == true ) {
+                $this->isSynced= false;
+            }
+        }
+        else
+        {
+            $this->isSynced= false;
+        }
     }
 
 
