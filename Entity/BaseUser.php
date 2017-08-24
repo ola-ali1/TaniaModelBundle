@@ -66,7 +66,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @var string $userPassword
      *
      * @Assert\NotBlank(groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_admin_create"}, message="fill_mandatory_field")
-     * @Assert\Length(min = 6, max = 30, groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, maxMessage="password_not_valid_max", minMessage="password_not_valid_min")
+     * @Assert\Length(min = 6, max = 12, groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, maxMessage="password_not_valid_max", minMessage="password_not_valid_min")
      * @Assert\Regex(pattern="/[a-zA-Zأ-ي]/", message="password_not_valid_no_text", groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      * @Assert\Regex(pattern="/[0-9٠-٩]/", message="password_not_valid_no_number", groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      */
