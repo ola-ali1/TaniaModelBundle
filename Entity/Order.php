@@ -37,7 +37,6 @@ class Order implements PfTransactionInvoiceInterface
         'delivered' => 'delivered',
         'returned' => 'returned',
         'closed' => 'closed',
-        'cancelled' => 'cancelled',
         'transaction pending' => 'transaction pending'
     );
 
