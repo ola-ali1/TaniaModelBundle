@@ -42,7 +42,7 @@ class Order implements PfTransactionInvoiceInterface
 
     public static $statusCategories = array(
         'current'   => array('placed', 'verified', 'delivering'),
-        'past'      => array('delivered', 'closed', 'cancelled')
+        'past'      => array('delivered', 'closed', 'transaction pending', 'cancelled')
     );
 
     /**
@@ -1634,7 +1634,13 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function prePersist($event)
     {
-        if ( $event->hasChangedField('isAsynced') == true ) {
+        if ($event instanceof  PreUpdateEventArgs ) {
+            if ( $event->hasChangedField('isAsynced') == true ) {
+                $this->isSynced= false;
+            }
+        }
+        else
+        {
             $this->isSynced= false;
         }
     }
