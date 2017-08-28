@@ -207,7 +207,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile"})
      * @Assert\Choice({"en", "ar"}, groups={"driver_edit_profile"}, message="invalid_locale")
      */
-    protected $locale;
+    protected $locale = 'ar';
 
     /**
      * @var bool
