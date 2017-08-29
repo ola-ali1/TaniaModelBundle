@@ -8,3 +8,9 @@ services:
             arguments: ["@request_stack", "@translator"]
             tags:
                 - { name: validator.constraint_validator, alias: uniqueCityItemPrice }
+
+    validator.unique_phone:
+            class: Ibtikar\TaniaModelBundle\Validator\Constraints\UniquePhoneValidator
+            arguments: ["@translator", "@doctrine.orm.entity_manager"]
+            tags:
+                - { name: validator.constraint_validator, alias: uniquePhone }

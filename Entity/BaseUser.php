@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Ibtikar\TaniaModelBundle\Validator\Constraints as TaniaAssert;
 use Ibtikar\TaniaModelBundle\Validator\Constraints\CustomEmail as AssertEmail;
 use \Doctrine\Common\Collections\ArrayCollection;
 
@@ -19,8 +20,8 @@ use \Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
+ * @TaniaAssert\UniquePhone(groups={"driver_edit_profile","signup", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
  * @UniqueEntity(fields={"email"}, groups={"driver_edit_profile", "signup", "edit", "email", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, message="email_exist")
- * @UniqueEntity(fields={"phone"}, groups={"driver_edit_profile","signup", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, message="phone_exist")
  */
 class BaseUser implements AdvancedUserInterface, EquatableInterface
 {
