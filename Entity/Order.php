@@ -1669,4 +1669,24 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->skipReason;
     }
+
+    /**
+     * check if order has any succeeded transaction
+     * @return boolean
+     */
+    public function hasSucceededTransaction()
+    {
+        $return = false;
+
+        if ($this->getPfTransactions()) {
+            foreach ($this->getPfTransactions() as $transaction) {
+                if ($transaction->getCurrentStatus() == PfTransaction::STATUS_SUCCESS) {
+                    $return = true;
+                    break;
+                }
+            }
+        }
+
+        return $return;
+    }
 }
