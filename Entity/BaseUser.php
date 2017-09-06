@@ -194,7 +194,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=190, unique=true)
+     * @ORM\Column(name="phone", type="string", length=190)
      *
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup", "phone","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      * @Assert\Regex("/^[+-]?\d+$/", groups={"driver_edit_profile", "edit", "edit-profile","backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})

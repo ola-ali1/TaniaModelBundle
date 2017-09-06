@@ -193,4 +193,15 @@ class Van
     }
 
 
+    /**
+     * Get status
+     *
+     * @return boolean
+     */
+    public function getCurrentCapacity()
+    {
+        if(count($this->vanItems)> 0)
+            return $this->vanItems[0]->getCurrentCapacity();
+        return '';
+    }
 }

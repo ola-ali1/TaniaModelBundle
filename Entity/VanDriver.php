@@ -119,4 +119,14 @@ class VanDriver
     {
         return $this->van->getTotalCapacity();
     }
+
+    /**
+     * Get currentCapacity
+     *
+     * @return string
+     */
+    public function getCurrentCapacity()
+    {
+        return $this->van->getCurrentCapacity();
+    }
 }
