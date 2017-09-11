@@ -20,8 +20,8 @@ use \Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
- * @TaniaAssert\UniquePhone(groups={"driver_edit_profile","signup", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
- * @UniqueEntity(fields={"email"}, groups={"driver_edit_profile", "signup", "edit", "email", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, message="email_exist")
+ * @TaniaAssert\UniquePhone(groups={"edit-profile", "driver_edit_profile","signup", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+ * @UniqueEntity(fields={"email"}, groups={"edit-profile", "driver_edit_profile", "signup", "edit", "email", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, message="email_exist")
  */
 class BaseUser implements AdvancedUserInterface, EquatableInterface
 {
