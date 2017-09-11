@@ -441,7 +441,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
         //check if we have an old image
         if ($this->temp) {
             //try to delete the old image
-            @unlink($this->getUploadRootDir() . '/' . $this->temp);
+//            @unlink($this->getUploadRootDir() . '/' . $this->temp);
             //clear the temp image
             $this->temp = NULL;
         }
