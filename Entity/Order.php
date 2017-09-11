@@ -31,7 +31,7 @@ class Order implements PfTransactionInvoiceInterface
     );
 
     public static $statuses = array(
-        'placed' => 'placed',
+        'placed' => 'new',
         'verified' => 'verified',
         'delivering' => 'delivering',
         'delivered' => 'delivered',
@@ -42,7 +42,7 @@ class Order implements PfTransactionInvoiceInterface
     );
 
     public static $statusCategories = array(
-        'current'   => array('placed', 'verified', 'delivering'),
+        'current'   => array('new', 'verified', 'delivering'),
         'past'      => array('delivered', 'closed', 'transaction pending', 'cancelled')
     );
 
@@ -865,7 +865,7 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getStatuses()
     {
-        return self::$statuses;
+        return array_flip(self::$statuses);
     }
 
     public function getUserName()
