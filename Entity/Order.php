@@ -159,7 +159,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="cancel_date", type="datetime")
+     * @ORM\Column(name="cancel_date", type="datetime", nullable=true)
      */
     private $cancelDate;
 
