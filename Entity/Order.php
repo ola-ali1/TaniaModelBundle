@@ -31,17 +31,18 @@ class Order implements PfTransactionInvoiceInterface
     );
 
     public static $statuses = array(
-        'placed' => 'placed',
+        'placed' => 'new',
         'verified' => 'verified',
         'delivering' => 'delivering',
         'delivered' => 'delivered',
         'returned' => 'returned',
+        'cancelled' => 'cancelled',
         'closed' => 'closed',
         'transaction-pending' => 'transaction-pending'
     );
 
     public static $statusCategories = array(
-        'current'   => array('placed', 'verified', 'delivering'),
+        'current'   => array('new', 'verified', 'delivering'),
         'past'      => array('delivered', 'closed', 'transaction pending', 'cancelled')
     );
 
@@ -146,6 +147,21 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\Column(name="return_reason", type="string", length=190, nullable=true)
      */
     private $returnReason;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cancel_reason", type="string", length=190, nullable=true)
+     */
+    private $cancelReason;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cancel_date", type="datetime", nullable=true)
+     */
+    private $cancelDate;
 
     /**
      * @var string
@@ -849,7 +865,7 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getStatuses()
     {
-        return self::$statuses;
+        return array_flip(self::$statuses);
     }
 
     public function getUserName()
@@ -1668,5 +1684,53 @@ class Order implements PfTransactionInvoiceInterface
     public function getSkipReason()
     {
         return $this->skipReason;
+    }
+
+    /**
+     * Set cancelReason
+     *
+     * @param string $cancelReason
+     *
+     * @return Order
+     */
+    public function setCancelReason($cancelReason)
+    {
+        $this->cancelReason = $cancelReason;
+
+        return $this;
+    }
+
+    /**
+     * Get cancelReason
+     *
+     * @return string
+     */
+    public function getCancelReason()
+    {
+        return $this->cancelReason;
+    }
+
+    /**
+     * Set cancelDate
+     *
+     * @param string $cancelDate
+     *
+     * @return Order
+     */
+    public function setCancelDate($cancelDate)
+    {
+        $this->cancelDate = $cancelDate;
+
+        return $this;
+    }
+
+    /**
+     * Get cancelDate
+     *
+     * @return string
+     */
+    public function getCancelDate()
+    {
+        return $this->cancelDate;
     }
 }
