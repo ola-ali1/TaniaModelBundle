@@ -202,6 +202,6 @@ class Van
     {
         if(count($this->vanItems)> 0)
             return $this->vanItems[0]->getCurrentCapacity();
-        return '';
+        return 0;
     }
 }
