@@ -14,3 +14,13 @@ services:
             arguments: ["@translator", "@doctrine.orm.entity_manager"]
             tags:
                 - { name: validator.constraint_validator, alias: uniquePhone }
+
+    google.phone_number:
+        class: Ibtikar\TaniaModelBundle\Service\PhoneNumber
+        arguments: [ ]
+
+    validator.phone_validator:
+        class: Ibtikar\TaniaModelBundle\Validator\Constraints\CustomPhoneValidator
+        arguments: [ '@google.phone_number', "@translator" ]
+        tags:
+                - { name: validator.constraint_validator, alias: customPhone }

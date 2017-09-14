@@ -48,9 +48,9 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=190)
+     * @ORM\Column(name="email", type="string", length=190, nullable=true)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"driver_edit_profile", "signup", "edit","edit-profile", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      */
     protected $email;
@@ -198,6 +198,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup", "phone","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      * @Assert\Regex("/^[+-]?\d+$/", groups={"driver_edit_profile", "edit", "edit-profile","backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @TaniaAssert\CustomPhone(groups={"phone_validator", "backend_user_create", "backend_user_edit"})
      */
     protected $phone;
 
