@@ -200,8 +200,10 @@ class Van
      */
     public function getCurrentCapacity()
     {
-        if(count($this->vanItems)> 0)
-            return $this->vanItems[0]->getCurrentCapacity();
-        return 0;
+        $count = 0;
+        foreach ($this->vanItems as $vanItem){
+            $count += $vanItem->getCurrentCapacity();
+        }
+        return $count;
     }
 }
