@@ -1733,4 +1733,11 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->cancelDate;
     }
+
+    public function getBalanceRequestStatuses()
+    {
+        $statuses = self::$statuses;
+        unset($statuses['cancelled']);
+        return array_flip($statuses);
+    }
 }
