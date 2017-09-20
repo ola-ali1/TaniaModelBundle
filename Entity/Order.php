@@ -1738,6 +1738,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         $statuses = self::$statuses;
         unset($statuses['cancelled']);
+        unset($statuses['transaction-pending']);
         return array_flip($statuses);
     }
 }
