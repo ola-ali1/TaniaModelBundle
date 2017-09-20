@@ -15,6 +15,10 @@ class CustomEmailValidator extends EmailValidator
     {
         parent::validate($value, $constraint);
 
+        if (null === $value || '' === $value) {
+            return;
+        }
+
         // more validation for email
         if (!filter_var($value, FILTER_VALIDATE_EMAIL) || preg_match('/[\'^£$%&*()}{#~?><>,|=¬]/', $value)) {
             $this->context->buildViolation($constraint->message)
