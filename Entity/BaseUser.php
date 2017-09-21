@@ -207,7 +207,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="locale", type="string", length=2, nullable=true, options={"fixed": true})
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup"})
-     * @Assert\Choice({"en", "ar", "hi", "ur"}, groups={"driver_edit_profile", "signup"}, message="invalid_locale")
+     * @Assert\Choice({"en", "ar", "hi", "ur"}, groups={"driver_edit_profile", "signup"}, message="invalid_locale") 
      */
     protected $locale = 'ar';
 
