@@ -51,7 +51,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @ORM\Column(name="email", type="string", length=190, nullable=true)
      *
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
-     * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"driver_edit_profile", "signup", "edit","edit-profile", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"signup", "edit","edit-profile", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      */
     protected $email;
 
@@ -206,8 +206,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @var string
      *
      * @ORM\Column(name="locale", type="string", length=2, nullable=true, options={"fixed": true})
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile"})
-     * @Assert\Choice({"en", "ar", "hi", "ur"}, groups={"driver_edit_profile"}, message="invalid_locale")
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup"})
+     * @Assert\Choice({"en", "ar", "hi", "ur"}, groups={"driver_edit_profile", "signup"}, message="invalid_locale")
      */
     protected $locale = 'ar';
 
