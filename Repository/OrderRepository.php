@@ -127,4 +127,24 @@ class OrderRepository extends EntityRepository
 
         return $query;
     }
+
+    public function getOrdersStatistics()
+    {
+        return $this->createQueryBuilder('o')
+                    ->select('COUNT(o) AS ordersCount, AVG(o.rate) as avgRate')
+                    ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                    ->getQuery()
+                    ->getScalarResult();
+    }
+
+    public function getOrdersStatusCount($status)
+    {
+        return $this->createQueryBuilder('o')
+		->select('COUNT(o.id) as ordersCount')
+                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->andWhere('o.status = :status')
+                ->setParameter('status', $status)
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
 }

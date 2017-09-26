@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="order_status_history")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OrderStatusHistoryRepository")
  */
 class OrderStatusHistory
 {

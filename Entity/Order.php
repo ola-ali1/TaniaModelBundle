@@ -31,7 +31,7 @@ class Order implements PfTransactionInvoiceInterface
     );
 
     public static $statuses = array(
-        'placed' => 'new',
+        'new' => 'new',
         'verified' => 'verified',
         'delivering' => 'delivering',
         'delivered' => 'delivered',
@@ -424,7 +424,7 @@ class Order implements PfTransactionInvoiceInterface
         $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderStatuses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pfTransactions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->setStatus($this::$statuses['placed']);
+        $this->setStatus($this::$statuses['new']);
     }
 
     /**
