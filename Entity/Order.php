@@ -107,6 +107,12 @@ class Order implements PfTransactionInvoiceInterface
     protected $orderItems;
 
     /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderStatusHistory",mappedBy="order", cascade={"persist", "remove"})
+     */
+    protected $orderStatuses;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction", mappedBy="invoice")
@@ -415,6 +421,7 @@ class Order implements PfTransactionInvoiceInterface
     public function __construct()
     {
         $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderStatuses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pfTransactions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setStatus($this::$statuses['placed']);
     }
@@ -824,6 +831,12 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function setStatus($status)
     {
+        if ($status != $this->status) {
+            $orderStatus = new OrderStatusHistory();
+            $orderStatus->setStatus($status);
+            $orderStatus->setOrder($this);
+            $this->addOrderStatus($orderStatus);
+        }
         $this->status = $status;
         return $this;
     }
@@ -1740,5 +1753,39 @@ class Order implements PfTransactionInvoiceInterface
         unset($statuses['cancelled']);
         unset($statuses['transaction-pending']);
         return array_flip($statuses);
+    }
+
+    /**
+     * Add orderStatus
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderStatusHistory $orderStatus
+     *
+     * @return OrderStatusHistory
+     */
+    public function addOrderStatus(\Ibtikar\TaniaModelBundle\Entity\OrderStatusHistory $orderStatus)
+    {
+        $this->orderStatuses[] = $orderStatus;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderStatus
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderStatusHistory $orderStatus
+     */
+    public function removeOrderStatus(\Ibtikar\TaniaModelBundle\Entity\OrderStatusHistory $orderStatus)
+    {
+        $this->orderStatuses->removeElement($orderStatus);
+    }
+
+    /**
+     * Get $orderStatuses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderStatuses()
+    {
+        return $this->$orderStatuses;
     }
 }
