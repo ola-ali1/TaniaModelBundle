@@ -21,9 +21,12 @@ class DriverRepository extends EntityRepository implements UserLoaderInterface
     public function getTopDrivers($topRates)
     {
         return $this->createQueryBuilder('d')
+                ->select('d.driverRate, d.id, d.fullName, d.fullNameAr, COUNT(o.id) as ordersCount')
+                ->leftJoin('d.driverOrders', 'o', 'WITH', 'o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order AND o.rate IS NOT NULL')
                 ->where('d.driverRate in (:topRates)')
                 ->setParameter('topRates', $topRates)
                 ->orderBy('d.driverRate','DESC')
+                ->groupBy('d.id')
                 ->getQuery()
                 ->getResult();
     }
