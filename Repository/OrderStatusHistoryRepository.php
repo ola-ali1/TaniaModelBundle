@@ -9,7 +9,7 @@ class OrderStatusHistoryRepository extends EntityRepository
     public function getOrdersStatusCount($fromDate)
     {
         return $this->createQueryBuilder('ost')
-                ->join('ost.order', 'o')
+                ->join('ost.order', 'o', 'WITH', 'ost.status = o.status')
 		->select('COUNT(ost.id) as ordersCount,ost.status')
                 ->andWhere('ost.createdAt >= :start')
                 ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")

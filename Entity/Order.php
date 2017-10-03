@@ -1789,4 +1789,54 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->$orderStatuses;
     }
+
+    public function getPaymentMethods()
+    {
+        return self::$paymentMethodList;
+    }
+
+    public function getRateValues()
+    {
+        return [1,2,3,4,5];
+    }
+
+    /**
+     * Get cityNameAr
+     *
+     * @return string
+     */
+    public function getCityNameAr()
+    {
+        return $this->city ? $this->city->getNameAr(): '';
+    }
+
+    /**
+     * Get cityNameEn
+     *
+     * @return string
+     */
+    public function getCityNameEn()
+    {
+        return $this->city ? $this->city->getNameEn(): '';
+    }
+
+    /**
+     * Get cityAreaNameAr
+     *
+     * @return string
+     */
+    public function getCityAreaNameAr()
+    {
+        return $this->cityArea ? $this->cityArea->getNameAr(): '';
+    }
+
+    /**
+     * Get cityAreaNameEn
+     *
+     * @return string
+     */
+    public function getCityAreaNameEn()
+    {
+        return $this->cityArea ? $this->cityArea->getNameEn(): '';
+    }
 }
