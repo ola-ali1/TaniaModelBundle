@@ -397,6 +397,22 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="city_area_name_en", type="string", length=15, nullable=true)
+     *
+     */
+    protected $cityAreaNameEn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city_area_name_ar", type="string", length=15, nullable=true)
+     *
+     */
+    protected $cityAreaNameAr;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="driver_image", type="string", length=300, nullable=true)
      *
      */
@@ -1820,14 +1836,19 @@ class Order implements PfTransactionInvoiceInterface
         return $this->city ? $this->city->getNameEn(): '';
     }
 
+
     /**
-     * Get cityAreaNameAr
+     * Set cityAreaNameEn
      *
-     * @return string
+     * @param string $cityAreaNameEn
+     *
+     * @return Order
      */
-    public function getCityAreaNameAr()
+    public function setCityAreaNameEn($cityAreaNameEn)
     {
-        return $this->cityArea ? $this->cityArea->getNameAr(): '';
+        $this->cityAreaNameEn = $cityAreaNameEn;
+
+        return $this;
     }
 
     /**
@@ -1837,6 +1858,30 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getCityAreaNameEn()
     {
-        return $this->cityArea ? $this->cityArea->getNameEn(): '';
+        return $this->cityAreaNameEn;
+    }
+
+    /**
+     * Set cityAreaNameAr
+     *
+     * @param string $cityAreaNameAr
+     *
+     * @return Order
+     */
+    public function setCityAreaNameAr($cityAreaNameAr)
+    {
+        $this->cityAreaNameAr = $cityAreaNameAr;
+
+        return $this;
+    }
+
+    /**
+     * Get cityAreaNameAr
+     *
+     * @return string
+     */
+    public function getCityAreaNameAr()
+    {
+        return $this->cityAreaNameAr;
     }
 }
