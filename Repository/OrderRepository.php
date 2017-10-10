@@ -140,11 +140,12 @@ class OrderRepository extends EntityRepository
     public function getOrdersStatusCount($status)
     {
         return $this->createQueryBuilder('o')
-		->select('COUNT(o.id) as ordersCount')
+		->select('COUNT(o.id) as ordersCount, o.status')
                 ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
-                ->andWhere('o.status = :status')
+                ->andWhere('o.status in (:status)')
                 ->setParameter('status', $status)
+                ->groupBy('o.status')
                 ->getQuery()
-                ->getSingleScalarResult();
+                ->getScalarResult();
     }
 }
