@@ -264,4 +264,15 @@ class Driver extends User
         return self::$statuses[$this->status ? '1' : '0'];
     }
 
+    public function getCityAreaNameEn()
+    {
+        return $this->driverCityAreas[0]->getCityArea()->getNameEn();
+    }
+
+    public function getCityAreaNameAr()
+    {
+        if(isset($this->driverCityAreas[0]))
+            return $this->driverCityAreas[0]->getCityArea()->getNameAr();
+        return '';
+    }
 }
