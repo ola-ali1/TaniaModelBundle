@@ -266,13 +266,15 @@ class Driver extends User
 
     public function getCityAreaNameEn()
     {
-        return $this->driverCityAreas[0]->getCityArea()->getNameEn();
+        if(isset($this->driverCityAreas[0]))
+            return $this->driverCityAreas[0]->getCityArea()->getNameEn();
+        return;
     }
 
     public function getCityAreaNameAr()
     {
         if(isset($this->driverCityAreas[0]))
             return $this->driverCityAreas[0]->getCityArea()->getNameAr();
-        return '';
+        return;
     }
 }
