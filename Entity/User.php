@@ -554,4 +554,17 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     {
         return $this->balance;
     }
+
+    public function getCityNameAr()
+    {
+        if($this->city)
+            return $this->city->getNameAr();
+        return;
+    }
+
+    public function getCityNameEn()
+    {
+        if($this->city)
+            return $this->city->getNameEn();
+    }
 }
