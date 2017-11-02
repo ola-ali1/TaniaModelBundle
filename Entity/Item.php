@@ -101,6 +101,11 @@ class Item
     private $nameEn;
 
     /**
+     * @ORM\Column(name="sort", type="integer", options={"default": 0})
+     */
+    private $sort;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="isSynced", type="boolean",  options={"default": 0}, nullable=true)
@@ -284,6 +289,30 @@ class Item
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set sort
+     *
+     * @param string $sort
+     *
+     * @return User
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Get sort
+     *
+     * @return string
+     */
+    public function getSort()
+    {
+        return $this->sort;
     }
 
     /**
