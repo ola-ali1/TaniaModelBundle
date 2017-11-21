@@ -512,6 +512,9 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      */
     public function setEmail($email)
     {
+        if(!$email)
+            $email = NULL; //for unique entity validation to ignore null values
+
         $this->email = $email;
 
         return $this;
