@@ -101,7 +101,7 @@ class Item
     private $nameEn;
 
     /**
-     * @ORM\Column(name="sort", type="integer", options={"default": 0})
+     * @ORM\Column(name="sort", type="integer", options={"default": 0}, nullable = true)
      */
     private $sort;
 
