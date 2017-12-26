@@ -3,6 +3,10 @@ services:
         class: Ibtikar\TaniaModelBundle\Service\UserDeviceNotification
         arguments: ["@doctrine.orm.entity_manager", "@firebase_cloud_messaging"]
 
+    jawaly_sms:
+        class: Ibtikar\TaniaModelBundle\Service\JawalySMS
+        arguments: ["%jawaly_username%", %jawaly_api_key%, %jawaly_from_name%, "@logger"]
+
     notification_center:
         class: Ibtikar\TaniaModelBundle\Service\NotificationCenter
         arguments: ["@doctrine.orm.entity_manager", "@user_device_notification"]
