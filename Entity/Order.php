@@ -263,6 +263,68 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="cost", type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $cost;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tax_fees", type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $taxFees;
+
+    /**
+     * Set taxFees
+     *
+     * @param string $taxFees
+     *
+     * @return Order
+     */
+    public function setTaxFees($taxFees)
+    {
+        $this->taxFees = $taxFees;
+
+        return $this;
+    }
+
+    /**
+     * Get taxFees
+     *
+     * @return string
+     */
+    public function getTaxFees()
+    {
+        return $this->taxFees;
+    }
+
+    /**
+     * Set cost
+     *
+     * @param string $cost
+     *
+     * @return Order
+     */
+    public function setCost($cost)
+    {
+        $this->cost = $cost;
+
+        return $this;
+    }
+
+    /**
+     * Get cost
+     *
+     * @return string
+     */
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="rate", type="decimal", precision=4, scale=2, nullable=true,options={"comment":"value set by user for rating order"})
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"rate"})
      * @Assert\Regex(
