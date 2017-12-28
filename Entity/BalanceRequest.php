@@ -30,14 +30,6 @@ class BalanceRequest extends Order
     private $balanceName;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, options={"default": 0})
-     * @Assert\Type(type="numeric")
-     */
-    protected $price;
-
-    /**
      * Set points
      *
      * @param string $points
@@ -59,30 +51,6 @@ class BalanceRequest extends Order
     public function getPoints()
     {
         return $this->points;
-    }
-
-    /**
-     * Set price
-     *
-     * @param string $price
-     *
-     * @return Balance
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return string
-     */
-    public function getPrice()
-    {
-        return $this->price;
     }
 
 

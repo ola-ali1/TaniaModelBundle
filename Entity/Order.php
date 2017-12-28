@@ -263,10 +263,10 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="cost", type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, options={"default": 0})
+     * @Assert\Type(type="numeric")
      */
-    private $cost;
-
+    protected $price;
     /**
      * @var string
      *
@@ -299,27 +299,27 @@ class Order implements PfTransactionInvoiceInterface
     }
 
     /**
-     * Set cost
+     * Set price
      *
-     * @param string $cost
+     * @param string $price
      *
-     * @return Order
+     * @return Balance
      */
-    public function setCost($cost)
+    public function setPrice($price)
     {
-        $this->cost = $cost;
+        $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get cost
+     * Get price
      *
      * @return string
      */
-    public function getCost()
+    public function getPrice()
     {
-        return $this->cost;
+        return $this->price;
     }
 
     /**
