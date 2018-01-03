@@ -173,6 +173,13 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="end_date", type="datetime", nullable=true)
+     */
+    private $endDate;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="skip_reason", type="string", length=190, nullable=true)
      */
     private $skipReason;
@@ -267,6 +274,7 @@ class Order implements PfTransactionInvoiceInterface
      * @Assert\Type(type="numeric")
      */
     protected $price;
+
     /**
      * @var string
      *
@@ -1945,5 +1953,85 @@ class Order implements PfTransactionInvoiceInterface
     public function getCityAreaNameAr()
     {
         return $this->cityAreaNameAr;
+    }
+
+    /**
+     * Set endDate
+     *
+     * @param \DateTime $endDate
+     *
+     * @return Order
+     */
+    public function setEndDate($endDate)
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    /**
+     * Get endDate
+     *
+     * @return \DateTime|null
+     */
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
+     * @return string
+     */
+    public function getItemsNamesAndQuantities()
+    {
+        $itemsString = '';
+        foreach ($this->orderItems as $orderItem) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/> ';
+            }
+            $itemsString .= $orderItem->getItem()->getNameEn() . ': ' . $orderItem->getCount();
+        }
+        return $itemsString;
+    }
+
+    /**
+     * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
+     * @return Integer
+     */
+    public function getItemsCount()
+    {
+        $itemsCount = 0;
+        foreach ($this->orderItems as $orderItem) {
+            $itemsCount += $orderItem->getCount();
+        }
+        return $itemsCount;
+    }
+
+    /**
+     * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
+     * @return string
+     */
+    public function getEndDateString()
+    {
+        $endDateString = '';
+        if ($this->endDate) {
+            $endDateString = $this->endDate->format('');
+        }
+        return $endDateString;
+    }
+
+    /**
+     * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
+     * @return string
+     */
+    public function getTotalSpentTime()
+    {
+        $time = '';
+        if ($this->endDate && $this->createdAt) {
+            $timeInterval = $this->endDate->diff($this->createdAt);
+            $time = $timeInterval->format('%a يوم, %H ساعة');
+        }
+        return $time;
     }
 }
