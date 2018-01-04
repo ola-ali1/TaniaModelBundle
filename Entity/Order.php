@@ -2016,7 +2016,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         $endDateString = '';
         if ($this->endDate) {
-            $endDateString = $this->endDate->format('');
+            $endDateString = $this->endDate->format('d/m/Y');
         }
         return $endDateString;
     }
