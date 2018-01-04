@@ -2030,7 +2030,7 @@ class Order implements PfTransactionInvoiceInterface
         $time = '';
         if ($this->endDate && $this->createdAt) {
             $timeInterval = $this->endDate->diff($this->createdAt);
-            $time = $timeInterval->format('%a يوم, %H ساعة');
+            $time = $timeInterval->format('%a يوم, %H ساعة, %I دقيقة');
         }
         return $time;
     }
