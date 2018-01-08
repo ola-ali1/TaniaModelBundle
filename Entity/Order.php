@@ -2025,12 +2025,32 @@ class Order implements PfTransactionInvoiceInterface
      * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
      * @return string
      */
-    public function getTotalSpentTime()
+    public function getTotalSpentTimeAr()
     {
         $time = '';
         if ($this->endDate && $this->createdAt) {
             $timeInterval = $this->endDate->diff($this->createdAt);
-            $time = $timeInterval->format('%a يوم, %H ساعة, %I دقيقة');
+            $minuteString = 'دقيقة';
+            $hourString = 'ساعة';
+            $dayString = 'يوم';
+            $time = $timeInterval->format("%a $dayString, %H $hourString, %I $minuteString");
+        }
+        return $time;
+    }
+
+    /**
+     * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
+     * @return string
+     */
+    public function getTotalSpentTimeEn()
+    {
+        $time = '';
+        if ($this->endDate && $this->createdAt) {
+            $timeInterval = $this->endDate->diff($this->createdAt);
+            $minuteString = 'minute';
+            $hourString = 'hour';
+            $dayString = 'day';
+            $time = $timeInterval->format("%a $dayString, %H $hourString, %I $minuteString");
         }
         return $time;
     }
