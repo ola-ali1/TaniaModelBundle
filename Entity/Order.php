@@ -57,6 +57,11 @@ class Order implements PfTransactionInvoiceInterface
     protected $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\User")
+     */
+    private $assignedBy;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\User", inversedBy="orders")
      */
     protected $user;
@@ -530,6 +535,30 @@ class Order implements PfTransactionInvoiceInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set assignedBy
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\User $assignedBy
+     *
+     * @return User
+     */
+    public function setAssignedBy(\Ibtikar\TaniaModelBundle\Entity\User $assignedBy = null)
+    {
+        $this->assignedBy = $assignedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\User
+     */
+    public function getAssignedBy()
+    {
+        return $this->assignedBy;
     }
 
     /**
