@@ -1912,7 +1912,7 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getRateValues()
     {
-        return [1,2,3,4,5];
+        return ['1' => 1,'2' => 2,'3' => 3,'4' => 4,'5' => 5];
     }
 
     /**
