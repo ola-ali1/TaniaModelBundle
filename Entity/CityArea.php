@@ -36,7 +36,7 @@ class CityArea
      *
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"create", "edit"})
      * @Assert\Length(min = 3, max = 15, groups={"create", "edit"})
-     * @ORM\Column(name="nameAr", type="string", length=15, unique=true)
+     * @ORM\Column(name="nameAr", type="string", length=15)
      */
     private $nameAr;
 
@@ -45,7 +45,7 @@ class CityArea
      *
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"create", "edit"})
      * @Assert\Length(min = 3, max = 15, groups={"create", "edit"})
-     * @ORM\Column(name="nameEn", type="string", length=15, unique=true)
+     * @ORM\Column(name="nameEn", type="string", length=15)
      */
     private $nameEn;
 
