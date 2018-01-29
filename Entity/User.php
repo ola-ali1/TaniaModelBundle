@@ -113,6 +113,14 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      */
     private $balance = 0;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usedBalance", type="decimal", precision=10, scale=2, options={"default": 0})
+     * @Assert\Type(type="numeric")
+     */
+    private $usedBalance = 0;
+
     public function __sleep() {
         $classVars = get_object_vars($this);
         // unset all object proxies not the collections
@@ -553,6 +561,38 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     public function getBalance()
     {
         return $this->balance;
+    }
+
+    /**
+     * Set usedBalance
+     *
+     * @param string $usedBalance
+     *
+     * @return User
+     */
+    public function setUsedBalance($usedBalance)
+    {
+        $this->usedBalance = $usedBalance;
+
+        return $this;
+    }
+
+    /**
+     * Get usedBalance
+     *
+     * @return string
+     */
+    public function getUsedBalance()
+    {
+        return $this->usedBalance;
+    }
+
+    /**
+     *
+     * @return float
+     */
+    public function getTotalBalance() {
+        return $this->balance + $this->usedBalance;
     }
 
     public function getCityNameAr()
