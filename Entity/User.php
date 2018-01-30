@@ -607,4 +607,11 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
         if($this->city)
             return $this->city->getNameEn();
     }
+
+    /**
+     * @return array
+     */
+    public function getYesOrNoOptions() {
+        return array('Yes' => 'Yes', 'No' => 'No');
+    }
 }
