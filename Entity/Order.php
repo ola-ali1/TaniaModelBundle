@@ -912,6 +912,7 @@ class Order implements PfTransactionInvoiceInterface
     public function setDriver(\Ibtikar\TaniaModelBundle\Entity\Driver $driver = null)
     {
         $this->driver = $driver;
+        if ($driver) {
         $this->setDriverFullName($driver->getFullName());
         $this->setDriverFullNameAr($driver->getFullNameAr());
         if ($driver->getImage()) {
@@ -922,6 +923,15 @@ class Order implements PfTransactionInvoiceInterface
         $this->setDriverUsername($driver->getUsername());
         foreach ($driver->getVanDrivers() as $vanDriver) {
             $this->setVan($vanDriver->getVan());
+        }
+        } else {
+            $this->setDriverFullName(null);
+            $this->setDriverFullNameAr(null);
+            $this->setDriverImage(null);
+            $this->setDriverPhone(null);
+            $this->setDriverRate(0);
+            $this->setDriverUsername(null);
+            $this->van = null;
         }
 
         return $this;
