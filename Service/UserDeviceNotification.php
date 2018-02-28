@@ -44,7 +44,6 @@ class UserDeviceNotification
     }
 
     /**
-     * @param FirebaseCloudMessaging $pushNotificationService
      * @param array $usersIds
      * @param string $title
      * @param string $body
@@ -64,6 +63,22 @@ class UserDeviceNotification
                 if ($userDevice->getType() === 'android') {
                     $this->firebaseCloudMessagingService->sendMessageToDevice($userDevice->getToken(), array_merge($data, array('title' => $title, 'body' => $body)));
                 }
+            }
+            $this->em->flush();
+        }
+    }
+
+    /**
+     * @param array $usersIds
+     * @param array $data
+     */
+    public function sendDataNotificationToUsers(array $usersIds, array $data = array())
+    {
+        if (count($usersIds) > 0) {
+            $userDevices = $this->em->getRepository('IbtikarGoogleServicesBundle:Device')->findBy(array('user' => $usersIds, 'type' => 'android'));
+            /* @var $userDevice \Ibtikar\GoogleServicesBundle\Entity\Device */
+            foreach ($userDevices as $userDevice) {
+                $this->firebaseCloudMessagingService->sendMessageToDevice($userDevice->getToken(), $data);
             }
             $this->em->flush();
         }
