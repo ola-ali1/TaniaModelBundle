@@ -57,6 +57,15 @@ class Shift
     protected $orders;
 
     /**
+     * @var integer
+     *
+     * @Assert\NotBlank
+     * @Assert\Type(type="numeric")
+     * @ORM\Column(name="maximumAllowedOrdersPerDay", type="integer", nullable=true)
+     */
+    private $maximumAllowedOrdersPerDay;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -203,4 +212,23 @@ class Shift
     {
         return $this->orders;
     }
+
+    /**
+     * @return integer
+     */
+    public function getMaximumAllowedOrdersPerDay()
+    {
+        return $this->maximumAllowedOrdersPerDay;
+    }
+
+    /**
+     * @param integer $maximumAllowedOrdersPerDay
+     * @return Shift
+     */
+    public function setMaximumAllowedOrdersPerDay($maximumAllowedOrdersPerDay)
+    {
+        $this->maximumAllowedOrdersPerDay = $maximumAllowedOrdersPerDay;
+        return $this;
+    }
+
 }
