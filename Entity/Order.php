@@ -288,6 +288,13 @@ class Order implements PfTransactionInvoiceInterface
     private $taxFees;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="source", type="string", length=190, nullable=true)
+     */
+    private $source;
+
+    /**
      * Set taxFees
      *
      * @param string $taxFees
@@ -2092,5 +2099,29 @@ class Order implements PfTransactionInvoiceInterface
             $time = $timeInterval->format("%a $dayString, %H $hourString, %I $minuteString");
         }
         return $time;
+    }
+
+    /**
+     * Set source
+     *
+     * @param string $source
+     *
+     * @return Order
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }
