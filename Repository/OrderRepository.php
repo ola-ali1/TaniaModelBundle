@@ -7,6 +7,28 @@ use Ibtikar\TaniaModelBundle\Entity\Order;
 
 class OrderRepository extends EntityRepository
 {
+
+    /**
+     * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
+     * @param integer $shiftId
+     * @return array
+     */
+    public function getShiftsOrdersCountToday($shiftId = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('o')
+                ->select('COUNT(o.id) as ordersCount, IDENTITY(o.shift) as shiftId')
+                ->where('o.createdAt >= :start')
+                ->andWhere('o.createdAt <= :end')
+//                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->setParameter('start', new \DateTime('midnight'))
+                ->setParameter('end', new \DateTime('tomorrow'))
+                ;
+        if ($shiftId) {
+            $queryBuilder->andWhere('o.shift = :shiftId')->setParameter('shiftId', $shiftId);
+        }
+        return $queryBuilder->groupBy('o.shift')->getQuery()->getResult();
+    }
+
     public function getDriverRate($driverId)
     {
         $query = $this->createQueryBuilder('o')
