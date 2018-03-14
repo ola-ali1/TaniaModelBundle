@@ -2124,4 +2124,12 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->source;
     }
+
+    /**
+     * @return array
+     */
+    public function getSources()
+    {
+        return array('android' => 'android', 'ios' => 'ios');
+    }
 }
