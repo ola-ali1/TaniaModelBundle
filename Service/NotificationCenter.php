@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManager;
 class NotificationCenter
 {
 
+    const USER_ORDER_EDITED = 'user-order-edited';
     const USER_ORDER_ASSIGNED = 'user-order-assigned';
     const USER_ORDER_CLOSED = 'user-order-closed';
     const USER_ORDER_DELIVERING = 'user-order-delivering';
