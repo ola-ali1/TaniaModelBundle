@@ -1030,6 +1030,14 @@ class Order implements PfTransactionInvoiceInterface
         return '';
     }
 
+    public function getUserBalance()
+    {
+        if ($this->user)
+            return $this->user->getBalance();
+
+        return '';
+    }
+
     /**
      * Set closeReason
      *
