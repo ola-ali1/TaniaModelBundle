@@ -1755,6 +1755,69 @@ class Order implements PfTransactionInvoiceInterface
     }
 
     /**
+     * @return null|\DateTime
+     */
+    public function getDeliveryDate()
+    {
+        try {
+            $deliveryDate = new \DateTime('@' . $this->getReceivingDate(), new \DateTimeZone(date_default_timezone_get()));
+            return $deliveryDate->format('d/m/Y');
+        } catch (\Exception $e) {
+
+        }
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getShiftFromString()
+    {
+        if ($this->shiftFrom) {
+            return $this->shiftFrom->format('H:i');
+        }
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getShiftToString()
+    {
+        if ($this->shiftTo) {
+            return $this->shiftTo->format('H:i');
+        }
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getShiftNameAr()
+    {
+        if ($this->shift) {
+            return $this->shift->getShiftAr();
+        }
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getShiftNameEn()
+    {
+        if ($this->shift) {
+            return $this->shift->getShift();
+        }
+    }
+
+    /**
+     * @return integer
+     */
+    public function getOrdersCount()
+    {
+        if ($this->user) {
+            return $this->user->getOrdersCount();
+        }
+    }
+
+    /**
      * check if it is possible to create new transaction for this invoice or not
      * @return boolean
      */

@@ -121,6 +121,13 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      */
     private $usedBalance = 0;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ordersCount", type="integer", options={"default": 0})
+     */
+    private $ordersCount = 0;
+
     public function __sleep() {
         $classVars = get_object_vars($this);
         // unset all object proxies not the collections
@@ -614,4 +621,24 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     public function getYesOrNoOptions() {
         return array('Yes' => 'Yes', 'No' => 'No');
     }
+
+    /**
+     * @return integer
+     */
+    public function getOrdersCount()
+    {
+        return $this->ordersCount;
+    }
+
+    /**
+     * @param integer $ordersCount
+     * @return this
+     */
+    public function setOrdersCount($ordersCount)
+    {
+        $this->ordersCount = $ordersCount;
+        return $this;
+    }
+
+
 }
