@@ -2,6 +2,8 @@
 
 namespace Ibtikar\TaniaModelBundle\Repository;
 
+use Ibtikar\TaniaModelBundle\Entity\User;
+
 /**
  * BaseUserRepository
  *
@@ -12,6 +14,18 @@ namespace Ibtikar\TaniaModelBundle\Repository;
  */
 class BaseUserRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
+     * @param User $user
+     */
+    public function increamentNumberOfOrders(User $user)
+    {
+        $this->getEntityManager()
+            ->createQuery('UPDATE IbtikarTaniaModelBundle:User u set u.ordersCount = u.ordersCount + 1 WHERE u.id = :userId')
+            ->setParameter('userId', $user->getId())
+            ->execute();
+    }
 
     public function countTodaysCodes($user)
     {
