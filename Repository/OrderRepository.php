@@ -17,9 +17,9 @@ class OrderRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('o')
                 ->select('COUNT(o.id) as ordersCount, IDENTITY(o.shift) as shiftId')
-                ->where('o.createdAt >= :start')
-                ->andWhere('o.createdAt <= :end')
-//                ->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                ->where('o.requiredDeliveryDate IS NOT NULL')
+                ->andWhere('o.requiredDeliveryDate >= :start')
+                ->andWhere('o.requiredDeliveryDate <= :end')
                 ->setParameter('start', new \DateTime('midnight'))
                 ->setParameter('end', new \DateTime('tomorrow'))
                 ;
