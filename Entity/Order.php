@@ -190,6 +190,13 @@ class Order implements PfTransactionInvoiceInterface
     private $skipReason;
 
     /**
+     * @var \DateTime $requiredDeliveryDate
+     *
+     * @ORM\Column(name="requiredDeliveryDate", type="date", nullable=true)
+     */
+    private $requiredDeliveryDate;
+
+    /**
      * @var text
      *
      * @ORM\Column(name="receiving_date", type="text", nullable=true)
@@ -2202,5 +2209,29 @@ class Order implements PfTransactionInvoiceInterface
     public function getSources()
     {
         return array('android' => 'android', 'ios' => 'ios');
+    }
+
+    /**
+     * Set requiredDeliveryDate
+     *
+     * @param \DateTime $requiredDeliveryDate
+     *
+     * @return Order
+     */
+    public function setRequiredDeliveryDate($requiredDeliveryDate)
+    {
+        $this->requiredDeliveryDate = $requiredDeliveryDate;
+
+        return $this;
+    }
+
+    /**
+     * Get requiredDeliveryDate
+     *
+     * @return \DateTime
+     */
+    public function getRequiredDeliveryDate()
+    {
+        return $this->requiredDeliveryDate;
     }
 }
