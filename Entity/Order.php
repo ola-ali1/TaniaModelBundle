@@ -830,6 +830,17 @@ class Order implements PfTransactionInvoiceInterface
     public function setReceivingDate($receivingDate)
     {
         $this->receivingDate = $receivingDate;
+        if ($receivingDate) {
+            try {
+                $requiredDeliveryDate = new \DateTime('@' . $receivingDate);
+                $requiredDeliveryDate->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+                $this->setRequiredDeliveryDate($requiredDeliveryDate);
+            } catch (\Exception $ex) {
+                $this->setRequiredDeliveryDate(null);
+            }
+        } else {
+            $this->setRequiredDeliveryDate(null);
+        }
 
         return $this;
     }
@@ -1745,32 +1756,24 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function isOrderAssignableToOfflineDrivers()
     {
-        if ($this->getShiftFrom() && $this->getShiftTo()) {
+        if ($this->getShiftFrom() && $this->getShiftTo() && $this->getRequiredDeliveryDate()) {
             $orderShiftStartTime = new \DateTime($this->getShiftFrom()->format('H:i:s'));
             $orderShiftEndTime = new \DateTime($this->getShiftTo()->format('H:i:s'));
-            try {
-                $orderDate = new \DateTime('@' . $this->getReceivingDate());
-                $currentTime = new \DateTime();
-                if ($orderDate->format('d') === $currentTime->format('d') && $currentTime >= $orderShiftStartTime && $currentTime <= $orderShiftEndTime) {
-                    return false;
-                }
-            } catch (\Exception $e) {
-
+            $currentTime = new \DateTime();
+            if ($this->getRequiredDeliveryDate()->format('d') === $currentTime->format('d') && $this->getRequiredDeliveryDate()->format('m') === $currentTime->format('m') && $currentTime >= $orderShiftStartTime && $currentTime <= $orderShiftEndTime) {
+                return false;
             }
         }
         return true;
     }
 
     /**
-     * @return null|\DateTime
+     * @return null|string
      */
     public function getDeliveryDate()
     {
-        try {
-            $deliveryDate = new \DateTime('@' . $this->getReceivingDate(), new \DateTimeZone(date_default_timezone_get()));
-            return $deliveryDate->format('d/m/Y');
-        } catch (\Exception $e) {
-
+        if ($this->requiredDeliveryDate) {
+            return $this->requiredDeliveryDate->format('d/m/Y');
         }
     }
 
