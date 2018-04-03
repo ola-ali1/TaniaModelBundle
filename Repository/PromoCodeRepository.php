@@ -17,7 +17,7 @@ class PromoCodeRepository extends EntityRepository
     {
         return $this->createQueryBuilder('pc')
                 ->select('pc')
-                ->where('pc.active = 1')
+                ->where('pc.enabled = 1')
                 ->andWhere('pc.sendToAllUsers = 1')
                 ->setMaxResults(1)
                 ->getQuery()->getResult();
