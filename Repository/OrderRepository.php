@@ -145,7 +145,7 @@ class OrderRepository extends EntityRepository
                 ->setParameters(['start' => $fromDate->format('Y-m-d H:i:s'),'end' => $toDate->format('Y-m-d H:i:s')])
                 ->orderBy('o.id', 'DESC')
                 ->getQuery()
-                ->getResult();
+                 ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
         return $query;
     }
