@@ -484,7 +484,7 @@ class PromoCode implements GroupSequenceProviderInterface
     public static function getTypes()
     {
         return array(
-            'fixed value' => PromoCode::PROMOCODE_TYPE_FIXED_VALUE,
+            PromoCode::PROMOCODE_TYPE_FIXED_VALUE => PromoCode::PROMOCODE_TYPE_FIXED_VALUE,
             PromoCode::PROMOCODE_TYPE_PERCENTAGE => PromoCode::PROMOCODE_TYPE_PERCENTAGE
         );
     }
