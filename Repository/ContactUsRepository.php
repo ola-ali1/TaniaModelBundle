@@ -19,16 +19,14 @@ class ContactUsRepository extends \Doctrine\ORM\EntityRepository
      * @return Orders list
      */
     public function getContactUsCreatedAt($fromDate, $toDate){
-        $query = $this->createQueryBuilder('o');
-
-        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\ContactUs")
-                ->andWhere('o.createdAt >= :start')
+        $queryBuilder = $this->createQueryBuilder('o');
+        if ($fromDate && $toDate) {
+            $queryBuilder->andWhere('o.createdAt >= :start')
                 ->andWhere('o.createdAt <= :end')
-                ->setParameters(['start' => $fromDate->format('Y-m-d H:i:s'),'end' => $toDate->format('Y-m-d H:i:s')])
-                ->orderBy('o.id', 'DESC')
+                ->setParameters(['start' => $fromDate->format('Y-m-d H:i:s'), 'end' => $toDate->format('Y-m-d H:i:s')]);
+        }
+        return $queryBuilder->orderBy('o.id', 'DESC')
                 ->getQuery()
                 ->getResult();
-
-        return $query;
     }
 }

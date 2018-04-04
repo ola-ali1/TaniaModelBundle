@@ -8,12 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * ContactUs
  *
- * @ORM\Table(name="contact_us")})
- * @ORM\Entity
+ * @ORM\Table(name="contact_us")
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\ContactUsRepository")
  */
 class ContactUs
 {
-    
+
     public static $contactTypes = array(
         'driver-contact' => 'driver-contact',
         'suggestion' => 'suggestion',
