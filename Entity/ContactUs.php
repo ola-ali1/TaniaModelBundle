@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ContactUs
 {
     
-//    use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
     public static $contactTypes = array(
         'driver-contact' => 'driver-contact',
