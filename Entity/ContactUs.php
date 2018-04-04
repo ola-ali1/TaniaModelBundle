@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ContactUs
 {
     
-
     public static $contactTypes = array(
         'driver-contact' => 'driver-contact',
         'suggestion' => 'suggestion',
