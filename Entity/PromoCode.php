@@ -494,7 +494,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function getRemainingUsageTimes()
     {
-        return $this->maximumAllowedTimesForAllUsers !== null ? $this->maximumAllowedTimesForAllUsers - $this->numberOfUsedTimes : '∞';
+        return $this->maximumAllowedTimesForAllUsers ? $this->maximumAllowedTimesForAllUsers - $this->numberOfUsedTimes : '∞';
     }
 
     /**
@@ -502,7 +502,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function getMaximumUsageTimesString()
     {
-        return $this->maximumAllowedTimesForAllUsers !== null ? $this->maximumAllowedTimesForAllUsers : '∞';
+        return $this->maximumAllowedTimesForAllUsers ? $this->maximumAllowedTimesForAllUsers : '∞';
     }
 
     /**
@@ -510,7 +510,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function isUsable()
     {
-        return !(!$this->enabled || (($this->expiryTime !== null) && ($this->expiryTime < new \DateTime())) || ($this->maximumAllowedTimesForAllUsers !== null && ($this->maximumAllowedTimesForAllUsers === $this->numberOfUsedTimes) || ($this->maximumNumberOfUsersAllowedToUse !== null && ($this->maximumNumberOfUsersAllowedToUse === $this->numberOfUsedByUsers))));
+        return !(!$this->enabled || (($this->expiryTime) && ($this->expiryTime < new \DateTime())) || ($this->maximumAllowedTimesForAllUsers && ($this->maximumAllowedTimesForAllUsers === $this->numberOfUsedTimes) || ($this->maximumNumberOfUsersAllowedToUse && ($this->maximumNumberOfUsersAllowedToUse === $this->numberOfUsedByUsers))));
     }
 
     /**
@@ -518,7 +518,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function getExpired()
     {
-        return (($this->expiryTime !== null) && ($this->expiryTime < new \DateTime())) || ($this->maximumAllowedTimesForAllUsers !== null && ($this->maximumAllowedTimesForAllUsers === $this->numberOfUsedTimes));
+        return (($this->expiryTime) && ($this->expiryTime < new \DateTime())) || ($this->maximumAllowedTimesForAllUsers && ($this->maximumAllowedTimesForAllUsers === $this->numberOfUsedTimes));
     }
 
     /**
@@ -526,7 +526,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function getAllowMultiUseForSingleUser()
     {
-        return $this->maximumAllowedTimesForAllUsers === null ? true : false;
+        return $this->maximumNumberOfAllowedTimesPerUser > 1 ? true : false;
     }
 
     /**
@@ -536,9 +536,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function setAllowMultiUseForSingleUser($allowMultiUseForSingleUser)
     {
-        if ($allowMultiUseForSingleUser) {
-            $this->maximumAllowedTimesForAllUsers = null;
-        } else {
+        if (!$allowMultiUseForSingleUser) {
             $this->maximumAllowedTimesForAllUsers = 1;
         }
         return $this;
