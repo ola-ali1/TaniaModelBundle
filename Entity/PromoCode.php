@@ -54,8 +54,8 @@ class PromoCode implements GroupSequenceProviderInterface
      * @var string
      *
      * @Assert\NotBlank
-     * @Assert\Length(min=1, max=10)
-     * @ORM\Column(name="code", type="string", length=10, unique=true)
+     * @Assert\Length(min=1, max=20)
+     * @ORM\Column(name="code", type="string", length=20, unique=true)
      */
     private $code;
 
@@ -74,7 +74,7 @@ class PromoCode implements GroupSequenceProviderInterface
      *
      * @Assert\NotBlank
      * @Assert\DateTime
-     * @Assert\Range(min="tomorrow")
+     * @Assert\Range(min="+1 hour")
      * @ORM\Column(name="expiryTime", type="datetime", nullable=true)
      */
     private $expiryTime;
