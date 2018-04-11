@@ -106,6 +106,7 @@ class PromoCode implements GroupSequenceProviderInterface
     /**
      * @var int
      *
+     * @Assert\Expression("value == null or value >= this.getMaximumNumberOfAllowedTimesPerUser()", message="This value must be larger than or equal to maximum number of allowed times per user")
      * @Assert\Range(min=1, max=999999)
      * @ORM\Column(name="maximumAllowedTimesForAllUsers", type="integer", nullable=true)
      */
