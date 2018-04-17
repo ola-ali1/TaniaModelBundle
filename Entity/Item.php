@@ -106,6 +106,13 @@ class Item
     private $sort = 0;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Regex(pattern="/^\d+$/")
+     * @ORM\Column(name="minimumAmountToOrder", type="integer", options={"default": 1})
+     */
+    private $minimumAmountToOrder = 1;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="isSynced", type="boolean",  options={"default": 0}, nullable=true)
@@ -596,4 +603,27 @@ class Item
     }
 
 
+    /**
+     * Set minimumAmountToOrder
+     *
+     * @param integer $minimumAmountToOrder
+     *
+     * @return Item
+     */
+    public function setMinimumAmountToOrder($minimumAmountToOrder)
+    {
+        $this->minimumAmountToOrder = $minimumAmountToOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get minimumAmountToOrder
+     *
+     * @return integer
+     */
+    public function getMinimumAmountToOrder()
+    {
+        return $this->minimumAmountToOrder;
+    }
 }
