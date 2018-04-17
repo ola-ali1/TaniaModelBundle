@@ -107,6 +107,7 @@ class Item
 
     /**
      * @Assert\NotBlank
+     * @Assert\Range(min=1)
      * @Assert\Regex(pattern="/^\d+$/")
      * @ORM\Column(name="minimumAmountToOrder", type="integer", options={"default": 1})
      */
