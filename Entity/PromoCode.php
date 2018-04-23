@@ -511,7 +511,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function isUsable()
     {
-        return !(!$this->enabled || (($this->expiryTime) && ($this->expiryTime < new \DateTime())) || ($this->maximumAllowedTimesForAllUsers && ($this->maximumAllowedTimesForAllUsers === $this->numberOfUsedTimes) || ($this->maximumNumberOfUsersAllowedToUse && ($this->maximumNumberOfUsersAllowedToUse === $this->numberOfUsedByUsers))));
+        return !(!$this->enabled || $this->getExpired());
     }
 
     /**
@@ -519,7 +519,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function getExpired()
     {
-        return (($this->expiryTime) && ($this->expiryTime < new \DateTime())) || ($this->maximumAllowedTimesForAllUsers && ($this->maximumAllowedTimesForAllUsers === $this->numberOfUsedTimes));
+        return (($this->expiryTime) && ($this->expiryTime < new \DateTime())) || ($this->maximumAllowedTimesForAllUsers && ($this->maximumAllowedTimesForAllUsers === $this->numberOfUsedTimes)) || ($this->maximumNumberOfUsersAllowedToUse && ($this->maximumNumberOfUsersAllowedToUse === $this->numberOfUsedByUsers));
     }
 
     /**

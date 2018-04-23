@@ -170,4 +170,21 @@ class OrderRepository extends EntityRepository
                 ->getQuery()
                 ->getScalarResult();
     }
+
+    /**
+     * Count of promo-code used time by sepeific user
+     *
+     * @param int $userId
+     * @param int $promoCodeId
+     * @return int count
+     */
+    public function countPromoCodeUsedTimesByUser($userId, $promoCodeId)
+    {
+        return $this->createQueryBuilder('o')
+                ->select('count(1)')
+                ->where('o.promoCode = :promoCodeId')->setParameter('promoCodeId', $promoCodeId)
+                ->andWhere('o.user = :user')->setParameter('user', $userId)
+                ->getQuery()->getSingleScalarResult();
+    }
+
 }

@@ -302,6 +302,115 @@ class Order implements PfTransactionInvoiceInterface
     private $source;
 
     /**
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\PromoCode", inversedBy="orders")
+     */
+    protected $promoCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="promo_code_name", type="string", length=20, nullable=true)
+     */
+    private $promoCodeName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="promo_code_method", type="string", length=11, nullable=true)
+     */
+    private $promoCodeMethod;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="promo_code_value", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $promoCodeValue;
+
+    /**
+     * Set promoCode
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\PromoCode $promoCode
+     *
+     * @return PromoCode
+     */
+    public function setPromoCode(\Ibtikar\TaniaModelBundle\Entity\PromoCode $promoCode = null)
+    {
+        if ($promoCode) {
+            $this->setPromoCodeMethod($promoCode->getType());
+            $this->setPromoCodeName($promoCode->getCode());
+            $this->setPromoCodeValue($promoCode->getDiscountAmount());
+        } else {
+            $this->setPromoCodeMethod(null);
+            $this->setPromoCodeName(null);
+            $this->setPromoCodeValue(null);
+        }
+
+        $this->promoCode = $promoCode;
+
+        return $this;
+    }
+
+    /**
+     * Get promoCode
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\PromoCode
+     */
+    public function getPromoCode()
+    {
+        return $this->promoCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPromoCodeName()
+    {
+        return $this->promoCodeName;
+    }
+
+    /**
+     * @param string $promoCodeName
+     */
+    public function setPromoCodeName($promoCodeName)
+    {
+        $this->promoCodeName = $promoCodeName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPromoCodeValue()
+    {
+        return $this->promoCodeValue;
+    }
+
+    /**
+     * @param string $promoCodeValue
+     */
+    public function setPromoCodeValue($promoCodeValue)
+    {
+        $this->promoCodeValue = $promoCodeValue;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPromoCodeMethod()
+    {
+        return $this->promoCodeMethod;
+    }
+
+    /**
+     * @param string $promoCodeMethod
+     */
+    public function setPromoCodeMethod($promoCodeMethod)
+    {
+        $this->promoCodeMethod = $promoCodeMethod;
+    }
+
+    /**
      * Set taxFees
      *
      * @param string $taxFees
