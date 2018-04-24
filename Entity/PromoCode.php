@@ -527,7 +527,7 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     public function getAllowMultiUseForSingleUser()
     {
-        return $this->maximumNumberOfAllowedTimesPerUser > 1 ? true : false;
+        return $this->maximumNumberOfAllowedTimesPerUser === null ? true : ($this->maximumNumberOfAllowedTimesPerUser > 1 ? true : false);
     }
 
     /**
