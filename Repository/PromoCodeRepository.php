@@ -35,10 +35,10 @@ class PromoCodeRepository extends EntityRepository
         $dql = '
             UPDATE IbtikarTaniaModelBundle:PromoCode pc
             SET pc.numberOfUsedTimes = pc.numberOfUsedTimes + 1
-            SET pc.usageTotalAmount = pc.usageTotalAmount + :usageTotalAmount
+            , pc.usageTotalAmount = pc.usageTotalAmount + :usageTotalAmount
             ';
         if (!$usedByUserBefore) {
-            $dql .= ' SET pc.numberOfUsedByUsers = pc.numberOfUsedByUsers + 1';
+            $dql .= ' , pc.numberOfUsedByUsers = pc.numberOfUsedByUsers + 1';
         }
         $dql .= ' WHERE pc.id = :id';
         return $this->getEntityManager()->createQuery($dql)
@@ -59,10 +59,10 @@ class PromoCodeRepository extends EntityRepository
         $dql = '
             UPDATE IbtikarTaniaModelBundle:PromoCode pc
             SET pc.numberOfUsedTimes = pc.numberOfUsedTimes - 1
-            SET pc.usageTotalAmount = pc.usageTotalAmount - :usageTotalAmount
+            , pc.usageTotalAmount = pc.usageTotalAmount - :usageTotalAmount
             ';
         if (!$usedByUserBefore) {
-            $dql .= ' SET pc.numberOfUsedByUsers = pc.numberOfUsedByUsers - 1';
+            $dql .= ' , pc.numberOfUsedByUsers = pc.numberOfUsedByUsers - 1';
         }
         $dql .= ' WHERE pc.id = :id';
         return $this->getEntityManager()->createQuery($dql)
