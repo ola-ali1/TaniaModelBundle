@@ -1146,7 +1146,7 @@ class Order implements PfTransactionInvoiceInterface
         if ($this->user)
             return $this->user->getFullName();
 
-        return '';
+        return $this->;
     }
 
     public function getUserPhone()
