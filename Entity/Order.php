@@ -1160,6 +1160,10 @@ class Order implements PfTransactionInvoiceInterface
         if ($this->user)
             return $this->user->getFullName();
 
+        if($userName = $this->getCustomerUsername()){
+            return $userName;
+        }
+
         return '';
     }
 
@@ -1167,6 +1171,10 @@ class Order implements PfTransactionInvoiceInterface
     {
         if ($this->user)
             return $this->user->getPhone();
+
+        if($userPhone = $this->getCustomerPhone()){
+            return $userPhone;
+        }
 
         return '';
     }
