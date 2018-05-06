@@ -329,6 +329,13 @@ class Order implements PfTransactionInvoiceInterface
     private $promoCodeValue;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_phone", type="string", length=190)
+     */
+    protected $customerPhone;
+
+    /**
      * Set promoCode
      *
      * @param \Ibtikar\TaniaModelBundle\Entity\PromoCode $promoCode
@@ -566,6 +573,13 @@ class Order implements PfTransactionInvoiceInterface
      * @Assert\Length(min = 4, max = 12, groups={"username"}, maxMessage="username_length_not_valid", minMessage="username_length_not_valid")
      */
     private $driverUsername;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_username", type="string", length=100, nullable=true)
+     */
+    private $customerUsername;
 
 
     /**
@@ -2346,4 +2360,53 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->requiredDeliveryDate;
     }
+
+    /**
+     * Set customer_username
+     *
+     * @param string $customerUsername
+     *
+     * @return Order
+     */
+    public function setCustomerUsername($customerUsername)
+    {
+        $this->customerUsername = $customerUsername;
+
+        return $this;
+    }
+
+    /**
+     * Get customer_username
+     *
+     * @return string
+     */
+    public function getCustomerUsername()
+    {
+        return $this->customerUsername;
+    }
+
+    /**
+     * Set customerPhone
+     *
+     * @param string $customerPhone
+     *
+     * @return User
+     */
+    public function setCustomerPhone($customerPhone)
+    {
+        $this->customerPhone = $customerPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get customerPhone
+     *
+     * @return string
+     */
+    public function getCustomerPhone()
+    {
+        return $this->customerPhone;
+    }
+
 }
