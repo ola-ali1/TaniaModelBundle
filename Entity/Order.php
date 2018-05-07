@@ -331,7 +331,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="customer_phone", type="string", length=190)
+     * @ORM\Column(name="customer_phone", type="string", length=190, nullable=true)
      */
     protected $customerPhone;
 
