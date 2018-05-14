@@ -35,6 +35,10 @@ class Item
      */
     private $name;
 
+    /**
+     * @ORM\Column(name="old_default_price",type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $oldDefaultPrice;
 
     /**
      * @ORM\Column(name="default_price",type="decimal", precision=10, scale=2)
@@ -627,4 +631,14 @@ class Item
     {
         return $this->minimumAmountToOrder;
     }
+    
+    public function getOldDefaultPrice() {
+        return $this->oldDefaultPrice;
+    }
+
+    public function setOldDefaultPrice($oldDefaultPrice) {
+        $this->oldDefaultPrice = $oldDefaultPrice;
+        return $this;
+    }
+
 }
