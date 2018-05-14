@@ -4,17 +4,21 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Ibtikar\TaniaModelBundle\Repository\UserAddressRepository;
 
 /**
  * UserAddress
  *
  * @ORM\Table(name="user_address", indexes={@ORM\Index(name="created_at", columns={"created_at"})})
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\UserAddressRepository")
  */
 class UserAddress
 {
 
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
+
+    CONST TYPE_MASAJED = 'MASAJED';
+    CONST TYPE_USER = 'USER';
 
     /**
      * @var integer
@@ -58,6 +62,54 @@ class UserAddress
      * @Assert\NotBlank(message="fill_mandatory_field")
      */
     private $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=30, options={"default": "USER"})
+     */
+    private $type = self::TYPE_USER;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="capacity", type="integer", options={"default": 0})
+     * @Assert\Type(type="numeric")
+     */
+    private $capacity = 0;
+
+    /**
+     * @return int
+     */
+    public function getCapacity()
+    {
+        return $this->capacity;
+    }
+
+    /**
+     * @param int $capacity
+     */
+    public function setCapacity($capacity)
+    {
+        $this->capacity = $capacity;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
 
     /**
