@@ -23,6 +23,11 @@ class Price
     protected $id;
 
     /**
+     * @ORM\Column(name="old_price",type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $oldPrice;
+   
+    /**
      * @var string
      *
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
@@ -128,5 +133,14 @@ class Price
     public function getItem()
     {
         return $this->item;
+    }
+    
+    public function getOldPrice() {
+        return $this->oldPrice;
+    }
+
+    public function setOldPrice($oldPrice) {
+        $this->oldPrice = $oldPrice;
+        return $this;
     }
 }
