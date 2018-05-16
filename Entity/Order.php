@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Ibtikar\TaniaModelBundle\Entity\UserAddress;
+
 /**
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="entityClass", type="string")
@@ -22,6 +24,9 @@ class Order implements PfTransactionInvoiceInterface
     CONST SADAD = 'SADAD';
     CONST BALANCE = 'BALANCE';
     CONST CREDIT = 'CREDIT';
+
+    CONST TYPE_MASAJED = 'MASAJED';
+    CONST TYPE_USER = 'USER';
 
     public static $paymentMethodList = array(
         self::CASH => 'Cash',
@@ -335,6 +340,12 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $customerPhone;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\UserAddress")
+     */
+    protected $userAddress;
+
     /**
      * Set promoCode
      *
@@ -643,6 +654,13 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\Column(name="isSynced", type="boolean",  options={"default": 0}, nullable=true)
      */
     protected $isSynced;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="address_type", type="string", length=30, options={"default": "USER"})
+     */
+    private $addressType = self::TYPE_USER;
 
     /**
      * Constructor
@@ -2415,6 +2433,48 @@ class Order implements PfTransactionInvoiceInterface
     public function getCustomerPhone()
     {
         return $this->customerPhone;
+    }
+   
+    /**
+     * Get addressType
+     *
+     * @return string
+     */
+    public function getAddressType() {
+        return $this->$AddressType;
+    }        
+
+    /**
+     * Set addressType
+     *
+     * @param string $addressType
+     *
+     * @return Order
+     */
+    public function setAddressType($AddressType) {
+        $this->addressType = $AddressType;
+        return $this;
+    }
+    
+    /**
+     * Get userAddress
+     *
+     * @return UserAddress
+     */
+    public function getUserAddress() {
+        return $this->userAddress;
+    }
+
+    /**
+     * Set userAddress
+     *
+     * @param UserAddress $userAddress
+     *
+     * @return Order
+     */
+    public function setUserAddress(UserAddress $userAddress = null) {
+        $this->userAddress = $userAddress;
+        return $this;
     }
 
 }
