@@ -2441,7 +2441,7 @@ class Order implements PfTransactionInvoiceInterface
      * @return string
      */
     public function getAddressType() {
-        return $this->$AddressType;
+        return $this->addressType;
     }        
 
     /**
