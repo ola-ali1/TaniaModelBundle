@@ -28,6 +28,11 @@ class Order implements PfTransactionInvoiceInterface
     CONST TYPE_MASAJED = 'MASAJED';
     CONST TYPE_USER = 'USER';
 
+    public static $addressTypes = array(
+        self::TYPE_MASAJED => 'Masjed',
+        self::TYPE_USER => 'User',
+    );
+
     public static $paymentMethodList = array(
         self::CASH => 'Cash',
         self::SADAD => 'SADAD',
@@ -2477,4 +2482,7 @@ class Order implements PfTransactionInvoiceInterface
         return $this;
     }
 
+    public function getAddressTypes(){
+        return self::$addressTypes;
+    }
 }
