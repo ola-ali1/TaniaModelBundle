@@ -2365,7 +2365,13 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getSources()
     {
-        return array('android' => 'android', 'ios' => 'ios');
+        return array('android' => 'android',
+            'ios'              => 'ios',
+            'nana'             => 'nana',
+            'tania-system'     => 'tania-system',
+            'tania-order-now'  => 'tania-order-now',
+            'tania-website'    => 'tania-website'
+        );
     }
 
     /**
