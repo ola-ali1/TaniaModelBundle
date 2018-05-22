@@ -352,6 +352,68 @@ class Order implements PfTransactionInvoiceInterface
     protected $userAddress;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_nana_synced", type="boolean",  options={"default": 0}, nullable=true)
+     */
+    protected $isNanaSynced;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="nana_sync_data", type="array", nullable=true)
+     */
+    private $nanaSyncData;
+
+    /**
+     * Set nanaSyncData
+     *
+     * @param array $nanaSyncData
+     *
+     * @return array
+     */
+    public function setNanaSyncData($nanaSyncData)
+    {
+        $this->nanaSyncData = $nanaSyncData;
+
+        return $this;
+    }
+
+    /**
+     * Get nanaSyncData
+     *
+     * @return array
+     */
+    public function getNanaSyncData()
+    {
+        return $this->nanaSyncData;
+    }
+
+    /**
+     * Set isNanaSynced
+     *
+     * @param boolean $isNanaSynced
+     *
+     * @return boolean
+     */
+    public function setIsNanaSynced($isNanaSynced)
+    {
+        $this->isNanaSynced = $isNanaSynced;
+
+        return $this;
+    }
+
+    /**
+     * Get $isNanaSynced
+     *
+     * @return boolean
+     */
+    public function getIsNanaSynced()
+    {
+        return $this->isNanaSynced;
+    }
+
+    /**
      * Set promoCode
      *
      * @param \Ibtikar\TaniaModelBundle\Entity\PromoCode $promoCode
@@ -2388,7 +2450,13 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getSources()
     {
-        return array('android' => 'android', 'ios' => 'ios');
+        return array('android' => 'android',
+            'ios'              => 'ios',
+            'nana'             => 'nana',
+            'tania-system'     => 'tania-system',
+            'tania-order-now'  => 'tania-order-now',
+            'tania-website'    => 'tania-website'
+        );
     }
 
     /**
