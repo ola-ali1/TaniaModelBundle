@@ -277,4 +277,13 @@ class Driver extends User
             return $this->driverCityAreas[0]->getCityArea()->getNameAr();
         return;
     }
+
+    public function getTotalOrderCount()
+    {
+        if($this->driverOrders) {
+            return $this->driverOrders->count();
+        }
+
+        return 0;
+    }
 }
