@@ -2269,9 +2269,32 @@ class Order implements PfTransactionInvoiceInterface
         $itemsString = '';
         foreach ($this->orderItems as $orderItem) {
             if (strlen($itemsString) !== 0) {
-                $itemsString .= '<br/> ';
+                $itemsString .= '<br/>';
             }
-            $itemsString .= $orderItem->getItem()->getNameEn() . ': ' . $orderItem->getCount();
+            $itemsString .= '(' . $orderItem->getCount() . ') '. $orderItem->getItem()->getNameEn();
+        }
+        return $itemsString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getItemsNamesAndQuantitiesEn()
+    { 
+        return $this->getItemsNamesAndQuantities();
+    }
+    
+    /**
+     * @return string
+     */
+    public function getItemsNamesAndQuantitiesAr()
+    {
+        $itemsString = '';
+        foreach ($this->orderItems as $orderItem) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $orderItem->getCount() . ') '. $orderItem->getItem()->getName();
         }
         return $itemsString;
     }
