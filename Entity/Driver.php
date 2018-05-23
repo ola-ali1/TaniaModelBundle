@@ -286,4 +286,16 @@ class Driver extends User
 
         return 0;
     }
+
+    public function getCurrentAssignedOrdersCount()
+    {
+        $count = 0;
+        foreach($this->driverOrders as $driverOrder) {
+            if($driverOrder && $driverOrder->getStatus() == Order::$statuses['verified']){
+                $count++;
+            }
+        }
+
+        return $count;
+    }
 }
