@@ -68,6 +68,18 @@ class Item
 
     /**
      *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OfferBuyItem",mappedBy="item")
+     */
+    protected $offerBuyItems;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OfferGetItem",mappedBy="item")
+     */
+    protected $offerGetItems;
+
+    /**
+     *
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanItem",mappedBy="item", cascade={"persist"})
      */
     protected $vanItems;
@@ -266,6 +278,8 @@ class Item
     {
         $this->prices = new ArrayCollection();
         $this->orderItems = new ArrayCollection();
+        $this->offerBuyItems = new ArrayCollection();
+        $this->offerGetItems = new ArrayCollection();
         $this->vanItems = new ArrayCollection();
     }
 
@@ -417,6 +431,74 @@ class Item
     public function getOrderItems()
     {
         return $this->orderItems;
+    }
+    
+    /**
+     * Add offerBuyItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OfferBuyItem $offerBuyItem
+     *
+     * @return OfferBuyItem
+     */
+    public function addOfferBuyItem(\Ibtikar\TaniaModelBundle\Entity\OfferBuyItem $offerBuyItem)
+    {
+        $this->offerBuyItems[] = $offerBuyItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove offerBuyItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OfferBuyItem $offerBuyItem
+     */
+    public function removeOfferBuyItem(\Ibtikar\TaniaModelBundle\Entity\OfferBuyItem $offerBuyItem)
+    {
+        $this->offerBuyItems->removeElement($offerBuyItem);
+    }
+
+    /**
+     * Get offerBuyItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOfferBuyItems()
+    {
+        return $this->offerBuyItems;
+    }
+    
+    /**
+     * Add offerGetItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OfferGetItem $offerGetItem
+     *
+     * @return OfferGetItem
+     */
+    public function addOfferGetItem(\Ibtikar\TaniaModelBundle\Entity\OfferGetItem $offerGetItem)
+    {
+        $this->offerGetItems[] = $offerGetItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove offerGetItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OfferGetItem $offerGetItem
+     */
+    public function removeOfferGetItem(\Ibtikar\TaniaModelBundle\Entity\OfferGetItem $offerGetItem)
+    {
+        $this->offerGetItems->removeElement($offerGetItem);
+    }
+
+    /**
+     * Get offerGetItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOfferGetItems()
+    {
+        return $this->offerGetItems;
     }
 
     /**

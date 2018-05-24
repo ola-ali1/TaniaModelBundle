@@ -122,6 +122,12 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $orderItems;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Offer", inversedBy="orders")
+     */
+    protected $offer;
+
     /**
      *
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderStatusHistory",mappedBy="order", cascade={"persist", "remove"})
@@ -887,6 +893,30 @@ class Order implements PfTransactionInvoiceInterface
     public function getShift()
     {
         return $this->shift;
+    }
+
+    /**
+     * Set offer
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Offer $offer
+     *
+     * @return Offer
+     */
+    public function setOffer(\Ibtikar\TaniaModelBundle\Entity\Offer $offer = null)
+    {
+        $this->offer = $offer;
+
+        return $this;
+    }
+
+    /**
+     * Get offer
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\Offer
+     */
+    public function getOffer()
+    {
+        return $this->offer;
     }
 
     /**
