@@ -63,6 +63,15 @@ class Offer
     private $title;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="title_en", type="string", length=100, nullable=true)
+     * @Assert\NotBlank(message="fill_mandatory_field")
+     * @Assert\Length(min = 3, max = 20, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
+     */
+    private $titleEn;
+
+    /**
      * @var text
      *
      * @ORM\Column(name="description_private", type="text", nullable=true)
@@ -75,6 +84,20 @@ class Offer
      * @ORM\Column(name="description_public", type="text", nullable=true)
      */
     private $descriptionPublic;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="description_private_en", type="text", nullable=true)
+     */
+    private $descriptionPrivateEn;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="description_public_en", type="text", nullable=true)
+     */
+    private $descriptionPublicEn;
 
     /**
      * @var \DateTime
@@ -189,6 +212,22 @@ class Offer
     }
 
     /**
+     * @return string
+     */
+    public function getTitleEn()
+    {
+        return $this->titleEn;
+    }
+
+    /**
+     * @param string $titleEn
+     */
+    public function setTitleEn($titleEn)
+    {
+        $this->titleEn = $titleEn;
+    }
+
+    /**
      * Set enabled
      *
      * @param boolean $enabled
@@ -243,6 +282,39 @@ class Offer
     public function setDescriptionPublic($descriptionPublic)
     {
         $this->descriptionPublic = $descriptionPublic;
+    }
+
+
+    /**
+     * @return text
+     */
+    public function getDescriptionPrivateEn()
+    {
+        return $this->descriptionPrivateEn;
+    }
+
+    /**
+     * @param text $descriptionPrivateEn
+     */
+    public function setDescriptionPrivateEn($descriptionPrivateEn)
+    {
+        $this->descriptionPrivateEn = $descriptionPrivateEn;
+    }
+
+    /**
+     * @return text
+     */
+    public function getDescriptionPublicEn()
+    {
+        return $this->descriptionPublicEn;
+    }
+
+    /**
+     * @param text $descriptionPublicEn
+     */
+    public function setDescriptionPublicEn($descriptionPublicEn)
+    {
+        $this->descriptionPublicEn = $descriptionPublicEn;
     }
 
     /**
