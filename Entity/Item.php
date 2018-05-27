@@ -124,6 +124,36 @@ class Item
      */
     protected $isSynced;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Ibtikar\TaniaModelBundle\Entity\ItemAttribute")
+    * @ORM\JoinColumn(name="item_attribute_id", referencedColumnName="id", nullable=true)
+    */
+    protected $attribute;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemBrand")
+    * @ORM\JoinColumn(name="item_brand_id", referencedColumnName="id", nullable=true)
+    */
+    protected $brand;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemPackage")
+    * @ORM\JoinColumn(name="item_package_id", referencedColumnName="id", nullable=true)
+    */
+    protected $package;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemPackageSize")
+    * @ORM\JoinColumn(name="item_package_size_id", referencedColumnName="id", nullable=true)
+    */
+    protected $packageSize;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemType")
+    * @ORM\JoinColumn(name="item_type_id", referencedColumnName="id", nullable=true)
+    */
+    protected $type;
+    
     public function __toString() {
         return $this->name;
     }
