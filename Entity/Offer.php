@@ -153,6 +153,21 @@ class Offer
      */
     private $numberOfUsedTimes = 0;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="cash_get_amount", type="decimal", precision=10, scale=2, options={"default": 0}, nullable = true)
+     * @Assert\Type(type="numeric")
+     */
+    private $cashGetAmount;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="percentage_get_amount", type="float", options={"default": 0}, nullable = true)
+     * @Assert\Type(type="numeric")
+     */
+    private $percentageGetAmount;
 
     /**
      * @var bool
@@ -439,6 +454,38 @@ class Offer
     public function setNumberOfUsedTimes($numberOfUsedTimes)
     {
         $this->numberOfUsedTimes = $numberOfUsedTimes;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCashGetAmount()
+    {
+        return $this->cashGetAmount;
+    }
+
+    /**
+     * @param float $cashGetAmount
+     */
+    public function setCashGetAmount($cashGetAmount)
+    {
+        $this->cashGetAmount = $cashGetAmount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPercentageGetAmount()
+    {
+        return $this->percentageGetAmount;
+    }
+
+    /**
+     * @param float $percentageGetAmount
+     */
+    public function setPercentageGetAmount($percentageGetAmount)
+    {
+        $this->percentageGetAmount = $percentageGetAmount;
     }
 
     /**
