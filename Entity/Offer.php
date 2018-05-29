@@ -377,4 +377,64 @@ class Offer
         return "$this->id";
     }
 
+    /**
+     * @return string
+     */
+    public function getOfferGetItemsNamesAndQuantitiesEn()
+    {
+        $itemsString = '';
+        foreach ($this->offerGetItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getNameEn();
+        }
+        return $itemsString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferGetItemsNamesAndQuantitiesAr()
+    {
+        $itemsString = '';
+        foreach ($this->offerGetItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getName();
+        }
+        return $itemsString;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getOfferBuyItemsNamesAndQuantitiesEn()
+    {
+        $itemsString = '';
+        foreach ($this->offerBuyItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getNameEn();
+        }
+        return $itemsString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferBuyItemsNamesAndQuantitiesAr()
+    {
+        $itemsString = '';
+        foreach ($this->offerBuyItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getName();
+        }
+        return $itemsString;
+    }
+
 }
