@@ -28,9 +28,9 @@ class Offer
     );
 
     public static $types = array(
-        self::TYPE_CASH_PERCENTAGE,
-        self::TYPE_CASH_AMOUNT,
-        self::TYPE_ITEM,
+        self::TYPE_CASH_PERCENTAGE => "PERCENTAGE",
+        self::TYPE_CASH_AMOUNT => "CASH",
+        self::TYPE_ITEM => "ITEM",
     );
 
 
@@ -554,6 +554,24 @@ class Offer
             $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getName();
         }
         return $itemsString;
+    }
+
+    public function getAmount() 
+    {
+        switch ($this->type) {
+            case self::TYPE_CASH_AMOUNT:
+                return $this->getCashGetAmount();
+                break;
+            case self::TYPE_CASH_PERCENTAGE:
+                return $this->getPercentageGetAmount() * 100 . " %";
+                break;
+            default:
+            case self::TYPE_ITEM:
+                return "item";
+                break;
+        }
+        
+       
     }
 
 }
