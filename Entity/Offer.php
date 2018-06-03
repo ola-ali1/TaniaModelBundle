@@ -2,6 +2,7 @@
 
 namespace Ibtikar\TaniaModelBundle\Entity;
 
+use Doctrine\Common\Util\Debug;
 use Symfony\Component\Validator\Constraints AS Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -102,7 +103,6 @@ class Offer
     /**
      * @var \DateTime
      *
-     * @Assert\NotBlank
      * @Assert\DateTime
      * @Assert\Range(min="now")
      * @ORM\Column(name="start_time", type="datetime", nullable=true)
@@ -130,12 +130,14 @@ class Offer
 
     /**
      *
+     * @Assert\NotBlank
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OfferBuyItem",mappedBy="offer")
      */
     protected $offerBuyItems;
 
     /**
      *
+     * @Assert\Expression("this.getType() != 'ITEM' or value != null", message="This value should not be blank.")
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OfferGetItem",mappedBy="offer")
      */
     protected $offerGetItems;
@@ -164,6 +166,7 @@ class Offer
     /**
      * @var float
      *
+     * @Assert\Expression("this.getType() != 'PERCENTAGE' or value != null", message="This value should not be blank.")
      * @ORM\Column(name="percentage_get_amount", type="float", options={"default": 0}, nullable = true)
      * @Assert\Type(type="numeric")
      */
@@ -574,4 +577,45 @@ class Offer
        
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersistCallback()
+    {
+        $this->startTime = $this->startTime ? $this->startTime : new \DateTime('now');;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     *
+     * @return Offer
+     */
+    public function addOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     */
+    public function removeOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
 }

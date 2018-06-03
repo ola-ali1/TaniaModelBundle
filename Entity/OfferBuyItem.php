@@ -195,4 +195,8 @@ class OfferBuyItem
     {
         $this->nameEn = $nameEn;
     }
+
+    public function __toString() {
+        return $this->name;
+    }
 }
