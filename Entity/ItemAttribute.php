@@ -104,7 +104,7 @@ class ItemAttribute
      */
     public function getNameEn()
     {
-        return $this->NameEn;
+        return $this->nameEn;
     }
 
     /**

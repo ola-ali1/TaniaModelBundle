@@ -104,7 +104,7 @@ class ItemPackage
      */
     public function getNameEn()
     {
-        return $this->NameEn;
+        return $this->nameEn;
     }
 
     /**
