@@ -339,41 +339,41 @@ class OrderOffer
 
 
     /**
-     * Add orderOrderOfferBuyItem
+     * Add orderOfferBuyItem
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferBuyItem $orderOrderOfferBuyItem
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferBuyItem $orderOfferBuyItem
      *
      * @return OrderOfferBuyItem
      */
-    public function addOrderOfferBuyItem(OrderOfferBuyItem $orderOrderOfferBuyItem)
+    public function addOrderOfferBuyItem(OrderOfferBuyItem $orderOfferBuyItem)
     {
-        $this->orderOrderOfferBuyItems[] = $orderOrderOfferBuyItem;
+        $this->orderOfferBuyItems[] = $orderOfferBuyItem;
 
         return $this;
     }
 
     /**
-     * Remove orderOrderOfferBuyItem
+     * Remove orderOfferBuyItem
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferBuyItem $orderOrderOfferBuyItem
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferBuyItem $orderOfferBuyItem
      */
-    public function removeOrderOfferBuyItem(OrderOfferBuyItem $orderOrderOfferBuyItem)
+    public function removeOrderOfferBuyItem(OrderOfferBuyItem $orderOfferBuyItem)
     {
-        $this->orderOrderOfferBuyItems->removeElement($orderOrderOfferBuyItem);
+        $this->orderOfferBuyItems->removeElement($orderOfferBuyItem);
     }
 
     /**
-     * Get orderOrderOfferBuyItems
+     * Get orderOfferBuyItems
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getOrderOfferBuyItems()
     {
-        return $this->orderOrderOfferBuyItems;
+        return $this->orderOfferBuyItems;
     }
 
     /**
-     * Add orderOrderOfferGetItem
+     * Add orderOfferGetItem
      *
      * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferGetItem $orderOfferGetItem
      *
@@ -387,7 +387,7 @@ class OrderOffer
     }
 
     /**
-     * Remove orderOrderOfferGetItem
+     * Remove orderOfferGetItem
      *
      * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferGetItem $orderOfferGetItem
      */
