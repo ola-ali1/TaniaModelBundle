@@ -618,4 +618,30 @@ class Offer
     {
         return $this->orders;
     }
+
+    public function getTotalItemCount()
+    {
+        return $this->offerBuyItems->count() + $this->offerGetItems->count();
+    }
+
+    public function getOfferPrice()
+    {
+        $value = 0;
+
+        /* @var OfferBuyItem $buyItem */
+        foreach($this->offerBuyItems as $buyItem)
+        {
+            $value += (double)$buyItem->getPrice();
+        }
+
+        if($this->type == self::TYPE_CASH_PERCENTAGE){
+            $value = $value * $this->percentageGetAmount;
+        }
+
+        if($this->type == self::TYPE_CASH_AMOUNT){
+            $value = $value + $this->cashGetAmount;
+        }
+
+        return $value;
+    }
 }
