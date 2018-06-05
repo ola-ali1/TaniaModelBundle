@@ -4,11 +4,13 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 /**
  * OrderOffer
  *
  * @ORM\Table(name="order_offer")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OrderOfferRepository")
  */
 class OrderOffer
@@ -41,7 +43,7 @@ class OrderOffer
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", inversedBy="orderOffes")
      */
     protected $order;
-    
+
     /**
      * @var string
      *
@@ -450,5 +452,47 @@ class OrderOffer
     public function getOrder()
     {
         return $this->order;
+    }
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function postPersistCallback(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        $em = $args->getEntityManager();
+        /* @var Offer $offer */
+        $offer = $this->offer;
+
+        /* @var OfferBuyItem $buyItem */
+        foreach ($offer->getOfferBuyItems() as $buyItem) {
+            /* @var $orderOfferBuyItem OrderOfferBuyItem */
+            $orderOfferBuyItem = new OrderOfferBuyItem();
+            $orderOfferBuyItem->setPrice($buyItem->getPrice());
+            $orderOfferBuyItem->setName($buyItem->getName());
+            $orderOfferBuyItem->setNameEn($buyItem->getNameEn());
+            $orderOfferBuyItem->setCount($buyItem->getCount());
+            $orderOfferBuyItem->setItem($buyItem->getItem());
+            $orderOfferBuyItem->setOrderOffer($this);
+
+            $em->persist($orderOfferBuyItem);
+        }
+
+        if($this->type == Offer::TYPE_ITEM){
+            /* @var OfferGetItem $getItem */
+            foreach ($offer->getOfferGetItems() as $getItem) {
+                /* @var $orderOfferGetItem OrderOfferGetItem */
+                $orderOfferGetItem = new OrderOfferGetItem();
+                $orderOfferGetItem->setPrice($getItem->getPrice());
+                $orderOfferGetItem->setName($getItem->getName());
+                $orderOfferGetItem->setNameEn($getItem->getNameEn());
+                $orderOfferGetItem->setCount($getItem->getCount());
+                $orderOfferGetItem->setItem($getItem->getItem());
+                $orderOfferGetItem->setOrderOffer($this);
+
+                $em->persist($orderOfferGetItem);
+            }
+        }
+        $em->flush();
     }
 }
