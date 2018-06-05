@@ -42,6 +42,7 @@ class Offer
     {
         $this->offerBuyItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->offerGetItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderOffers   = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -178,6 +179,12 @@ class Offer
      * @ORM\Column(name="enabled", type="boolean", options={"default": true})
      */
     private $enabled = true;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderOffer",mappedBy="offer")
+     */
+    protected $orderOffers;
 
     /**
      * Get id
@@ -643,5 +650,39 @@ class Offer
         }
 
         return $value;
+    }
+
+    /**
+     * Add orderOffer
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer
+     *
+     * @return Offer
+     */
+    public function addOrderOffer(\Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer)
+    {
+        $this->orderOffers[] = $orderOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderOffer
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer
+     */
+    public function removeOrderOffer(\Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer)
+    {
+        $this->orderOffers->removeElement($orderOffer);
+    }
+
+    /**
+     * Get orderOffers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderOffers()
+    {
+        return $this->orderOffers;
     }
 }
