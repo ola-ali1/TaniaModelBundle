@@ -60,7 +60,7 @@ class Offer
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
-     * @Assert\Length(min = 3, max = 20, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
+     * @Assert\Length(min = 4, max = 100, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
      */
     private $title;
 
@@ -69,7 +69,7 @@ class Offer
      *
      * @ORM\Column(name="title_en", type="string", length=100, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
-     * @Assert\Length(min = 3, max = 20, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
+     * @Assert\Length(min = 4, max = 100, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
      */
     private $titleEn;
 
