@@ -6,10 +6,12 @@ use Doctrine\Common\Util\Debug;
 use Symfony\Component\Validator\Constraints AS Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Offer
  *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ORM\Table(name="offer")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OfferRepository")
@@ -185,6 +187,13 @@ class Offer
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderOffer",mappedBy="offer")
      */
     protected $orderOffers;
+
+    /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     /**
      * Get id
@@ -516,7 +525,7 @@ class Offer
             if (strlen($itemsString) !== 0) {
                 $itemsString .= '<br/>';
             }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getNameEn();
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
         }
         return $itemsString;
     }
@@ -531,7 +540,7 @@ class Offer
             if (strlen($itemsString) !== 0) {
                 $itemsString .= '<br/>';
             }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getName();
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getName();
         }
         return $itemsString;
     }
@@ -546,7 +555,7 @@ class Offer
             if (strlen($itemsString) !== 0) {
                 $itemsString .= '<br/>';
             }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getNameEn();
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
         }
         return $itemsString;
     }
@@ -561,7 +570,7 @@ class Offer
             if (strlen($itemsString) !== 0) {
                 $itemsString .= '<br/>';
             }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getName();
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getName();
         }
         return $itemsString;
     }
@@ -690,4 +699,24 @@ class Offer
     {
         return ($this->enabled == 0) ? "No" : "Yes";
     }
+
+    /**    
+     * @return Offer
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+    
 }
