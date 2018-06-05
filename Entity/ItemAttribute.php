@@ -133,8 +133,8 @@ class ItemAttribute
     /**
      * @return string
      */
-    //public function __toString()
-    //{
-    //    return (string) $this->nameEn . " | " . $this->nameAr;
-    //}
+    public function __toString()
+    {
+        return (string) $this->nameEn . " | " . $this->nameAr;
+    }
 }
