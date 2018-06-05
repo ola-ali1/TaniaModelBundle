@@ -647,11 +647,11 @@ class Offer
         /* @var OfferBuyItem $buyItem */
         foreach($this->offerBuyItems as $buyItem)
         {
-            $value += (double)$buyItem->getPrice();
+            $value += (double)$buyItem->getPrice() * $buyItem->getCount();
         }
 
         if($this->type == self::TYPE_CASH_PERCENTAGE){
-            $value = $value * $this->percentageGetAmount;
+            $value = max(0, $value - $value * $this->percentageGetAmount);
         }
 
         if($this->type == self::TYPE_CASH_AMOUNT){
