@@ -618,4 +618,9 @@ class Offer
     {
         return $this->orders;
     }
+    
+    public function getEnabledString() 
+    {
+        return ($this->enabled == 0) ? "No" : "Yes";
+    }
 }
