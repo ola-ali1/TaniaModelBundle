@@ -113,6 +113,27 @@ class OrderOffer
     protected $orderOfferGetItems;
 
     /**
+     * @ORM\Column(name="count", type="integer", options={"default": 0})
+     */
+    private $count;
+
+    /**
+     * @return mixed
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param mixed $count
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
+    }
+
+    /**
      * Get id
      *
      * @return int
