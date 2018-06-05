@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints AS Assert;
  * ItemPackageSize
  *
  * @ORM\Table(name="item_package_size")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\ItemPackageSizeRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class ItemPackageSize
@@ -128,5 +128,13 @@ class ItemPackageSize
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->nameEn . " | " . $this->nameAr;
     }
 }

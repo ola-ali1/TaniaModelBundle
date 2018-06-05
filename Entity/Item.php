@@ -753,4 +753,79 @@ class Item
         return $this;
     }
 
+    /**
+     * @return ItemAttribute
+     */
+    public function getAttribute() {
+        return $this->attribute;
+    }
+
+    /**
+     * @return ItemBrand
+     */
+    public function getBrand() {
+        return $this->brand;
+    }
+
+    /**
+     * @return ItemPackage
+     */
+    public function getPackage() {
+        return $this->package;
+    }
+
+    /**
+     * @return ItemPackageSize
+     */
+    public function getPackageSize() {
+        return $this->packageSize;
+    }
+
+    /**
+     * @return ItemType
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setAttribute($attribute) {
+        $this->attribute = $attribute;
+        return $this;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setBrand($brand) {
+        $this->brand = $brand;
+        return $this;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setPackage($package) {
+        $this->package = $package;
+        return $this;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setPackageSize($packageSize) {
+        $this->packageSize = $packageSize;
+        return $this;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setType($type) {
+        $this->type = $type;
+        return $this;
+    }
+
 }

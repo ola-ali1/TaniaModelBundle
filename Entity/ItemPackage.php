@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints AS Assert;
  * ItemPackage
  *
  * @ORM\Table(name="item_package")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\ItemPackageRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class ItemPackage
@@ -128,5 +128,13 @@ class ItemPackage
     public function getDeletedAt()
     {
         return $this->deletedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->nameEn . " | " . $this->nameAr;
     }
 }
