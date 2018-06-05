@@ -828,4 +828,53 @@ class Item
         return $this;
     }
 
+    public function getAttributeNameAr()
+    {
+        return $this->getAttribute() ? $this->getAttribute()->getNameAr() : "";
+    }
+
+    public function getAttributeNameEn()
+    {
+        return $this->getAttribute() ? $this->getAttribute()->getNameEn() : "";
+    }
+    
+    public function getBrandNameAr()
+    {
+        return $this->getBrand() ? $this->getBrand()->getNameAr() : "";
+    }
+
+    public function getBrandNameEn()
+    {
+        return $this->getBrand() ? $this->getBrand()->getNameEn() : "";
+    }
+    
+    public function getPackageNameAr()
+    {
+        return $this->getPackage() ? $this->getPackage()->getNameAr() : "";
+    }
+
+    public function getPackageNameEn()
+    {
+        return $this->getPackage() ? $this->getPackage()->getNameEn() : "";
+    }
+    
+    public function getPackageSizeNameAr()
+    {
+        return $this->getPackageSize() ? $this->getPackageSize()->getNameAr() : "";
+    }
+
+    public function getPackageSizeNameEn()
+    {
+        return $this->getPackageSize() ? $this->getPackageSize()->getNameEn() : "";
+    }
+    
+    public function getTypeNameAr()
+    {
+        return $this->getType() ? $this->getType()->getNameAr() : "";
+    }
+
+    public function getTypeNameEn()
+    {
+        return $this->getType() ? $this->getType()->getNameEn() : "";
+    }
 }
