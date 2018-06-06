@@ -475,6 +475,7 @@ class OrderOffer
             $orderOfferBuyItem->setItem($buyItem->getItem());
             $orderOfferBuyItem->setOrderOffer($this);
 
+            $this->addOrderOfferBuyItem($orderOfferBuyItem);
             $em->persist($orderOfferBuyItem);
         }
 
@@ -490,6 +491,7 @@ class OrderOffer
                 $orderOfferGetItem->setItem($getItem->getItem());
                 $orderOfferGetItem->setOrderOffer($this);
 
+                $this->addOrderOfferBuyItem($orderOfferGetItem);
                 $em->persist($orderOfferGetItem);
             }
         }
