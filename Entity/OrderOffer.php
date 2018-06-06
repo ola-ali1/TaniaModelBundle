@@ -491,7 +491,7 @@ class OrderOffer
                 $orderOfferGetItem->setItem($getItem->getItem());
                 $orderOfferGetItem->setOrderOffer($this);
 
-                $this->addOrderOfferBuyItem($orderOfferGetItem);
+                $this->addOrderOfferGetItem($orderOfferGetItem);
                 $em->persist($orderOfferGetItem);
             }
         }
