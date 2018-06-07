@@ -106,8 +106,8 @@ class Offer
     /**
      * @var \DateTime
      *
-     * @Assert\DateTime
-     * @Assert\Range(min="now")
+     * Assert\DateTime
+     * Assert\Range(min="now")
      * @ORM\Column(name="start_time", type="datetime", nullable=true)
      */
     private $startTime;
