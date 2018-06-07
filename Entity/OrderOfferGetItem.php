@@ -31,6 +31,8 @@ class OrderOfferGetItem
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderOffer", inversedBy="orderOfferGetItems")
+     *
+     * @ORM\JoinColumn(name="offer_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $orderOffer;
 
