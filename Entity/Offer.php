@@ -32,7 +32,7 @@ class Offer
 
     public static $types = array(
         self::TYPE_CASH_PERCENTAGE => "PERCENTAGE",
-        self::TYPE_CASH_AMOUNT => "CASH",
+        //self::TYPE_CASH_AMOUNT => "CASH",
         self::TYPE_ITEM => "ITEM",
     );
 
