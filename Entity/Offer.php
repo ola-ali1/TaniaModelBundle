@@ -661,6 +661,34 @@ class Offer
         return $value;
     }
 
+    public function getOfferDiscount()
+    {
+        $value = 0;
+
+        if($this->type == self::TYPE_ITEM) {
+            /* @var OfferGetItem $getItem */
+            foreach ($this->offerGetItems as $getItem) {
+                $value += (double)$getItem->getPrice() * $getItem->getCount();
+            }
+        } else {
+            $buyCost = 0;
+            /* @var OfferBuyItem $buyItem */
+            foreach ($this->offerBuyItems as $buyItem) {
+                $buyCost += (double)$buyItem->getPrice() * $buyItem->getCount();
+            }
+
+            if ($this->type == self::TYPE_CASH_PERCENTAGE) {
+                $value = $buyCost * $this->percentageGetAmount;
+            }
+
+            if ($this->type == self::TYPE_CASH_AMOUNT) {
+                $value = $buyCost + $this->cashGetAmount;
+            }
+        }
+
+        return $value;
+    }
+
     /**
      * Add orderOffer
      *
