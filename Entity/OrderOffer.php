@@ -2,6 +2,7 @@
 
 namespace Ibtikar\TaniaModelBundle\Entity;
 
+use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -492,6 +493,7 @@ class OrderOffer
                 $orderOfferGetItem->setOrderOffer($this);
 
                 $this->addOrderOfferGetItem($orderOfferGetItem);
+
                 $em->persist($orderOfferGetItem);
             }
         }
