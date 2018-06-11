@@ -124,7 +124,7 @@ class Package
     /**
      * @var float
      *
-     * @ORM\Column(name="get_amount", type="decimal", precision=10, scale=2, options={"default": 0}, nullable = true)
+     * @ORM\Column(name="get_amount", type="integer", options={"default": 0}, nullable = true)
      * @Assert\Type(type="numeric")
      */
     private $getAmount;
