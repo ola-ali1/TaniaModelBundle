@@ -63,8 +63,8 @@ class PromoCode implements GroupSequenceProviderInterface
      * @var string
      *
      * @Assert\NotBlank
-     * @Assert\Range(min=1, max=100, groups={"percentage"})
-     * @Assert\Range(min=1, max=999999, groups={"fixed-value"})
+     * @Assert\Range(min=0, max=100, groups={"percentage"})
+     * @Assert\Range(min=0, max=999999, groups={"fixed-value"})
      * @ORM\Column(name="discountAmount", type="decimal", precision=8, scale=2, options={"comment": "Based on type the maximum value should be either 100 or 999999"})
      */
     private $discountAmount;
