@@ -278,6 +278,29 @@ class Driver extends User
         return;
     }
 
+    public function getDriverCityAreasEn()
+    {
+        if (count($this->driverCityAreas)) {
+            $areas = [];
+            foreach($this->driverCityAreas as $driverCityArea)
+                $areas[] = $driverCityArea->getCityArea()->getNameEn();
+            return implode(', ', $areas);
+        }
+
+        return 'unassigned';
+    }
+
+    public function getDriverCityAreasAr()
+    {
+        if (count($this->driverCityAreas)) {
+            $areas = [];
+            foreach($this->driverCityAreas as $driverCityArea)
+                $areas[] = $driverCityArea->getCityArea()->getNameAr();
+            return implode('، ', $areas);
+        }
+        return 'غير مضاف';
+    }
+
     public function getTotalOrderCount()
     {
         if($this->driverOrders) {
