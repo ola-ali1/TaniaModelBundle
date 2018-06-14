@@ -682,7 +682,26 @@ class Offer
             }
 
             if ($this->type == self::TYPE_CASH_AMOUNT) {
-                $value = $buyCost + $this->cashGetAmount;
+                $value = $this->cashGetAmount;
+            }
+        }
+
+        return $value;
+    }
+
+    public function getOfferTotalPrice()
+    {
+        $value = 0;
+
+        /* @var OfferBuyItem $buyItem */
+        foreach ($this->offerBuyItems as $buyItem) {
+            $value += (double)$buyItem->getPrice() * $buyItem->getCount();
+        }
+
+        if($this->type == self::TYPE_ITEM) {
+            /* @var OfferGetItem $getItem */
+            foreach ($this->offerGetItems as $getItem) {
+                $value += (double)$getItem->getPrice() * $getItem->getCount();
             }
         }
 

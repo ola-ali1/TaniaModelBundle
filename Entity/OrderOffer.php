@@ -499,4 +499,32 @@ class OrderOffer
         }
         $em->flush();
     }
+
+    public function getOfferDiscount()
+    {
+        $value = 0;
+
+        if($this->type == Offer::TYPE_ITEM) {
+            /* @var OfferGetItem $getItem */
+            foreach ($this->orderOfferGetItems as $getItem) {
+                $value += (double)$getItem->getPrice() * $getItem->getCount();
+            }
+        } else {
+            $buyCost = 0;
+            /* @var OfferBuyItem $buyItem */
+            foreach ($this->orderOfferBuyItems as $buyItem) {
+                $buyCost += (double)$buyItem->getPrice() * $buyItem->getCount();
+            }
+
+            if ($this->type == Offer::TYPE_CASH_PERCENTAGE) {
+                $value = $buyCost * $this->percentageGetAmount;
+            }
+
+            if ($this->type == Offer::TYPE_CASH_AMOUNT) {
+                $value = $this->cashGetAmount;
+            }
+        }
+
+        return $value;
+    }
 }
