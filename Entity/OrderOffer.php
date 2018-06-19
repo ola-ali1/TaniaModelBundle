@@ -2,6 +2,7 @@
 
 namespace Ibtikar\TaniaModelBundle\Entity;
 
+use Doctrine\Common\Util\Debug;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -339,41 +340,41 @@ class OrderOffer
 
 
     /**
-     * Add orderOrderOfferBuyItem
+     * Add orderOfferBuyItem
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferBuyItem $orderOrderOfferBuyItem
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferBuyItem $orderOfferBuyItem
      *
      * @return OrderOfferBuyItem
      */
-    public function addOrderOfferBuyItem(OrderOfferBuyItem $orderOrderOfferBuyItem)
+    public function addOrderOfferBuyItem(OrderOfferBuyItem $orderOfferBuyItem)
     {
-        $this->orderOrderOfferBuyItems[] = $orderOrderOfferBuyItem;
+        $this->orderOfferBuyItems[] = $orderOfferBuyItem;
 
         return $this;
     }
 
     /**
-     * Remove orderOrderOfferBuyItem
+     * Remove orderOfferBuyItem
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferBuyItem $orderOrderOfferBuyItem
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferBuyItem $orderOfferBuyItem
      */
-    public function removeOrderOfferBuyItem(OrderOfferBuyItem $orderOrderOfferBuyItem)
+    public function removeOrderOfferBuyItem(OrderOfferBuyItem $orderOfferBuyItem)
     {
-        $this->orderOrderOfferBuyItems->removeElement($orderOrderOfferBuyItem);
+        $this->orderOfferBuyItems->removeElement($orderOfferBuyItem);
     }
 
     /**
-     * Get orderOrderOfferBuyItems
+     * Get orderOfferBuyItems
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getOrderOfferBuyItems()
     {
-        return $this->orderOrderOfferBuyItems;
+        return $this->orderOfferBuyItems;
     }
 
     /**
-     * Add orderOrderOfferGetItem
+     * Add orderOfferGetItem
      *
      * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferGetItem $orderOfferGetItem
      *
@@ -387,7 +388,7 @@ class OrderOffer
     }
 
     /**
-     * Remove orderOrderOfferGetItem
+     * Remove orderOfferGetItem
      *
      * @param \Ibtikar\TaniaModelBundle\Entity\OrderOfferGetItem $orderOfferGetItem
      */
@@ -475,6 +476,7 @@ class OrderOffer
             $orderOfferBuyItem->setItem($buyItem->getItem());
             $orderOfferBuyItem->setOrderOffer($this);
 
+            $this->addOrderOfferBuyItem($orderOfferBuyItem);
             $em->persist($orderOfferBuyItem);
         }
 
@@ -490,9 +492,39 @@ class OrderOffer
                 $orderOfferGetItem->setItem($getItem->getItem());
                 $orderOfferGetItem->setOrderOffer($this);
 
+                $this->addOrderOfferGetItem($orderOfferGetItem);
+
                 $em->persist($orderOfferGetItem);
             }
         }
         $em->flush();
+    }
+
+    public function getOfferDiscount()
+    {
+        $value = 0;
+
+        if($this->type == Offer::TYPE_ITEM) {
+            /* @var OfferGetItem $getItem */
+            foreach ($this->orderOfferGetItems as $getItem) {
+                $value += (double)$getItem->getPrice() * $getItem->getCount();
+            }
+        } else {
+            $buyCost = 0;
+            /* @var OfferBuyItem $buyItem */
+            foreach ($this->orderOfferBuyItems as $buyItem) {
+                $buyCost += (double)$buyItem->getPrice() * $buyItem->getCount();
+            }
+
+            if ($this->type == Offer::TYPE_CASH_PERCENTAGE) {
+                $value = $buyCost * $this->percentageGetAmount;
+            }
+
+            if ($this->type == Offer::TYPE_CASH_AMOUNT) {
+                $value = $this->cashGetAmount;
+            }
+        }
+
+        return $value;
     }
 }

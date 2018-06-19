@@ -4,14 +4,12 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @ORM\Table(name="offer_buy_item")
+ * @ORM\Table(name="order_package_buy_item")
  * @ORM\Entity()
  */
-class OfferBuyItem
+class OrderPackageBuyItem
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
@@ -26,15 +24,16 @@ class OfferBuyItem
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Item", inversedBy="offerBuyItems")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Item", inversedBy="orderPackageBuyItems")
      */
     protected $item;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Offer", inversedBy="offerBuyItems")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderPackage", inversedBy="orderPackageBuyItems")
+     * @ORM\JoinColumn(name="order_package_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $offer;
+    protected $orderPackage;
 
     /**
      * @ORM\Column(name="count", type="integer")
@@ -59,12 +58,6 @@ class OfferBuyItem
      */
     private $nameEn;
 
-    /**
-     * @var \DateTime $deletedAt
-     *
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
-     */
-    protected $deletedAt;
 
     /**
      * Get id
@@ -101,27 +94,27 @@ class OfferBuyItem
     }
 
     /**
-     * Set offer
+     * Set orderPackage
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Offer $offer
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderPackage $orderPackage
      *
-     * @return Offer
+     * @return OrderPackage
      */
-    public function setOffer(\Ibtikar\TaniaModelBundle\Entity\Offer $offer = null)
+    public function setOrderPackage(\Ibtikar\TaniaModelBundle\Entity\OrderPackage $orderPackage = null)
     {
-        $this->offer = $offer;
+        $this->orderPackage = $orderPackage;
 
         return $this;
     }
 
     /**
-     * Get offer
+     * Get package
      *
-     * @return \Ibtikar\TaniaModelBundle\Entity\Offer
+     * @return \Ibtikar\TaniaModelBundle\Entity\Package
      */
-    public function getOffer()
+    public function getOrderPackage()
     {
-        return $this->offer;
+        return $this->orderPackage;
     }
 
     /**
@@ -207,24 +200,4 @@ class OfferBuyItem
     public function __toString() {
         return $this->name;
     }
-
-    /**    
-     * @return OfferBuyItem
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-        return $this;
-    }
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-    
 }

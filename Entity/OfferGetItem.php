@@ -4,8 +4,10 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ORM\Table(name="offer_Get_item")
  * @ORM\Entity()
  */
@@ -56,6 +58,13 @@ class OfferGetItem
      * @ORM\Column(name="name_en", type="string")
      */
     private $nameEn;
+
+    /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     /**
      * Get id
@@ -196,6 +205,26 @@ class OfferGetItem
     }
 
     public function __toString() {
-        return $this->name;
+        return "$this->name";
     }
+
+    /**    
+     * @return OfferGetItem
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+    
 }

@@ -6,10 +6,12 @@ use Doctrine\Common\Util\Debug;
 use Symfony\Component\Validator\Constraints AS Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Offer
  *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ORM\Table(name="offer")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OfferRepository")
@@ -30,7 +32,7 @@ class Offer
 
     public static $types = array(
         self::TYPE_CASH_PERCENTAGE => "PERCENTAGE",
-        self::TYPE_CASH_AMOUNT => "CASH",
+        //self::TYPE_CASH_AMOUNT => "CASH",
         self::TYPE_ITEM => "ITEM",
     );
 
@@ -60,7 +62,7 @@ class Offer
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
-     * @Assert\Length(min = 3, max = 20, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
+     * @Assert\Length(min = 4, max = 100, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
      */
     private $title;
 
@@ -69,7 +71,7 @@ class Offer
      *
      * @ORM\Column(name="title_en", type="string", length=100, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
-     * @Assert\Length(min = 3, max = 20, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
+     * @Assert\Length(min = 4, max = 100, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
      */
     private $titleEn;
 
@@ -104,8 +106,8 @@ class Offer
     /**
      * @var \DateTime
      *
-     * @Assert\DateTime
-     * @Assert\Range(min="now")
+     * Assert\DateTime
+     * Assert\Range(min="now")
      * @ORM\Column(name="start_time", type="datetime", nullable=true)
      */
     private $startTime;
@@ -185,6 +187,13 @@ class Offer
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderOffer",mappedBy="offer")
      */
     protected $orderOffers;
+
+    /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     /**
      * Get id
@@ -516,7 +525,7 @@ class Offer
             if (strlen($itemsString) !== 0) {
                 $itemsString .= '<br/>';
             }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getNameEn();
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
         }
         return $itemsString;
     }
@@ -531,7 +540,7 @@ class Offer
             if (strlen($itemsString) !== 0) {
                 $itemsString .= '<br/>';
             }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getName();
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getName();
         }
         return $itemsString;
     }
@@ -546,7 +555,7 @@ class Offer
             if (strlen($itemsString) !== 0) {
                 $itemsString .= '<br/>';
             }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getNameEn();
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
         }
         return $itemsString;
     }
@@ -561,7 +570,7 @@ class Offer
             if (strlen($itemsString) !== 0) {
                 $itemsString .= '<br/>';
             }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getItem()->getName();
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getName();
         }
         return $itemsString;
     }
@@ -638,15 +647,62 @@ class Offer
         /* @var OfferBuyItem $buyItem */
         foreach($this->offerBuyItems as $buyItem)
         {
-            $value += (double)$buyItem->getPrice();
+            $value += (double)$buyItem->getPrice() * $buyItem->getCount();
         }
 
         if($this->type == self::TYPE_CASH_PERCENTAGE){
-            $value = $value * $this->percentageGetAmount;
+            $value = max(0, $value - $value * $this->percentageGetAmount);
         }
 
         if($this->type == self::TYPE_CASH_AMOUNT){
             $value = $value + $this->cashGetAmount;
+        }
+
+        return $value;
+    }
+
+    public function getOfferDiscount()
+    {
+        $value = 0;
+
+        if($this->type == self::TYPE_ITEM) {
+            /* @var OfferGetItem $getItem */
+            foreach ($this->offerGetItems as $getItem) {
+                $value += (double)$getItem->getPrice() * $getItem->getCount();
+            }
+        } else {
+            $buyCost = 0;
+            /* @var OfferBuyItem $buyItem */
+            foreach ($this->offerBuyItems as $buyItem) {
+                $buyCost += (double)$buyItem->getPrice() * $buyItem->getCount();
+            }
+
+            if ($this->type == self::TYPE_CASH_PERCENTAGE) {
+                $value = $buyCost * $this->percentageGetAmount;
+            }
+
+            if ($this->type == self::TYPE_CASH_AMOUNT) {
+                $value = $this->cashGetAmount;
+            }
+        }
+
+        return $value;
+    }
+
+    public function getOfferTotalPrice()
+    {
+        $value = 0;
+
+        /* @var OfferBuyItem $buyItem */
+        foreach ($this->offerBuyItems as $buyItem) {
+            $value += (double)$buyItem->getPrice() * $buyItem->getCount();
+        }
+
+        if($this->type == self::TYPE_ITEM) {
+            /* @var OfferGetItem $getItem */
+            foreach ($this->offerGetItems as $getItem) {
+                $value += (double)$getItem->getPrice() * $getItem->getCount();
+            }
         }
 
         return $value;
@@ -685,4 +741,29 @@ class Offer
     {
         return $this->orderOffers;
     }
+    
+    public function getEnabledString() 
+    {
+        return ($this->enabled == 0) ? "No" : "Yes";
+    }
+
+    /**    
+     * @return Offer
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+    
 }

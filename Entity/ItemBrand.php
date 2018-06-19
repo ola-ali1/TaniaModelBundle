@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints AS Assert;
  * ItemBrand
  *
  * @ORM\Table(name="item_brand")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\ItemBrandRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class ItemBrand
@@ -129,4 +129,13 @@ class ItemBrand
     {
         return $this->deletedAt;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->nameEn . " | " . $this->nameAr;
+    }
+    
 }
