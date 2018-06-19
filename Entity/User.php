@@ -50,7 +50,7 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      * @var string $neighborhood
      *
      * @ORM\Column(name="neighborhood", type="string", length=100, nullable=true)
-     * @Assert\Length(min = 4, max = 15, groups={"signup", "edit"}, maxMessage="neighborhood_length_not_valid", minMessage="neighborhood_length_not_valid")
+     * @Assert\Length(min = 4, max = 15, groups={"signup", "edit", "easy-signup"}, maxMessage="neighborhood_length_not_valid", minMessage="neighborhood_length_not_valid")
      */
     protected $neighborhood;
 
@@ -59,7 +59,7 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      *
      * @ORM\Column(name="address", type="string", length=400, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
-     * @Assert\Length(min = 4, max = 300, groups={"signup", "edit"}, maxMessage="address_length_not_valid", minMessage="address_length_not_valid")
+     * @Assert\Length(min = 4, max = 300, groups={"signup", "edit", "easy-signup"}, maxMessage="address_length_not_valid", minMessage="address_length_not_valid")
      */
     private $address;
 
