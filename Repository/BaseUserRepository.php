@@ -90,7 +90,7 @@ class BaseUserRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('u')
             ->select('u')
-            ->where("o.driver = :driver")
+            ->where("u.phone = :phone")
             ->andWhere("u.isPhoneVerified = :true")
             ->andWhere("u INSTANCE OF Ibtikar\TaniaModelBundle\Entity\User")
             ->setParameters(['phone' => $phone, 'true' => TRUE])
