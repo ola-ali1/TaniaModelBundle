@@ -86,4 +86,16 @@ class BaseUserRepository extends \Doctrine\ORM\EntityRepository
                 ->getResult();
     }
 
+    public function getUserByPhone($phone)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u')
+            ->where("o.driver = :driver")
+            ->andWhere("u.isPhoneVerified = :true")
+            ->andWhere("u INSTANCE OF Ibtikar\TaniaModelBundle\Entity\User")
+            ->setParameters(['phone' => $phone, 'true' => TRUE])
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 }

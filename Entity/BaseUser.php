@@ -160,6 +160,20 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     /**
      * @var \DateTime
      *
+     * @ORM\Column(name="lastLoginPasswordRequestDate", type="datetime", nullable=true)
+     */
+    protected $lastLoginPasswordRequestDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="loginPasswordRequests", type="smallint", nullable=true)
+     */
+    protected $loginPasswordRequests = 0;
+
+    /**
+     * @var \DateTime
+     *
      * @ORM\Column(name="lastEmailVerificationRequestDate", type="datetime", nullable=true)
      */
     protected $lastEmailVerificationRequestDate;
@@ -1130,6 +1144,30 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     public function getAddresses()
     {
         return $this->addresses;
+    }
+
+    /**
+     * Set lastLoginPasswordRequestDate
+     *
+     * @param \DateTime $lastLoginPasswordRequestDate
+     *
+     * @return User
+     */
+    public function setlastLoginPasswordRequestDate($lastLoginPasswordRequestDate)
+    {
+        $this->lastLoginPasswordRequestDate = $lastLoginPasswordRequestDate;
+
+        return $this;
+    }
+
+    /**
+     * Get lastLoginPasswordRequestDate
+     *
+     * @return \DateTime
+     */
+    public function getlastLoginPasswordRequestDate()
+    {
+        return $this->lastLoginPasswordRequestDate;
     }
 
 }
