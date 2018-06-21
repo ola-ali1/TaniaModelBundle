@@ -20,8 +20,8 @@ use \Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
- * @TaniaAssert\UniquePhone(groups={"edit-profile", "driver_edit_profile","signup", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
- * @UniqueEntity(fields={"email"}, groups={"edit-profile", "driver_edit_profile", "signup", "edit", "email", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, message="email_exist")
+ * @TaniaAssert\UniquePhone(groups={"edit-profile", "driver_edit_profile","signup", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
+ * @UniqueEntity(fields={"email"}, groups={"edit-profile", "driver_edit_profile", "signup", "edit", "email", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"}, message="email_exist")
  */
 class BaseUser implements AdvancedUserInterface, EquatableInterface
 {
@@ -51,7 +51,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @ORM\Column(name="email", type="string", length=190, nullable=true)
      *
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
-     * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"signup", "edit","edit-profile", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @AssertEmail(strict=true,checkMX=true, checkHost=true, message="invalid_email", groups={"signup", "edit","edit-profile", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
      */
     protected $email;
 
@@ -66,10 +66,10 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     /**
      * @var string $userPassword
      *
-     * @Assert\NotBlank(groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_admin_create"}, message="fill_mandatory_field")
-     * @Assert\Length(min = 6, max = 12, groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, maxMessage="password_not_valid_max", minMessage="password_not_valid_min")
-     * @Assert\Regex(pattern="/[a-zA-Zأ-ي]/", message="password_not_valid_no_text", groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
-     * @Assert\Regex(pattern="/[0-9٠-٩]/", message="password_not_valid_no_number", groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\NotBlank(groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_admin_create", "easy-signup"}, message="fill_mandatory_field")
+     * @Assert\Length(min = 6, max = 12, groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"}, maxMessage="password_not_valid_max", minMessage="password_not_valid_min")
+     * @Assert\Regex(pattern="/[a-zA-Zأ-ي]/", message="password_not_valid_no_text", groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
+     * @Assert\Regex(pattern="/[0-9٠-٩]/", message="password_not_valid_no_number", groups={"signup", "changePassword", "resetPassword", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
      */
     protected $userPassword;
 
@@ -190,8 +190,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="fullName", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
-     * @Assert\Length(min = 4, max = 25, groups={"driver_edit_profile", "signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
+     * @Assert\Length(min = 4, max = 25, groups={"driver_edit_profile", "signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
      */
     protected $fullName;
 
@@ -210,7 +210,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="phone", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup", "phone","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup", "phone","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
      * @Assert\Regex("/^[+-]?\d+$/", groups={"driver_edit_profile", "edit", "edit-profile","backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      * @TaniaAssert\CustomPhone(groups={"phone_validator", "backend_user_create", "backend_user_edit"})
      */
@@ -220,8 +220,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      * @var string
      *
      * @ORM\Column(name="locale", type="string", length=2, nullable=true, options={"fixed": true})
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup"})
-     * @Assert\Choice({"en", "ar", "hi", "ur"}, groups={"driver_edit_profile", "signup"}, message="invalid_locale")
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup", "easy-signup"})
+     * @Assert\Choice({"en", "ar", "hi", "ur"}, groups={"driver_edit_profile", "signup", "easy-signup"}, message="invalid_locale")
      */
     protected $locale = 'ar';
 
