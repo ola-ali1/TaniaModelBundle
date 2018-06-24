@@ -165,7 +165,7 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     protected $lastLoginPasswordRequestDate;
 
     /**
-     * @var \DateTime
+     * @var integer
      *
      * @ORM\Column(name="loginPasswordRequests", type="smallint", nullable=true)
      */
@@ -1168,6 +1168,23 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
     public function getlastLoginPasswordRequestDate()
     {
         return $this->lastLoginPasswordRequestDate;
+    }
+
+
+    /**
+     * @return integer
+     */
+    public function getLoginPasswordRequests()
+    {
+        return $this->loginPasswordRequests;
+    }
+
+    /**
+     * @param integer $loginPasswordRequests
+     */
+    public function setLoginPasswordRequests($loginPasswordRequests)
+    {
+        $this->loginPasswordRequests = $loginPasswordRequests;
     }
 
 }
