@@ -110,7 +110,7 @@ class Package
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order",mappedBy="package")
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", mappedBy="package")
      */
     protected $orders;
 

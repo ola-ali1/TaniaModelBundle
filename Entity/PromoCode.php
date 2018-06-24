@@ -147,6 +147,11 @@ class PromoCode implements GroupSequenceProviderInterface
      */
     protected $enabled = true;
 
+    /**     
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", mappedBy="promoCode")
+     */
+    private $orders;
+    
     /**
      * @return string
      */
@@ -595,5 +600,16 @@ class PromoCode implements GroupSequenceProviderInterface
     {
         return $this->enabled;
     }
+    
+    public function getOrders() {
+        return $this->orders;
+    }
 
+    /**
+     * @return PromoCode
+     */
+    public function setOrders($orders) {
+        $this->orders = $orders;
+        return $this;
+    }
 }
