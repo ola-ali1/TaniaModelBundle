@@ -128,6 +128,11 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $orderOffers;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderPackage",mappedBy="order")
+     */
+    protected $orderPackages;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Offer", inversedBy="orders")
@@ -376,11 +381,6 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\Column(name="nana_sync_data", type="array", nullable=true)
      */
     private $nanaSyncData;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Package", inversedBy="orders")
-     */
-    protected $packages;
 
     /**
      * Set nanaSyncData

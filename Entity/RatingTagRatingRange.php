@@ -22,12 +22,12 @@ class RatingTagRatingRange
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\RatingTag", inversedBy="RatingTagRatingRange")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\RatingTag", inversedBy="ratingTagRatingRanges")
      */
     private $ratingTag;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\RatingRange", inversedBy="RatingTagRatingRange")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\RatingRange", inversedBy="ratingTagRatingRanges")
      */
     private $ratingRange;
 

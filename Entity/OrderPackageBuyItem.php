@@ -24,7 +24,7 @@ class OrderPackageBuyItem
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Item", inversedBy="orderPackageBuyItems")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Item")
      */
     protected $item;
 

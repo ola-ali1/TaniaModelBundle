@@ -109,12 +109,6 @@ class Package
     protected $packageBuyItems;
 
     /**
-     *
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", mappedBy="package")
-     */
-    protected $orders;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="number_of_used_times", type="integer", options={"default": 0})
@@ -424,40 +418,6 @@ class Package
     public function prePersistCallback()
     {
         $this->startTime = $this->startTime ? $this->startTime : new \DateTime('now');;
-    }
-
-    /**
-     * Add order
-     *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
-     *
-     * @return Package
-     */
-    public function addOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
-    {
-        $this->orders[] = $order;
-
-        return $this;
-    }
-
-    /**
-     * Remove order
-     *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
-     */
-    public function removeOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
-    {
-        $this->orders->removeElement($order);
-    }
-
-    /**
-     * Get orders
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getOrders()
-    {
-        return $this->orders;
     }
 
     public function getTotalItemCount()
