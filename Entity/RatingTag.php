@@ -4,6 +4,7 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints AS Assert;
 
 /**
  * RatingTag
@@ -25,14 +26,16 @@ class RatingTag
 
     /**
      * @var string
-     *
+     * @Assert\Length(max=255,min=1)
+     * @Assert\NotBlank
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string
-     *
+     * @Assert\Length(max=255,min=1)
+     * @Assert\NotBlank
      * @ORM\Column(name="name_en", type="string", length=255)
      */
     private $nameEn;
@@ -136,5 +139,15 @@ class RatingTag
     {
         return $this->deletedAt;
     }
+    
+    public function getRatingRangesHtml() 
+    {
+        $string = '';
+        foreach ($this->ratingTagRatingRanges as $ratingTagRatingRange) {
+            $string .= "<div class='rating-tag'>" . $ratingTagRatingRange->getRatingRange()->getStart() . ' - ' . $ratingTagRatingRange->getRatingRange()->getEnd() . "</div>";
+        }
+        return $string;
+    }
+    
 }
 
