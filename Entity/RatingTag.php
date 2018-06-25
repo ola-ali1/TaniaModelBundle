@@ -148,6 +148,5 @@ class RatingTag
         }
         return $string;
     }
-    
 }
 
