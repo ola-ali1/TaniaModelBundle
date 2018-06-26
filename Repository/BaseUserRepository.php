@@ -91,9 +91,8 @@ class BaseUserRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('u')
             ->select('u')
             ->where("u.phone = :phone")
-            ->andWhere("u.isPhoneVerified = :true")
             ->andWhere("u INSTANCE OF Ibtikar\TaniaModelBundle\Entity\User")
-            ->setParameters(['phone' => $phone, 'true' => TRUE])
+            ->setParameters(['phone' => $phone])
             ->getQuery()
             ->getOneOrNullResult();
     }
