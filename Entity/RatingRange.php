@@ -153,6 +153,6 @@ class RatingRange
     public function getDeletedAt()
     {
         return $this->deletedAt;
-    }
+    }   
 }
 
