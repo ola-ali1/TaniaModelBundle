@@ -128,6 +128,11 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $orderOffers;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderPackage",mappedBy="order")
+     */
+    protected $orderPackages;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Offer", inversedBy="orders")
