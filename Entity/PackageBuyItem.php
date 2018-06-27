@@ -8,10 +8,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @ORM\Table(name="offer_buy_item")
+ * @ORM\Table(name="package_buy_item")
  * @ORM\Entity()
  */
-class OfferBuyItem
+class PackageBuyItem
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
@@ -26,15 +26,15 @@ class OfferBuyItem
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Item", inversedBy="offerBuyItems")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Item")
      */
     protected $item;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Offer", inversedBy="offerBuyItems")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Package", inversedBy="packageBuyItems")
      */
-    protected $offer;
+    protected $package;
 
     /**
      * @ORM\Column(name="count", type="integer")
@@ -101,27 +101,27 @@ class OfferBuyItem
     }
 
     /**
-     * Set offer
+     * Set package
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Offer $offer
+     * @param \Ibtikar\TaniaModelBundle\Entity\Package $package
      *
-     * @return Offer
+     * @return Package
      */
-    public function setOffer(\Ibtikar\TaniaModelBundle\Entity\Offer $offer = null)
+    public function setPackage(\Ibtikar\TaniaModelBundle\Entity\Package $package = null)
     {
-        $this->offer = $offer;
+        $this->package = $package;
 
         return $this;
     }
 
     /**
-     * Get offer
+     * Get package
      *
-     * @return \Ibtikar\TaniaModelBundle\Entity\Offer
+     * @return \Ibtikar\TaniaModelBundle\Entity\Package
      */
-    public function getOffer()
+    public function getPackage()
     {
-        return $this->offer;
+        return $this->package;
     }
 
     /**
@@ -209,7 +209,7 @@ class OfferBuyItem
     }
 
     /**    
-     * @return OfferBuyItem
+     * @return PackageBuyItem
      */
     public function setDeletedAt($deletedAt)
     {

@@ -2,13 +2,16 @@
 
 namespace Ibtikar\TaniaModelBundle\Entity;
 
+use Doctrine\Common\Util\Debug;
 use Symfony\Component\Validator\Constraints AS Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Offer
  *
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  * @ORM\Table(name="offer")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="Ibtikar\TaniaModelBundle\Repository\OfferRepository")
@@ -28,9 +31,9 @@ class Offer
     );
 
     public static $types = array(
-        self::TYPE_CASH_PERCENTAGE,
-        self::TYPE_CASH_AMOUNT,
-        self::TYPE_ITEM,
+        self::TYPE_CASH_PERCENTAGE => "PERCENTAGE",
+        //self::TYPE_CASH_AMOUNT => "CASH",
+        self::TYPE_ITEM => "ITEM",
     );
 
 
@@ -41,6 +44,7 @@ class Offer
     {
         $this->offerBuyItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->offerGetItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderOffers   = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -58,9 +62,18 @@ class Offer
      *
      * @ORM\Column(name="title", type="string", length=100, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field")
-     * @Assert\Length(min = 3, max = 20, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
+     * @Assert\Length(min = 4, max = 100, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
      */
     private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title_en", type="string", length=100, nullable=true)
+     * @Assert\NotBlank(message="fill_mandatory_field")
+     * @Assert\Length(min = 4, max = 100, maxMessage="offerTitle_length_not_valid", minMessage="offerTitle_length_not_valid")
+     */
+    private $titleEn;
 
     /**
      * @var text
@@ -77,11 +90,24 @@ class Offer
     private $descriptionPublic;
 
     /**
+     * @var text
+     *
+     * @ORM\Column(name="description_private_en", type="text", nullable=true)
+     */
+    private $descriptionPrivateEn;
+
+    /**
+     * @var text
+     *
+     * @ORM\Column(name="description_public_en", type="text", nullable=true)
+     */
+    private $descriptionPublicEn;
+
+    /**
      * @var \DateTime
      *
-     * @Assert\NotBlank
-     * @Assert\DateTime
-     * @Assert\Range(min="now")
+     * Assert\DateTime
+     * Assert\Range(min="now")
      * @ORM\Column(name="start_time", type="datetime", nullable=true)
      */
     private $startTime;
@@ -107,12 +133,14 @@ class Offer
 
     /**
      *
+     * @Assert\NotBlank
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OfferBuyItem",mappedBy="offer")
      */
     protected $offerBuyItems;
 
     /**
      *
+     * @Assert\Expression("this.getType() != 'ITEM' or value != null", message="This value should not be blank.")
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OfferGetItem",mappedBy="offer")
      */
     protected $offerGetItems;
@@ -130,6 +158,22 @@ class Offer
      */
     private $numberOfUsedTimes = 0;
 
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="cash_get_amount", type="decimal", precision=10, scale=2, options={"default": 0}, nullable = true)
+     * @Assert\Type(type="numeric")
+     */
+    private $cashGetAmount;
+
+    /**
+     * @var float
+     *
+     * @Assert\Expression("this.getType() != 'PERCENTAGE' or value != null", message="This value should not be blank.")
+     * @ORM\Column(name="percentage_get_amount", type="float", options={"default": 0}, nullable = true)
+     * @Assert\Type(type="numeric")
+     */
+    private $percentageGetAmount;
 
     /**
      * @var bool
@@ -137,6 +181,19 @@ class Offer
      * @ORM\Column(name="enabled", type="boolean", options={"default": true})
      */
     private $enabled = true;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderOffer",mappedBy="offer")
+     */
+    protected $orderOffers;
+
+    /**
+     * @var \DateTime $deletedAt
+     *
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    protected $deletedAt;
 
     /**
      * Get id
@@ -186,6 +243,22 @@ class Offer
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitleEn()
+    {
+        return $this->titleEn;
+    }
+
+    /**
+     * @param string $titleEn
+     */
+    public function setTitleEn($titleEn)
+    {
+        $this->titleEn = $titleEn;
     }
 
     /**
@@ -243,6 +316,39 @@ class Offer
     public function setDescriptionPublic($descriptionPublic)
     {
         $this->descriptionPublic = $descriptionPublic;
+    }
+
+
+    /**
+     * @return text
+     */
+    public function getDescriptionPrivateEn()
+    {
+        return $this->descriptionPrivateEn;
+    }
+
+    /**
+     * @param text $descriptionPrivateEn
+     */
+    public function setDescriptionPrivateEn($descriptionPrivateEn)
+    {
+        $this->descriptionPrivateEn = $descriptionPrivateEn;
+    }
+
+    /**
+     * @return text
+     */
+    public function getDescriptionPublicEn()
+    {
+        return $this->descriptionPublicEn;
+    }
+
+    /**
+     * @param text $descriptionPublicEn
+     */
+    public function setDescriptionPublicEn($descriptionPublicEn)
+    {
+        $this->descriptionPublicEn = $descriptionPublicEn;
     }
 
     /**
@@ -370,6 +476,38 @@ class Offer
     }
 
     /**
+     * @return float
+     */
+    public function getCashGetAmount()
+    {
+        return $this->cashGetAmount;
+    }
+
+    /**
+     * @param float $cashGetAmount
+     */
+    public function setCashGetAmount($cashGetAmount)
+    {
+        $this->cashGetAmount = $cashGetAmount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPercentageGetAmount()
+    {
+        return $this->percentageGetAmount;
+    }
+
+    /**
+     * @param float $percentageGetAmount
+     */
+    public function setPercentageGetAmount($percentageGetAmount)
+    {
+        $this->percentageGetAmount = $percentageGetAmount;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
@@ -377,4 +515,255 @@ class Offer
         return "$this->id";
     }
 
+    /**
+     * @return string
+     */
+    public function getOfferGetItemsNamesAndQuantitiesEn()
+    {
+        $itemsString = '';
+        foreach ($this->offerGetItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
+        }
+        return $itemsString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferGetItemsNamesAndQuantitiesAr()
+    {
+        $itemsString = '';
+        foreach ($this->offerGetItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getName();
+        }
+        return $itemsString;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getOfferBuyItemsNamesAndQuantitiesEn()
+    {
+        $itemsString = '';
+        foreach ($this->offerBuyItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
+        }
+        return $itemsString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferBuyItemsNamesAndQuantitiesAr()
+    {
+        $itemsString = '';
+        foreach ($this->offerBuyItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getName();
+        }
+        return $itemsString;
+    }
+
+    public function getAmount() 
+    {
+        switch ($this->type) {
+            case self::TYPE_CASH_AMOUNT:
+                return $this->getCashGetAmount();
+                break;
+            case self::TYPE_CASH_PERCENTAGE:
+                return $this->getPercentageGetAmount() * 100 . " %";
+                break;
+            default:
+            case self::TYPE_ITEM:
+                return "item";
+                break;
+        }
+        
+       
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersistCallback()
+    {
+        $this->startTime = $this->startTime ? $this->startTime : new \DateTime('now');;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     *
+     * @return Offer
+     */
+    public function addOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\Order $order
+     */
+    public function removeOrder(\Ibtikar\TaniaModelBundle\Entity\Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    public function getTotalItemCount()
+    {
+        return $this->offerBuyItems->count() + $this->offerGetItems->count();
+    }
+
+    public function getOfferPrice()
+    {
+        $value = 0;
+
+        /* @var OfferBuyItem $buyItem */
+        foreach($this->offerBuyItems as $buyItem)
+        {
+            $value += (double)$buyItem->getPrice() * $buyItem->getCount();
+        }
+
+        if($this->type == self::TYPE_CASH_PERCENTAGE){
+            $value = max(0, $value - $value * $this->percentageGetAmount);
+        }
+
+        if($this->type == self::TYPE_CASH_AMOUNT){
+            $value = $value + $this->cashGetAmount;
+        }
+
+        return $value;
+    }
+
+    public function getOfferDiscount()
+    {
+        $value = 0;
+
+        if($this->type == self::TYPE_ITEM) {
+            /* @var OfferGetItem $getItem */
+            foreach ($this->offerGetItems as $getItem) {
+                $value += (double)$getItem->getPrice() * $getItem->getCount();
+            }
+        } else {
+            $buyCost = 0;
+            /* @var OfferBuyItem $buyItem */
+            foreach ($this->offerBuyItems as $buyItem) {
+                $buyCost += (double)$buyItem->getPrice() * $buyItem->getCount();
+            }
+
+            if ($this->type == self::TYPE_CASH_PERCENTAGE) {
+                $value = $buyCost * $this->percentageGetAmount;
+            }
+
+            if ($this->type == self::TYPE_CASH_AMOUNT) {
+                $value = $this->cashGetAmount;
+            }
+        }
+
+        return $value;
+    }
+
+    public function getOfferTotalPrice()
+    {
+        $value = 0;
+
+        /* @var OfferBuyItem $buyItem */
+        foreach ($this->offerBuyItems as $buyItem) {
+            $value += (double)$buyItem->getPrice() * $buyItem->getCount();
+        }
+
+        if($this->type == self::TYPE_ITEM) {
+            /* @var OfferGetItem $getItem */
+            foreach ($this->offerGetItems as $getItem) {
+                $value += (double)$getItem->getPrice() * $getItem->getCount();
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * Add orderOffer
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer
+     *
+     * @return Offer
+     */
+    public function addOrderOffer(\Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer)
+    {
+        $this->orderOffers[] = $orderOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderOffer
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer
+     */
+    public function removeOrderOffer(\Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer)
+    {
+        $this->orderOffers->removeElement($orderOffer);
+    }
+
+    /**
+     * Get orderOffers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderOffers()
+    {
+        return $this->orderOffers;
+    }
+    
+    public function getEnabledString() 
+    {
+        return ($this->enabled == 0) ? "No" : "Yes";
+    }
+
+    /**    
+     * @return Offer
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+    
 }

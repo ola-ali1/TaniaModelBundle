@@ -78,6 +78,11 @@ class CityArea
     protected $driverCityAreas;
 
     /**
+     * @ORM\Column(name="order_count", type="integer", options={"default": 0})
+     */
+    private $driverCount = 0;
+
+    /**
      * @var \DateTime $deletedAt
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
@@ -319,5 +324,41 @@ class CityArea
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * Set driverCount
+     *
+     * @param string $driverCount
+     *
+     * @return driverCount
+     */
+    public function setDriverCount($driverCount)
+    {
+        $this->driverCount = $driverCount;
+
+        return $this;
+    }
+
+    /**
+     * Get driverCount
+     *
+     * @return string
+     */
+    public function getDriverCount()
+    {
+        return $this->driverCount;
+    }
+
+    public function decrementDriverCount()
+    {
+        if($this->driverCount > 0)
+            $this->driverCount = $this->driverCount - 1;
+    }
+
+
+    public function incrementDriverCount()
+    {
+        $this->driverCount = $this->driverCount + 1;
     }
 }

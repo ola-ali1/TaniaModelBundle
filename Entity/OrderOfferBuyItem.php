@@ -4,14 +4,12 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
- * @ORM\Table(name="offer_buy_item")
+ * @ORM\Table(name="order_offer_buy_item")
  * @ORM\Entity()
  */
-class OfferBuyItem
+class OrderOfferBuyItem
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
@@ -26,15 +24,17 @@ class OfferBuyItem
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Item", inversedBy="offerBuyItems")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Item")
      */
     protected $item;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Offer", inversedBy="offerBuyItems")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderOffer", inversedBy="orderOfferBuyItems")
+     *
+     * @ORM\JoinColumn(name="order_offer_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $offer;
+    protected $orderOffer;
 
     /**
      * @ORM\Column(name="count", type="integer")
@@ -59,12 +59,6 @@ class OfferBuyItem
      */
     private $nameEn;
 
-    /**
-     * @var \DateTime $deletedAt
-     *
-     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
-     */
-    protected $deletedAt;
 
     /**
      * Get id
@@ -101,15 +95,15 @@ class OfferBuyItem
     }
 
     /**
-     * Set offer
+     * Set orderOffer
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Offer $offer
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer
      *
-     * @return Offer
+     * @return OrderOffer
      */
-    public function setOffer(\Ibtikar\TaniaModelBundle\Entity\Offer $offer = null)
+    public function setOrderOffer(\Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer = null)
     {
-        $this->offer = $offer;
+        $this->orderOffer = $orderOffer;
 
         return $this;
     }
@@ -119,9 +113,9 @@ class OfferBuyItem
      *
      * @return \Ibtikar\TaniaModelBundle\Entity\Offer
      */
-    public function getOffer()
+    public function getOrderOffer()
     {
-        return $this->offer;
+        return $this->orderOffer;
     }
 
     /**
@@ -207,24 +201,4 @@ class OfferBuyItem
     public function __toString() {
         return $this->name;
     }
-
-    /**    
-     * @return OfferBuyItem
-     */
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
-        return $this;
-    }
-
-    /**
-     * Get deletedAt
-     *
-     * @return \DateTime
-     */
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-    
 }

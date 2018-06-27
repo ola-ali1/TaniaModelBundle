@@ -122,6 +122,17 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $orderItems;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderOffer",mappedBy="order")
+     */
+    protected $orderOffers;
+
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderPackage",mappedBy="order")
+     */
+    protected $orderPackages;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Offer", inversedBy="orders")
@@ -743,6 +754,8 @@ class Order implements PfTransactionInvoiceInterface
         $this->orderItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderStatuses = new \Doctrine\Common\Collections\ArrayCollection();
         $this->pfTransactions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orderOffers = new \Doctrine\Common\Collections\ArrayCollection();
+
         $this->setStatus($this::$statuses['new']);
     }
 
@@ -2605,6 +2618,7 @@ class Order implements PfTransactionInvoiceInterface
     public function getAddressTypes(){
         return self::$addressTypes;
     }
+
     
     public function getPromoCodeText()
     {
@@ -2616,5 +2630,39 @@ class Order implements PfTransactionInvoiceInterface
     }
     public function getDiscountAmountString(){
         return $this->getPromoCode()->getDiscountAmountString();
+    }
+
+    /**
+     * Add orderOffer
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer
+     *
+     * @return Order
+     */
+    public function addOrderOffer(\Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer)
+    {
+        $this->orderOffers[] = $orderOffer;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderOffer
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer
+     */
+    public function removeOrderOffer(\Ibtikar\TaniaModelBundle\Entity\OrderOffer $orderOffer)
+    {
+        $this->orderOffers->removeElement($orderOffer);
+    }
+
+    /**
+     * Get orderOffers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderOffers()
+    {
+        return $this->orderOffers;
     }
 }

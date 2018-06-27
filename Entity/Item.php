@@ -136,6 +136,36 @@ class Item
      */
     protected $isSynced;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="Ibtikar\TaniaModelBundle\Entity\ItemAttribute")
+    * @ORM\JoinColumn(name="item_attribute_id", referencedColumnName="id", nullable=true)
+    */
+    protected $attribute;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemBrand")
+    * @ORM\JoinColumn(name="item_brand_id", referencedColumnName="id", nullable=true)
+    */
+    protected $brand;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemPackage")
+    * @ORM\JoinColumn(name="item_package_id", referencedColumnName="id", nullable=true)
+    */
+    protected $package;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemPackageSize")
+    * @ORM\JoinColumn(name="item_package_size_id", referencedColumnName="id", nullable=true)
+    */
+    protected $packageSize;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemType")
+    * @ORM\JoinColumn(name="item_type_id", referencedColumnName="id", nullable=true)
+    */
+    protected $type;
+    
     public function __toString() {
         return $this->name;
     }
@@ -723,4 +753,128 @@ class Item
         return $this;
     }
 
+    /**
+     * @return ItemAttribute
+     */
+    public function getAttribute() {
+        return $this->attribute;
+    }
+
+    /**
+     * @return ItemBrand
+     */
+    public function getBrand() {
+        return $this->brand;
+    }
+
+    /**
+     * @return ItemPackage
+     */
+    public function getPackage() {
+        return $this->package;
+    }
+
+    /**
+     * @return ItemPackageSize
+     */
+    public function getPackageSize() {
+        return $this->packageSize;
+    }
+
+    /**
+     * @return ItemType
+     */
+    public function getType() {
+        return $this->type;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setAttribute($attribute) {
+        $this->attribute = $attribute;
+        return $this;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setBrand($brand) {
+        $this->brand = $brand;
+        return $this;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setPackage($package) {
+        $this->package = $package;
+        return $this;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setPackageSize($packageSize) {
+        $this->packageSize = $packageSize;
+        return $this;
+    }
+
+    /**
+     * @return Item
+     */
+    public function setType($type) {
+        $this->type = $type;
+        return $this;
+    }
+
+    public function getAttributeNameAr()
+    {
+        return $this->getAttribute() ? $this->getAttribute()->getNameAr() : "";
+    }
+
+    public function getAttributeNameEn()
+    {
+        return $this->getAttribute() ? $this->getAttribute()->getNameEn() : "";
+    }
+    
+    public function getBrandNameAr()
+    {
+        return $this->getBrand() ? $this->getBrand()->getNameAr() : "";
+    }
+
+    public function getBrandNameEn()
+    {
+        return $this->getBrand() ? $this->getBrand()->getNameEn() : "";
+    }
+    
+    public function getPackageNameAr()
+    {
+        return $this->getPackage() ? $this->getPackage()->getNameAr() : "";
+    }
+
+    public function getPackageNameEn()
+    {
+        return $this->getPackage() ? $this->getPackage()->getNameEn() : "";
+    }
+    
+    public function getPackageSizeNameAr()
+    {
+        return $this->getPackageSize() ? $this->getPackageSize()->getNameAr() : "";
+    }
+
+    public function getPackageSizeNameEn()
+    {
+        return $this->getPackageSize() ? $this->getPackageSize()->getNameEn() : "";
+    }
+    
+    public function getTypeNameAr()
+    {
+        return $this->getType() ? $this->getType()->getNameAr() : "";
+    }
+
+    public function getTypeNameEn()
+    {
+        return $this->getType() ? $this->getType()->getNameEn() : "";
+    }
 }
