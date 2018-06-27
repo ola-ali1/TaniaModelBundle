@@ -583,6 +583,11 @@ class Order implements PfTransactionInvoiceInterface
     private $rateComment;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\RatingTag", inversedBy="orders")
+     */
+    private $ratingTag;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=190)
@@ -2651,5 +2656,20 @@ class Order implements PfTransactionInvoiceInterface
     public function getOrderOffers()
     {
         return $this->orderOffers;
+    }
+    /**
+     * 
+     * @param \Ibtikar\TaniaModelBundle\Entity\RatingTag $ratingTag
+     * @return Order
+     */
+    public function setRatingTag($ratingTag) {
+        $this->ratingTag = $ratingTag;
+        return $this;
+    }
+    /**
+     * @return \Ibtikar\TaniaModelBundle\Entity\RatingTag
+     */
+    public function getRatingTag(){
+        return $this->ratingTag;
     }
 }
