@@ -63,6 +63,14 @@ class ContactUs
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order")
      */
     protected $order;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="closed", type="integer", nullable=true, options={"default" : 0})
+     *
+     */
+    private $closed;
 
     /**
      * Set order
@@ -174,6 +182,30 @@ class ContactUs
     public function getType()
     {
         return $this->type;
+    }
+    
+    /**
+     * Set closed
+     *
+     * @param string $closed
+     *
+     * @return ContactUs
+     */
+    public function setClosed($closed)
+    {
+        $this->closed = $closed;
+        
+        return $this;
+    }
+    
+    /**
+     * Get closed
+     *
+     * @return integer
+     */
+    public function getClosed()
+    {
+        return $this->closed;
     }
 
     /**
