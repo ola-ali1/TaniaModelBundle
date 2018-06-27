@@ -2605,4 +2605,16 @@ class Order implements PfTransactionInvoiceInterface
     public function getAddressTypes(){
         return self::$addressTypes;
     }
+    
+    public function getPromoCodeText()
+    {
+        return $this->getPromoCode()->getCode();
+    }
+    public function getPromoCodeType()
+    {
+        return $this->getPromoCode()->getType();
+    }
+    public function getDiscountAmountString(){
+        return $this->getPromoCode()->getDiscountAmountString();
+    }
 }
