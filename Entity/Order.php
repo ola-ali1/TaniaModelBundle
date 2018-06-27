@@ -2670,6 +2670,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->orderOffers;
     }
+    
     /**
      * 
      * @param \Ibtikar\TaniaModelBundle\Entity\RatingTag $ratingTag
@@ -2679,6 +2680,7 @@ class Order implements PfTransactionInvoiceInterface
         $this->ratingTag = $ratingTag;
         return $this;
     }
+    
     /**
      * @return \Ibtikar\TaniaModelBundle\Entity\RatingTag
      */
