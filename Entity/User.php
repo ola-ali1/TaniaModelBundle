@@ -114,6 +114,22 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     private $balance = 0;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="points", type="integer", options={"default": 0})
+     * @Assert\Type(type="numeric")
+     */
+    private $points = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="usedPoints", type="integer", options={"default": 0})
+     * @Assert\Type(type="numeric")
+     */
+    private $usedPoints = 0;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="usedBalance", type="decimal", precision=10, scale=2, options={"default": 0})
@@ -629,6 +645,38 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     {
         $this->ordersCount = $ordersCount;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * @param string $points
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUsedPoints()
+    {
+        return $this->usedPoints;
+    }
+
+    /**
+     * @param int $usedPoints
+     */
+    public function setUsedPoints($usedPoints)
+    {
+        $this->usedPoints = $usedPoints;
     }
 
     /**
