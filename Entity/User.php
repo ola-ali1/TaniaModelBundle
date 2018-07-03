@@ -23,6 +23,9 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
 
     use PfPaymentMethodHolderTrait;
 
+    /* @var $container \Symfony\Component\DependencyInjection\ContainerAwareInterface */
+    private $container;
+
     /**
      * @Assert\Regex("/ar|en/")
      * @ORM\Column(name="application_language", type="string", length=2, options={"default": "ar"})
@@ -146,11 +149,13 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
 
     /**
      * Constructor
+     * @param ContainerAwareInterface $container
      */
-    public function __construct()
+    public function __construct($container)
     {
         parent::__construct();
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->container = $container;
     }
 
     /**
@@ -638,6 +643,20 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     {
         $this->ordersCount = $ordersCount;
         return $this;
+    }
+
+    /**
+     * get password validity remaining seconds
+     * @param integer $passwordExpiryTime
+     * @return integer
+     */
+    public function getValidityRemainingSeconds($passwordExpiryTime)
+    {
+        $now  = new \DateTime();
+        $diff = $this->getLastLoginPasswordRequestDate() ? $now->format('U') - $this->getLastLoginPasswordRequestDate()->format('U') : 0; //Time Passed Since Last Attempt in seconds
+
+        //If last attempt has passed allowed time
+        return $diff > ( $passwordExpiryTime * 60 ) ? 0 : ( $passwordExpiryTime * 60 ) - $diff;
     }
 
 
