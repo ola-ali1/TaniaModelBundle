@@ -20,7 +20,7 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 class Item
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
-
+    
     /**
      * @var int
      *
