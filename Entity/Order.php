@@ -1244,6 +1244,7 @@ class Order implements PfTransactionInvoiceInterface
             $orderStatus = new OrderStatusHistory();
             $orderStatus->setStatus($status);
             $orderStatus->setOrder($this);
+            $orderStatus->setActionDoneBy($this->getDriver());
             $this->addOrderStatus($orderStatus);
         }
         $this->status = $status;
