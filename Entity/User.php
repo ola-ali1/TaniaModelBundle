@@ -23,9 +23,6 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
 
     use PfPaymentMethodHolderTrait;
 
-    /* @var $container \Symfony\Component\DependencyInjection\ContainerAwareInterface */
-    private $container;
-
     /**
      * @Assert\Regex("/ar|en/")
      * @ORM\Column(name="application_language", type="string", length=2, options={"default": "ar"})
@@ -146,17 +143,6 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     protected $deletedAt;
-
-    /**
-     * Constructor
-     * @param ContainerAwareInterface $container
-     */
-    public function __construct($container)
-    {
-        parent::__construct();
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->container = $container;
-    }
 
     /**
      * needed to disable the doctrine proxy __get as it trigger notice error
