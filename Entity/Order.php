@@ -24,6 +24,7 @@ class Order implements PfTransactionInvoiceInterface
     CONST SADAD = 'SADAD';
     CONST BALANCE = 'BALANCE';
     CONST CREDIT = 'CREDIT';
+    CONST POINTS = 'POINTS';
 
     CONST TYPE_MASAJED = 'MASAJED';
     CONST TYPE_USER = 'USER';
@@ -37,7 +38,8 @@ class Order implements PfTransactionInvoiceInterface
         self::CASH => 'Cash',
         self::SADAD => 'SADAD',
         self::CREDIT => 'Online With Card Id',
-        self::BALANCE => 'Balance'
+        self::BALANCE => 'Balance',
+        self::POINTS => 'Points'
     );
 
     public static $statuses = array(
@@ -582,6 +584,11 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $rateComment;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\RatingTag", inversedBy="orders")
+     */
+    private $ratingTag;
+    
     /**
      * @var string
      *
@@ -1237,6 +1244,7 @@ class Order implements PfTransactionInvoiceInterface
             $orderStatus = new OrderStatusHistory();
             $orderStatus->setStatus($status);
             $orderStatus->setOrder($this);
+            $orderStatus->setActionDoneBy($this->getDriver());
             $this->addOrderStatus($orderStatus);
         }
         $this->status = $status;
@@ -2619,6 +2627,19 @@ class Order implements PfTransactionInvoiceInterface
         return self::$addressTypes;
     }
 
+    
+    public function getPromoCodeText()
+    {
+        return $this->getPromoCode()->getCode();
+    }
+    public function getPromoCodeType()
+    {
+        return $this->getPromoCode()->getType();
+    }
+    public function getDiscountAmountString(){
+        return $this->getPromoCode()->getDiscountAmountString();
+    }
+
     /**
      * Add orderOffer
      *
@@ -2651,5 +2672,22 @@ class Order implements PfTransactionInvoiceInterface
     public function getOrderOffers()
     {
         return $this->orderOffers;
+    }
+    
+    /**
+     * 
+     * @param \Ibtikar\TaniaModelBundle\Entity\RatingTag $ratingTag
+     * @return Order
+     */
+    public function setRatingTag($ratingTag) {
+        $this->ratingTag = $ratingTag;
+        return $this;
+    }
+    
+    /**
+     * @return \Ibtikar\TaniaModelBundle\Entity\RatingTag
+     */
+    public function getRatingTag(){
+        return $this->ratingTag;
     }
 }
