@@ -2690,4 +2690,5 @@ class Order implements PfTransactionInvoiceInterface
     public function getRatingTag(){
         return $this->ratingTag;
     }
+
 }
