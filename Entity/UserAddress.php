@@ -82,7 +82,6 @@ class UserAddress
      * @var string
      *
      * @ORM\Column(name="customer_group", type="string", length=100, nullable=true)
-     * @Assert\NotBlank(message="fill_mandatory_field")
      * @Assert\Length(min = 3, max = 20, maxMessage="addressTitle_length_not_valid", minMessage="addressTitle_length_not_valid")
      */
     private $customerGroup;
