@@ -53,9 +53,9 @@ class RatingTag
     private $deletedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order",mappedBy="ratingTag")
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderRatingTag", mappedBy="ratingTag")
      */
-    private $orders;
+    private $orderRatingTags;
 
     /**
      * Get id
@@ -154,15 +154,21 @@ class RatingTag
         return $string;
     }
     
-    public function setOrders($orders) 
-    {
-        $this->orders = $orders;
+    /**
+     * 
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag $orderRatingTag
+     * @return Order
+     */
+    public function setOrderRatingTags($orderRatingTags) {
+        $this->orderRatingTags = $orderRatingTags;
         return $this;
     }
-
-    public function getOrders() 
-    {
-        return $this->orders;
+    
+    /**
+     * @return \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag
+     */
+    public function getOrderRatingTags(){
+        return $this->orderRatingTags;
     }
 }
 
