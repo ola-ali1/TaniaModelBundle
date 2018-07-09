@@ -265,6 +265,7 @@ class UserAddress
         return $this->customerGroup;
     }
 
+    
     /**
      * @param string $customerGroup
      */
