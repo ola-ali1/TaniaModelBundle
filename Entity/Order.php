@@ -24,6 +24,7 @@ class Order implements PfTransactionInvoiceInterface
     CONST SADAD = 'SADAD';
     CONST BALANCE = 'BALANCE';
     CONST CREDIT = 'CREDIT';
+    CONST POINTS = 'POINTS';
 
     CONST TYPE_MASAJED = 'MASAJED';
     CONST TYPE_USER = 'USER';
@@ -37,7 +38,8 @@ class Order implements PfTransactionInvoiceInterface
         self::CASH => 'Cash',
         self::SADAD => 'SADAD',
         self::CREDIT => 'Online With Card Id',
-        self::BALANCE => 'Balance'
+        self::BALANCE => 'Balance',
+        self::POINTS => 'Points'
     );
 
     public static $statuses = array(
@@ -1242,6 +1244,7 @@ class Order implements PfTransactionInvoiceInterface
             $orderStatus = new OrderStatusHistory();
             $orderStatus->setStatus($status);
             $orderStatus->setOrder($this);
+            $orderStatus->setActionDoneBy($this->getDriver());
             $this->addOrderStatus($orderStatus);
         }
         $this->status = $status;
@@ -2687,4 +2690,5 @@ class Order implements PfTransactionInvoiceInterface
     public function getOrderRatingTags(){
         return $this->orderRatingTags;
     }
+
 }

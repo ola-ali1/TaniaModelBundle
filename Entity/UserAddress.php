@@ -79,6 +79,14 @@ class UserAddress
     private $capacity = 0;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_group", type="string", length=100, nullable=true)
+     * @Assert\Length(min = 3, max = 20, maxMessage="addressTitle_length_not_valid", minMessage="addressTitle_length_not_valid")
+     */
+    private $customerGroup;
+
+    /**
      * @return int
      */
     public function getCapacity()
@@ -246,5 +254,23 @@ class UserAddress
     public function getTitle()
     {
         return $this->title;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getCustomerGroup()
+    {
+        return $this->customerGroup;
+    }
+
+    
+    /**
+     * @param string $customerGroup
+     */
+    public function setCustomerGroup($customerGroup)
+    {
+        $this->customerGroup = $customerGroup;
     }
 }
