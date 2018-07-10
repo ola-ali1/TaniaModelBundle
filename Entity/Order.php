@@ -2,7 +2,6 @@
 
 namespace Ibtikar\TaniaModelBundle\Entity;
 
-use Doctrine\Common\Util\Debug;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransactionInvoiceInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -2677,20 +2676,21 @@ class Order implements PfTransactionInvoiceInterface
     
     /**
      * 
-     * @param \Ibtikar\TaniaModelBundle\Entity\RatingTag $ratingTag
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag $orderRatingTag
      * @return Order
      */
-    public function setRatingTag($ratingTag) {
-        $this->ratingTag = $ratingTag;
+    public function setOrderRatingTags($orderRatingTags) {
+        $this->orderRatingTags = $orderRatingTags;
         return $this;
     }
     
     /**
-     * @return \Ibtikar\TaniaModelBundle\Entity\RatingTag
+     * @return \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag
      */
-    public function getRatingTag(){
-        return $this->ratingTag;
+    public function getOrderRatingTags(){
+        return $this->orderRatingTags;
     }
+
 
     public function getOrderReturnedBy(){
         if($this->getStatus() == self::$statuses['returned']){

@@ -137,7 +137,7 @@ class Item
     protected $isSynced;
 
     /**
-    * @ORM\ManyToOne(targetEntity="Ibtikar\TaniaModelBundle\Entity\ItemAttribute")
+    * @ORM\ManyToOne(targetEntity="Ibtikar\TaniaModelBundle\Entity\ItemAttribute", fetch="EAGER")
     * @ORM\JoinColumn(name="item_attribute_id", referencedColumnName="id", nullable=true)
     */
     protected $attribute;
