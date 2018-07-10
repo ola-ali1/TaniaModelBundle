@@ -585,9 +585,9 @@ class Order implements PfTransactionInvoiceInterface
     private $rateComment;
 
     /**
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderRatingTag", mappedBy="order")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\RatingTag", inversedBy="orders")
      */
-    private $orderRatingTags;
+    private $ratingTag;
     
     /**
      * @var string
@@ -2267,7 +2267,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getOrderStatuses()
     {
-        return $this->$orderStatuses;
+        return $this->orderStatuses;
     }
 
     public function getPaymentMethods()
@@ -2691,4 +2691,14 @@ class Order implements PfTransactionInvoiceInterface
         return $this->orderRatingTags;
     }
 
+
+    public function getOrderReturnedBy(){
+        if($this->getStatus() == self::$statuses['returned']){
+            if($driver = $this->getOrderStatuses()->last()->getActionDoneBy()){
+                return $driver->getFullNameAr();
+            }
+        }
+
+        return "";
+    }
 }
