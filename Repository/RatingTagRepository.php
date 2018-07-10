@@ -17,6 +17,7 @@ class RatingTagRepository extends \Doctrine\ORM\EntityRepository
             ->innerJoin('rtrr.ratingRange', 'rr')                
             ->andWhere(":value >= rr.start and :value <= rr.end")
             ->setParameter(":value", $value)
+            ->groupBy('t.id')
             ->getQuery();
         return $query->getResult($query::HYDRATE_OBJECT);
     }
