@@ -2,6 +2,7 @@
 
 namespace Ibtikar\TaniaModelBundle\Entity;
 
+use Doctrine\Common\Util\Debug;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransactionInvoiceInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -2267,7 +2268,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getOrderStatuses()
     {
-        return $this->$orderStatuses;
+        return $this->orderStatuses;
     }
 
     public function getPaymentMethods()
@@ -2689,5 +2690,15 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getRatingTag(){
         return $this->ratingTag;
+    }
+
+    public function getOrderReturnedBy(){
+        if($this->getStatus() == self::$statuses['returned']){
+            if($driver = $this->getOrderStatuses()->last()->getActionDoneBy()){
+                return $driver->getFullNameAr();
+            }
+        }
+
+        return "";
     }
 }
