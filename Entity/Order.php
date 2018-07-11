@@ -2693,7 +2693,7 @@ class Order implements PfTransactionInvoiceInterface
 
 
     public function getOrderReturnedBy(){
-        if($this->getStatus() == self::$statuses['returned']){
+        if($this->getStatus() == self::$statuses['returned'] && $this->getOrderStatuses()->last()){
             if($driver = $this->getOrderStatuses()->last()->getActionDoneBy()){
                 return $driver->getFullNameAr();
             }
