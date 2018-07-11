@@ -68,11 +68,11 @@ class OrderRatingTag
     /**
      * Set order
      *
-     * @param Order $ratingRange
+     * @param Order $order
      *
      * @return OrderRatingTag
      */
-    public function setRatingRange($order)
+    public function setOrder($order)
     {
         $this->order = $order;
         return $this;
