@@ -2505,7 +2505,8 @@ class Order implements PfTransactionInvoiceInterface
             'ios'              => 'ios',
             'nana'             => 'nana',
             'tania-system'     => 'tania-system',
-            'tania-website'    => 'tania-website'
+            'tania-website'    => 'tania-website',
+            'tania-order-now'    => 'tania-order-now'
         );
     }
 
