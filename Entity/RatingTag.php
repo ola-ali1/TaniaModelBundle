@@ -53,6 +53,11 @@ class RatingTag
     private $deletedAt;
 
     /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderRatingTag", mappedBy="ratingTag")
+     */
+    private $orderRatingTags;
+
+    /**
      * Get id
      *
      * @return int
@@ -147,6 +152,23 @@ class RatingTag
             $string .= "<div class='rating-tag'>" . $ratingTagRatingRange->getRatingRange()->getStart() . ' - ' . $ratingTagRatingRange->getRatingRange()->getEnd() . "</div>";
         }
         return $string;
+    }
+    
+    /**
+     * 
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag $orderRatingTag
+     * @return Order
+     */
+    public function setOrderRatingTags($orderRatingTags) {
+        $this->orderRatingTags = $orderRatingTags;
+        return $this;
+    }
+    
+    /**
+     * @return \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag
+     */
+    public function getOrderRatingTags(){
+        return $this->orderRatingTags;
     }
 }
 

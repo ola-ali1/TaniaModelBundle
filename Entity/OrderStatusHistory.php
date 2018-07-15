@@ -35,6 +35,13 @@ class OrderStatusHistory
      */
     private $status;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\User")
+     */
+    private $actionDoneBy;
+
+
     /**
      * Constructor
      */
@@ -99,4 +106,29 @@ class OrderStatusHistory
     {
         return $this->order;
     }
+
+    /**
+     * Set actionDoneBy
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\User $actionDoneBy
+     *
+     * @return User
+     */
+    public function setActionDoneBy(\Ibtikar\TaniaModelBundle\Entity\User $actionDoneBy = null)
+    {
+        $this->actionDoneBy = $actionDoneBy;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\User
+     */
+    public function getActionDoneBy()
+    {
+        return $this->actionDoneBy;
+    }
+
 }

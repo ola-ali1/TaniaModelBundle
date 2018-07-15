@@ -56,4 +56,20 @@ class ItemRepository extends EntityRepository
         $queryBuilder = $queryBuilder->andWhere('i.shown = 1');
         return $queryBuilder->getQuery()->getResult();
     }
+
+    function getAllItems(){
+        
+        $query = $this->createQueryBuilder('i')
+                ->select('i')
+                ->leftJoin('i.attribute', 'attr')
+                ->leftJoin('i.brand', 'b')
+                ->leftJoin('i.package', 'p')
+                ->leftJoin('i.packageSize', 'ps')
+                ->leftJoin('i.type', 'typ')
+                ->where('i.shown = :shown')
+                ->orderBy('i.sort', 'DESC')
+                ->setParameter('shown', true)
+                ->getQuery();
+        return $query->getResult();
+    }
 }

@@ -114,6 +114,22 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     private $balance = 0;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="points", type="integer", options={"default": 0})
+     * @Assert\Type(type="numeric")
+     */
+    private $points = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="usedPoints", type="integer", options={"default": 0})
+     * @Assert\Type(type="numeric")
+     */
+    private $usedPoints = 0;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="usedBalance", type="decimal", precision=10, scale=2, options={"default": 0})
@@ -143,15 +159,6 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     protected $deletedAt;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * needed to disable the doctrine proxy __get as it trigger notice error
@@ -638,6 +645,52 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     {
         $this->ordersCount = $ordersCount;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * @param string $points
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUsedPoints()
+    {
+        return $this->usedPoints;
+    }
+
+    /**
+     * @param int $usedPoints
+     */
+    public function setUsedPoints($usedPoints)
+    {
+        $this->usedPoints = $usedPoints;
+    }
+
+    /**
+     * get password validity remaining seconds
+     * @param integer $passwordExpiryTime
+     * @return integer
+     */
+    public function getValidityRemainingSeconds($passwordExpiryTime)
+    {
+        $now  = new \DateTime();
+        $diff = $this->getLastLoginPasswordRequestDate() ? $now->format('U') - $this->getLastLoginPasswordRequestDate()->format('U') : 0; //Time Passed Since Last Attempt in seconds
+
+        //If last attempt has passed allowed time
+        return $diff > ( $passwordExpiryTime * 60 ) ? 0 : ( $passwordExpiryTime * 60 ) - $diff;
     }
 
 

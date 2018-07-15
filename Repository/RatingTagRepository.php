@@ -10,4 +10,15 @@ namespace Ibtikar\TaniaModelBundle\Repository;
  */
 class RatingTagRepository extends \Doctrine\ORM\EntityRepository
 {
+    function getRatingTagsByRatingValue($value){
+        $query = $this->createQueryBuilder('t')
+            ->select('t')
+            ->innerJoin('t.ratingTagRatingRanges', 'rtrr')
+            ->innerJoin('rtrr.ratingRange', 'rr')                
+            ->andWhere(":value >= rr.start and :value <= rr.end")
+            ->setParameter(":value", $value)
+            ->groupBy('t.id')
+            ->getQuery();
+        return $query->getResult($query::HYDRATE_OBJECT);
+    }
 }

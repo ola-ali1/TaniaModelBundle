@@ -24,6 +24,7 @@ class Order implements PfTransactionInvoiceInterface
     CONST SADAD = 'SADAD';
     CONST BALANCE = 'BALANCE';
     CONST CREDIT = 'CREDIT';
+    CONST POINTS = 'POINTS';
 
     CONST TYPE_MASAJED = 'MASAJED';
     CONST TYPE_USER = 'USER';
@@ -37,7 +38,8 @@ class Order implements PfTransactionInvoiceInterface
         self::CASH => 'Cash',
         self::SADAD => 'SADAD',
         self::CREDIT => 'Online With Card Id',
-        self::BALANCE => 'Balance'
+        self::BALANCE => 'Balance',
+        self::POINTS => 'Points'
     );
 
     public static $statuses = array(
@@ -582,6 +584,11 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $rateComment;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderRatingTag", mappedBy="order")
+     */
+    private $orderRatingTags;
+    
     /**
      * @var string
      *
@@ -1237,6 +1244,7 @@ class Order implements PfTransactionInvoiceInterface
             $orderStatus = new OrderStatusHistory();
             $orderStatus->setStatus($status);
             $orderStatus->setOrder($this);
+            $orderStatus->setActionDoneBy($this->getDriver());
             $this->addOrderStatus($orderStatus);
         }
         $this->status = $status;
@@ -2259,7 +2267,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getOrderStatuses()
     {
-        return $this->$orderStatuses;
+        return $this->orderStatuses;
     }
 
     public function getPaymentMethods()
@@ -2497,7 +2505,8 @@ class Order implements PfTransactionInvoiceInterface
             'ios'              => 'ios',
             'nana'             => 'nana',
             'tania-system'     => 'tania-system',
-            'tania-website'    => 'tania-website'
+            'tania-website'    => 'tania-website',
+            'tania-order-now'    => 'tania-order-now'
         );
     }
 
@@ -2664,5 +2673,33 @@ class Order implements PfTransactionInvoiceInterface
     public function getOrderOffers()
     {
         return $this->orderOffers;
+    }
+    
+    /**
+     * 
+     * @param \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag $orderRatingTag
+     * @return Order
+     */
+    public function setOrderRatingTags($orderRatingTags) {
+        $this->orderRatingTags = $orderRatingTags;
+        return $this;
+    }
+    
+    /**
+     * @return \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag
+     */
+    public function getOrderRatingTags(){
+        return $this->orderRatingTags;
+    }
+
+
+    public function getOrderReturnedBy(){
+        if($this->getStatus() == self::$statuses['returned'] && $this->getOrderStatuses()->last()){
+            if($driver = $this->getOrderStatuses()->last()->getActionDoneBy()){
+                return $driver->getFullNameAr();
+            }
+        }
+        
+        return "";
     }
 }
