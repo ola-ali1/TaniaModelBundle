@@ -2505,7 +2505,8 @@ class Order implements PfTransactionInvoiceInterface
             'ios'              => 'ios',
             'nana'             => 'nana',
             'tania-system'     => 'tania-system',
-            'tania-website'    => 'tania-website'
+            'tania-website'    => 'tania-website',
+            'tania-order-now'    => 'tania-order-now'
         );
     }
 
@@ -2693,12 +2694,12 @@ class Order implements PfTransactionInvoiceInterface
 
 
     public function getOrderReturnedBy(){
-        if($this->getStatus() == self::$statuses['returned']){
+        if($this->getStatus() == self::$statuses['returned'] && $this->getOrderStatuses()->last()){
             if($driver = $this->getOrderStatuses()->last()->getActionDoneBy()){
                 return $driver->getFullNameAr();
             }
         }
-
+        
         return "";
     }
 }

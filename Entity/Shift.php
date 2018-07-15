@@ -64,6 +64,11 @@ class Shift
      * @ORM\Column(name="maximumAllowedOrdersPerDay", type="integer", nullable=true)
      */
     private $maximumAllowedOrdersPerDay;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ShiftDays")
+     */
+    protected $shiftDay;
 
     /**
      * Constructor
@@ -229,6 +234,30 @@ class Shift
     {
         $this->maximumAllowedOrdersPerDay = $maximumAllowedOrdersPerDay;
         return $this;
+    }
+    
+    /**
+     * Set shiftDay
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\ShiftDays $shiftDay
+     *
+     * @return Shift
+     */
+    public function setShiftDay($shiftDay)
+    {
+        $this->shiftDay = $shiftDay;
+        
+        return $this;
+    }
+    
+    /**
+     * Get shiftDay
+     *
+     * @return \Ibtikar\TaniaModelBUndle\Entity\ShiftDays
+     */
+    public function getShiftDay()
+    {
+        return $this->shiftDay;
     }
 
 }
