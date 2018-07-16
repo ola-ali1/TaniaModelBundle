@@ -6,49 +6,55 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Ibtikar\TaniaModelBundle\Repository\ShiftRepository;
 
 /**
+ *
  * @ORM\Table(name="shift_days")
  * @ORM\Entity()
  */
-
 class ShiftDays
 {
-    
+
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
-    
+
     /**
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;    
+    protected $id;
+
     /**
+     *
      * @var string
      *
      * @ORM\Column(name="day_ar", type="string")
      */
     private $dayAr;
-    
+
     /**
+     *
      * @var string
      *
      * @ORM\Column(name="day_en", type="string")
      */
     private $dayEn;
+
     /**
+     *
      * @var integer
      *
      * @ORM\Column(name="active", type="integer",nullable=true, options={"default" : 1})
      */
     private $active;
-    
+
     /**
      *
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Shift",mappedBy="shiftDay")
      */
     protected $shifts;
-    
+
     /**
      * Constructor
      */
@@ -56,7 +62,7 @@ class ShiftDays
     {
         $this->shifts = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -66,7 +72,7 @@ class ShiftDays
     {
         return $this->id;
     }
-    
+
     /**
      * Set dayAr
      *
@@ -77,10 +83,10 @@ class ShiftDays
     public function setDayAr($day)
     {
         $this->dayAr = $day;
-        
+
         return $this;
     }
-    
+
     /**
      * Get dayAr
      *
@@ -90,7 +96,7 @@ class ShiftDays
     {
         return $this->dayAr;
     }
-    
+
     /**
      * Set dayEn
      *
@@ -101,10 +107,10 @@ class ShiftDays
     public function setDayEn($day)
     {
         $this->dayEn = $day;
-        
+
         return $this;
     }
-    
+
     /**
      * Get dayEn
      *
@@ -114,7 +120,7 @@ class ShiftDays
     {
         return $this->dayEn;
     }
-    
+
     /**
      * Set active
      *
@@ -125,10 +131,10 @@ class ShiftDays
     public function setActive($active)
     {
         $this->active = $active;
-        
+
         return $this;
     }
-    
+
     /**
      * Get active
      *
@@ -138,27 +144,59 @@ class ShiftDays
     {
         return $this->active;
     }
-    
-    
-    public function getShiftsHtml(){
-        $output="";
-        $dayShifts=$this->getShifts();
-        if($dayShifts!=null && count($dayShifts)>0){
-            for ($i=0;$i<count($dayShifts);$i++){
-                $shift=$dayShifts[$i];
-                $output .= $shift->getShiftAr()."/".$shift->getShift().":-<br>";
-                $output .="From: ".$shift->getFrom()->format('H:i').", To: ".$shift->getTo()->format('H:i').", Max Orders Allowed: ".$shift->getMaximumAllowedOrdersPerDay();
-                if($i<=(count($dayShifts)-2))$output .="<hr>";
+
+    public function getShiftsHtmlar()
+    {
+        $output = "";
+        $dayShifts = $this->getShifts();
+        if ($dayShifts != null && count($dayShifts) > 0) {
+            for ($i = 0; $i < count($dayShifts); $i ++) {
+                $shift = $dayShifts[$i];
+                if ($shift->getIsDeleted() == 0) {
+                    $output .= $shift->getShiftAr() . "/" . $shift->getShift() . ":-<br>";
+                    $output .= "من: " . $shift->getFrom()->format('H:i') . ", إلي: " . $shift->getTo()->format('H:i') . ", أقصي عدد للطلبات في اليوم: " . $shift->getMaximumAllowedOrdersPerDay();
+                    if ($i <= (count($dayShifts) - 2))
+                        $output .= "<hr>";
+                }
             }
         }
         return $output;
     }
     
-    public function getActiveStatus() {
-        if($this->getActive()==1) return "Active Day";
-        else return "Inactive Day";
+    public function getShiftsHtmlen()
+    {
+        $output = "";
+        $dayShifts = $this->getShifts();
+        if ($dayShifts != null && count($dayShifts) > 0) {
+            for ($i = 0; $i < count($dayShifts); $i ++) {
+                $shift = $dayShifts[$i];
+                if ($shift->getIsDeleted() == 0) {
+                    $output .= $shift->getShiftAr() . "/" . $shift->getShift() . ":-<br>";
+                    $output .= "From: " . $shift->getFrom()->format('H:i') . ", To: " . $shift->getTo()->format('H:i') . ", Max Allowed Orders Per Day: " . $shift->getMaximumAllowedOrdersPerDay();
+                    if ($i <= (count($dayShifts) - 2))
+                        $output .= "<hr>";
+                }
+            }
+        }
+        return $output;
+    }
+
+    public function getActiveStatusar()
+    {
+        if ($this->getActive() == 1)
+            return "يوم مفعل";
+        else
+            return "يوم غير مفعل";
     }
     
+    public function getActiveStatusen()
+    {
+        if ($this->getActive() == 1)
+            return "Active Day";
+            else
+                return "Inactive Day";
+    }
+
     /**
      * Add shift
      *
@@ -169,10 +207,10 @@ class ShiftDays
     public function addShift(\Ibtikar\TaniaModelBundle\Entity\Shift $shift)
     {
         $this->shifts[] = $shift;
-        
+
         return $this;
     }
-    
+
     /**
      * Remove shifts
      *
@@ -182,7 +220,7 @@ class ShiftDays
     {
         $this->shifts->removeElement($shift);
     }
-    
+
     /**
      * Get shifts
      *
@@ -192,9 +230,5 @@ class ShiftDays
     {
         return $this->shifts;
     }
-    
-    
-    
-    
 }
 
