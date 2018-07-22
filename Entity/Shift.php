@@ -55,6 +55,7 @@ class Shift
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order",mappedBy="shift")
      */
     protected $orders;
+    
 
     /**
      * @var integer
@@ -64,6 +65,18 @@ class Shift
      * @ORM\Column(name="maximumAllowedOrdersPerDay", type="integer", nullable=true)
      */
     private $maximumAllowedOrdersPerDay;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="is_deleted", type="integer",nullable=true, options={"default" : 0})
+     */
+    private $isDeleted;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ShiftDays")
+     */
+    protected $shiftDay;
 
     /**
      * Constructor
@@ -81,6 +94,11 @@ class Shift
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function setId($id)
+    {
+        return $this->id=$id;
     }
 
     /**
@@ -229,6 +247,48 @@ class Shift
     {
         $this->maximumAllowedOrdersPerDay = $maximumAllowedOrdersPerDay;
         return $this;
+    }
+    
+    /**
+     * @return integer
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+    
+    /**
+     * @param integer $isDeleted
+     * @return Shift
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+        return $this;
+    }
+    
+    /**
+     * Set shiftDay
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\ShiftDays $shiftDay
+     *
+     * @return Shift
+     */
+    public function setShiftDay($shiftDay)
+    {
+        $this->shiftDay = $shiftDay;
+        
+        return $this;
+    }
+    
+    /**
+     * Get shiftDay
+     *
+     * @return \Ibtikar\TaniaModelBUndle\Entity\ShiftDays
+     */
+    public function getShiftDay()
+    {
+        return $this->shiftDay;
     }
 
 }

@@ -166,6 +166,11 @@ class Item
     */
     protected $type;
     
+    /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemHome", mappedBy="item")
+     */
+    private $itemHome;
+    
     public function __toString() {
         return $this->name;
     }

@@ -416,6 +416,11 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
         return $addresses;
     }
 
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }    
+    
     /**
      * @var string
      *
