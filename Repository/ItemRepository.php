@@ -83,7 +83,7 @@ class ItemRepository extends EntityRepository
                 ->leftJoin('i.packageSize', 'ps')
                 ->leftJoin('i.type', 'typ')
                 ->where('i.shown = :shown')
-                ->orderBy('i.sort', 'DESC')
+                ->orderBy('ih.position', 'ASC')
                 ->setParameter('shown', true)
                 ->getQuery();
         return $query->getResult();
