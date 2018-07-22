@@ -10,4 +10,12 @@ namespace Ibtikar\TaniaModelBundle\Repository;
  */
 class RatingRangeRepository extends \Doctrine\ORM\EntityRepository
 {
+    function getRatingTagJoinRatingRange(){
+        $query = $this->createQueryBuilder('rr')
+            ->select('rr,rtrr,rt')
+            ->innerJoin('rr.ratingTagRatingRanges', 'rtrr')
+            ->innerJoin('rtrr.ratingTag', 'rt')                
+            ->getQuery();
+        return $query->getResult($query::HYDRATE_ARRAY);
+    }
 }
