@@ -72,4 +72,20 @@ class ItemRepository extends EntityRepository
                 ->getQuery();
         return $query->getResult();
     }
+
+    function getHomeItems(){
+        $query = $this->createQueryBuilder('i')
+                ->select('i')
+                ->innerJoin('i.itemHome', 'ih')
+                ->leftJoin('i.attribute', 'attr')
+                ->leftJoin('i.brand', 'b')
+                ->leftJoin('i.package', 'p')
+                ->leftJoin('i.packageSize', 'ps')
+                ->leftJoin('i.type', 'typ')
+                ->where('i.shown = :shown')
+                ->orderBy('i.sort', 'DESC')
+                ->setParameter('shown', true)
+                ->getQuery();
+        return $query->getResult();
+    }
 }
