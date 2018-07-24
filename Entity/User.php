@@ -406,12 +406,14 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
         return $this->latitude;
     }
 
-    public function getUserAddresses()
+    public function getUserAddresses() 
     {
-        $addresses[] = array('id' => 0, 'title' => '', 'address' => $this->address, 'longitude' => (DOUBLE)$this->longitude, 'latitude' => (DOUBLE)$this->latitude);
-
-        foreach($this->addresses as $address)
-            $addresses[] = array('id' => $address->getId(), 'title' => $address->getTitle(), 'address' => $address->getAddress(), 'longitude' => (DOUBLE)$address->getLongitude(), 'latitude' => (DOUBLE)$address->getLatitude(), 'type' => UserAddress::TYPE_USER , 'capacity' => 0);
+        $addresses = [];
+        if ($this->address && $this->longitude && $this->latitude) {
+            $addresses[] = array('id' => 0, 'title' => '', 'address' => $this->address, 'longitude' => (DOUBLE) $this->longitude, 'latitude' => (DOUBLE) $this->latitude);
+        }
+        foreach ($this->addresses as $address)
+            $addresses[] = array('id' => $address->getId(), 'title' => $address->getTitle(), 'address' => $address->getAddress(), 'longitude' => (DOUBLE) $address->getLongitude(), 'latitude' => (DOUBLE) $address->getLatitude(), 'type' => UserAddress::TYPE_USER, 'capacity' => 0);
 
         return $addresses;
     }
