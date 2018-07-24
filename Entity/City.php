@@ -71,6 +71,11 @@ class City
     protected $orders;
 
     /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\PromoCodeCity", mappedBy="city")
+     */
+    private $promoCodeCities;
+
+    /**
      * @return string
      */
     public function __toString()
@@ -352,4 +357,16 @@ class City
     {
         return $this->orders;
     }
+
+    public function getPromoCodeCities() 
+    {
+        return $this->promoCodeCities;
+    }
+
+    public function setPromoCodeCities($promoCodeCities) 
+    {
+        $this->promoCodeCities = $promoCodeCities;
+        return $this;
+    }
+    
 }

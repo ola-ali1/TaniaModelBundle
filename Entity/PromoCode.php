@@ -153,6 +153,11 @@ class PromoCode implements GroupSequenceProviderInterface
     private $orders;
     
     /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\PromoCodeCity", mappedBy="promoCode")
+     */
+    private $promoCodeCities;
+
+    /**
      * @return string
      */
     public function __toString()
@@ -612,4 +617,16 @@ class PromoCode implements GroupSequenceProviderInterface
         $this->orders = $orders;
         return $this;
     }
+    
+    public function getPromoCodeCities() 
+    {
+        return $this->promoCodeCities;
+    }
+
+    public function setPromoCodeCities($promoCodeCities) 
+    {
+        $this->promoCodeCities = $promoCodeCities;
+        return $this;
+    }
+    
 }
