@@ -51,7 +51,7 @@ class ShiftDays
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Shift",mappedBy="shiftDay")
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Shift", mappedBy="shiftDay")
      */
     protected $shifts;
 

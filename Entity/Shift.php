@@ -74,7 +74,7 @@ class Shift
     private $isDeleted;
     
     /**
-     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ShiftDays")
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ShiftDays", inversedBy="shifts")
      */
     protected $shiftDay;
 
