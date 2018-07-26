@@ -50,12 +50,13 @@ class Order implements PfTransactionInvoiceInterface
         'returned' => 'returned',
         'cancelled' => 'cancelled',
         'closed' => 'closed',
-        'transaction-pending' => 'transaction-pending'
+        'transaction-pending' => 'transaction-pending',
+        'confirmed' => 'confirmed'        
     );
 
     public static $statusCategories = array(
         'current'   => array('new', 'verified', 'delivering', 'returned'),
-        'past'      => array('delivered', 'closed', 'transaction-pending', 'cancelled')
+        'past'      => array('delivered', 'closed', 'transaction-pending', 'cancelled', 'confirmed')
     );
 
     public static $disallowDeletePaymentStatuses = array('new', 'verified', 'delivering', 'transaction-pending');
