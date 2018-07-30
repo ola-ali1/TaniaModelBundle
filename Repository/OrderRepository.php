@@ -189,6 +189,7 @@ class OrderRepository extends EntityRepository
     
     public function getShiftsOrdersCountForShift($shiftId = null)
     {
+        
         $queryBuilder = $this->createQueryBuilder('o')
         ->select('COUNT(o.id) as ordersCount, IDENTITY(o.shift) as shiftId')
         ->where('o.requiredDeliveryDate IS NOT NULL')
