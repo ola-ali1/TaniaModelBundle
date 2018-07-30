@@ -186,5 +186,17 @@ class OrderRepository extends EntityRepository
                 ->andWhere('o.user = :user')->setParameter('user', $userId)
                 ->getQuery()->getSingleScalarResult();
     }
+    
+    public function getShiftsOrdersCountForShift($shiftId = null)
+    {
+        $queryBuilder = $this->createQueryBuilder('o')
+        ->select('COUNT(o.id) as ordersCount, IDENTITY(o.shift) as shiftId')
+        ->where('o.requiredDeliveryDate IS NOT NULL')
+        ;
+        if ($shiftId) {
+            $queryBuilder->andWhere('o.shift = :shiftId')->setParameter('shiftId', $shiftId);
+        }
+        return $queryBuilder->groupBy('o.shift')->getQuery()->getResult();
+    }
 
 }
