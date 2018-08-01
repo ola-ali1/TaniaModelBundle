@@ -74,6 +74,6 @@ class NotificationCenter
 
     public function sendNotificationToTopic($topic=null,$locale="ar",$titleAr, $titleEn, $bodyAr, $bodyEn,$oldStatus,$newStatus)
     {
-        $this->userDeviceNotification->sendNotificationToTopic($topic,$locale, $titleAr, $titleEn, $bodyAr, $bodyEn,$oldStatus,$newStatus);
+        return $this->userDeviceNotification->sendNotificationToTopic($topic,$locale, $titleAr, $titleEn, $bodyAr, $bodyEn,$oldStatus,$newStatus);
     }
 }
