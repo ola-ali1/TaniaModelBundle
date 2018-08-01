@@ -87,8 +87,6 @@ class UserDeviceNotification
     public function sendNotificationToTopic($topic=null,$locale="ar",$titleAr, $titleEn, $bodyAr, $bodyEn,$oldStatus,$newStatus)
     {
         if ($topic) {
-
-
             $title = $locale === 'ar' ? $titleAr : $titleEn;
             $body = $locale === 'ar' ? $bodyAr : $bodyEn;
             $data = array(
@@ -97,8 +95,8 @@ class UserDeviceNotification
                 'title' => $title,
                 'body' => $body
             );
-            $this->firebaseCloudMessagingService->ssendMessageToTopic($topic, $data, 'high');
-
+            $this->firebaseCloudMessagingService->sendNotificationToTopic($topic, $title, $body, $data);
         }
     }
+
 }
