@@ -3,6 +3,7 @@
 namespace Ibtikar\TaniaModelBundle\Service;
 
 use Ibtikar\GoogleServicesBundle\Service\FirebaseCloudMessaging;
+use Ibtikar\GoogleServicesBundle\Service\FireBaseRetrievingData;
 use Ibtikar\TaniaModelBundle\Entity\DeviceNotification;
 use Ibtikar\TaniaModelBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
@@ -75,5 +76,9 @@ class NotificationCenter
     public function sendNotificationToTopic($topic=null,$locale="ar",$titleAr, $titleEn, $bodyAr, $bodyEn,$oldStatus,$newStatus)
     {
         $this->userDeviceNotification->sendNotificationToTopic($topic,$locale, $titleAr, $titleEn, $bodyAr, $bodyEn,$oldStatus,$newStatus);
+    }
+
+    public function updatefirebaseDatabase($order){
+        $this->get("firebase_database")->updateDataObject($order<getId(),$order->getStatus());
     }
 }
