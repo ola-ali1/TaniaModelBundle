@@ -187,11 +187,23 @@ class OrderRepository extends EntityRepository
                 ->getQuery()->getSingleScalarResult();
     }
     
-    public function getShiftsOrdersCountForShift($shiftId = null)
+    public function getShiftsOrdersCountForShift($shiftId = null,$actualDate)
     {
+        $beginOfDay = clone $actualDate;
+
+        $beginOfDay->modify('midnight');
+
+        $endOfDay = clone $beginOfDay;
+        $endOfDay->modify('tomorrow');
+        $endOfDay->modify('1 second ago');
+
         $queryBuilder = $this->createQueryBuilder('o')
         ->select('COUNT(o.id) as ordersCount, IDENTITY(o.shift) as shiftId')
         ->where('o.requiredDeliveryDate IS NOT NULL')
+        ->andWhere('o.requiredDeliveryDate >= :start')
+        ->andWhere('o.requiredDeliveryDate <= :end')
+        ->setParameter('start', $beginOfDay)
+        ->setParameter('end',$endOfDay)
         ;
         if ($shiftId) {
             $queryBuilder->andWhere('o.shift = :shiftId')->setParameter('shiftId', $shiftId);
