@@ -79,8 +79,9 @@ class NotificationCenter
     }
 
     public function updatefirebaseDatabase($order){
-        $database= $this->get("firebase_database")->getDatabaseObject();
-        $database=$this->getDatabaseObject();
+
+        $database=$this->get("firebase_database")->getDatabaseObject();
+        var_dump($database);
         $object=[
             "id"=>$order->getId(),
             "status"=>$order->getStatus()
