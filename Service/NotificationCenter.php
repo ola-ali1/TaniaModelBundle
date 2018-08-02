@@ -37,13 +37,19 @@ class NotificationCenter
     private $userDeviceNotification;
 
     /**
+     * @var FireBaseRetrievingData $firebaseDatabase
+     */
+    private $firebaseDatabase;
+
+    /**
      * @param EntityManager $em
      * @param FirebaseCloudMessaging $userDeviceNotification
      */
-    public function __construct(EntityManager $em, UserDeviceNotification $userDeviceNotification)
+    public function __construct(EntityManager $em, UserDeviceNotification $userDeviceNotification,FireBaseRetrievingData $firebaseDatabase)
     {
         $this->em = $em;
         $this->userDeviceNotification = $userDeviceNotification;
+        $this->firebaseDatabase = $firebaseDatabase;
     }
 
     /**
@@ -80,14 +86,14 @@ class NotificationCenter
 
     public function updatefirebaseDatabase($order){
 
-        $database=$this->get("firebase_database")->getDatabaseObject();
-        var_dump($database);
+        $database=$this->firebaseDatabase->getDatabaseObject();
+
         $object=[
             "id"=>$order->getId(),
             "status"=>$order->getStatus()
         ];
         $database->getReference('Orders')
-            ->set($object);
+            ->update($object);
 
 
     }

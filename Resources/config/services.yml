@@ -9,7 +9,7 @@ services:
 
     notification_center:
         class: Ibtikar\TaniaModelBundle\Service\NotificationCenter
-        arguments: ["@doctrine.orm.entity_manager", "@user_device_notification"]
+        arguments: ["@doctrine.orm.entity_manager", "@user_device_notification", "@firebase_database"]
 
     validator.unique_city_item_price:
             class: Ibtikar\TaniaModelBundle\Validator\Constraints\UniqueCityItemPriceValidator
