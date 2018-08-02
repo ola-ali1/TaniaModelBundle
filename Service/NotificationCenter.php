@@ -86,14 +86,13 @@ class NotificationCenter
 
     public function updatefirebaseDatabase($order){
 
-        
+
         $database=$this->firebaseDatabase->getDatabaseObject();
-var_dump($database);
         $object=[
             "id"=>$order->getId(),
             "status"=>$order->getStatus()
         ];
-        $database->getReference('Orders')
+        $database->getReference('Orders/'+$order->getId())
             ->update($object);
 
 
