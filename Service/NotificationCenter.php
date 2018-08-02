@@ -92,7 +92,7 @@ class NotificationCenter
             "id"=>$order->getId(),
             "status"=>$order->getStatus()
         ];
-        $database->getReference('Orders/'+$order->getId())
+        $database->getReference('Orders/'.$order->getId())
             ->update($object);
 
 
