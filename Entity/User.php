@@ -143,6 +143,16 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      * @ORM\Column(name="ordersCount", type="integer", options={"default": 0})
      */
     private $ordersCount = 0;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\UserItemPackage", mappedBy="user")
+     */
+    private $userItemPackages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\UserPackage", mappedBy="user")
+     */
+    private $userPackages;
 
     public function __sleep() {
         $classVars = get_object_vars($this);

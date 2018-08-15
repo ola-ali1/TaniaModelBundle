@@ -171,6 +171,11 @@ class Item
      */
     private $itemHome;
     
+    /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\UserItemPackage", mappedBy="item")
+     */
+    private $userItemPackages;
+
     public function __toString() {
         return $this->name;
     }

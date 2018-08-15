@@ -144,6 +144,10 @@ class Package
     protected $deletedAt;
 
     /**
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\UserPackage", mappedBy="package")
+     */
+    private $userPackages;
+    /**
      * Get id
      *
      * @return int
@@ -341,6 +345,24 @@ class Package
         return $this->packageBuyItems;
     }
 
+    public function getBuyItemsIds()
+    {
+        $packageItemIds = [];
+        foreach ($this->packageBuyItems as $pbi) {
+            $packageItemIds[] = $pbi->getItem()->getId();
+        }
+        return $packageItemIds;
+    }
+
+    public function findPackageBuyItemByItemId($itemId) {
+        foreach ($this->packageBuyItems as $pbi) {
+            if ($itemId == $pbi->getItem()->getId()) {
+                return $pbi;
+            }
+        }
+        return false;
+    }
+    
     /**
      * @return int
      */
