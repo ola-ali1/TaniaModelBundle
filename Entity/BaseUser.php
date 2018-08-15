@@ -20,8 +20,8 @@ use \Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
- * @TaniaAssert\UniquePhone(groups={"edit-profile", "driver_edit_profile","signup", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
- * @UniqueEntity(fields={"email"}, groups={"edit-profile", "driver_edit_profile", "signup", "edit", "email", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"}, message="email_exist")
+ * @TaniaAssert\UniquePhone(groups={"edit-profile", "driver_edit_profile","signup", "easy-edit", "edit", "phone", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
+ * @UniqueEntity(fields={"email"}, groups={"edit-profile", "driver_edit_profile", "signup", "easy-edit", "edit", "email", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"}, message="email_exist")
  */
 class BaseUser implements AdvancedUserInterface, EquatableInterface
 {
@@ -190,8 +190,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="fullName", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
-     * @Assert\Length(min = 4, max = 25, groups={"driver_edit_profile", "signup","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup","edit-profile", "edit", "easy-edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
+     * @Assert\Length(min = 4, max = 25, groups={"driver_edit_profile", "signup","edit-profile", "edit", "easy-edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"}, maxMessage="fullname_length_not_valid", minMessage="fullname_length_not_valid")
      */
     protected $fullName;
 
@@ -210,8 +210,8 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
      *
      * @ORM\Column(name="phone", type="string", length=190)
      *
-     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup", "phone","edit-profile", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
-     * @Assert\Regex("/^[+-]?\d+$/", groups={"driver_edit_profile", "edit", "edit-profile","backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
+     * @Assert\NotBlank(message="fill_mandatory_field", groups={"driver_edit_profile", "signup", "phone","edit-profile", "easy-edit", "edit", "backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit", "easy-signup"})
+     * @Assert\Regex("/^[+-]?\d+$/", groups={"driver_edit_profile", "easy-edit", "edit", "edit-profile","backend_user_create", "backend_user_edit", "backend_admin_create", "backend_admin_edit"})
      * @TaniaAssert\CustomPhone(groups={"phone_validator", "backend_user_create", "backend_user_edit"})
      */
     protected $phone;
