@@ -13,6 +13,7 @@ class UserItemPackageRepository extends \Doctrine\ORM\EntityRepository
     function insertOrIncreaseItemsCountsIfExist($order) {
         $orderItems = $order->getOrderItems();
         $user = $order->getUser();
+        $em = $this->getEntityManager();
         /* @var $orderItem \Ibtikar\TaniaModelBundle\Entity\OrderItem */
         /* @var $userItemPackage \Ibtikar\TaniaModelBundle\Entity\UserItemPackage */
         foreach ($orderItems as $orderItem) {
