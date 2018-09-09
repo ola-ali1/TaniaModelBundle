@@ -25,7 +25,8 @@ class NotificationCenter
     const USER_BALANCE_ORDER_CLOSED = 'user-blance-order-closed';
     const USER_BALANCE_ORDER_CONFIRMED = 'user-blance-order-confirmed';
     const DRIVER_ORDER_DELAYED = 'driver-order-delayed';
-
+    const DRIVER_ORDER_REASSIGNED = 'driver-order-reassigned';
+    
     /**
      * @var EntityManager $em
      */
