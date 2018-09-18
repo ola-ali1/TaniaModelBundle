@@ -1324,6 +1324,16 @@ class Order implements PfTransactionInvoiceInterface
         return $this->van;
     }
 
+    /**
+     * Get Van Type
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\VanType
+     */
+    public function getVanType()
+    {
+        return $this->getVan() && $this->getVan()->getType() ? $this->getVan()->getType() : NULL;
+    }
+
     public function getStatuses()
     {
         return array_flip(self::$statuses);
