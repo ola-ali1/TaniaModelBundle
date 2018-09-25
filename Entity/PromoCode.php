@@ -628,5 +628,24 @@ class PromoCode implements GroupSequenceProviderInterface
         $this->promoCodeCities = $promoCodeCities;
         return $this;
     }
+
+    public function getCities() 
+    {
+        $cities = [];
+        if (!$this->promoCodeCities) {
+            return [];
+        }
+        foreach ($this->promoCodeCities as $promoCodeCity) {
+            if ($promoCodeCity->getCity()) {
+                $cities[] = $promoCodeCity->getCity();
+            }
+        }
+        return $cities;
+    }
     
+    public function isCitySupported($city)
+    {
+        return in_array($city, $this->getCities());
+    }
+
 }
