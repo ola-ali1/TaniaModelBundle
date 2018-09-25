@@ -20,10 +20,12 @@ class NotificationCenter
     const USER_ORDER_DELIVERING = 'user-order-delivering';
     const USER_ORDER_CANCEL = 'user-order-cancel';
     const USER_ORDER_DELIVERED = 'user-order-delivered';
+    const USER_ORDER_COMPLAINT_OPENED = 'user-order-complaint-opened';
+    const USER_ORDER_COMPLAINT_CLOSED = 'user-order-complaint-closed';
     const USER_PAYMENT_FAILED = 'user-payment-failed';
     const USER_BALANCE_ORDER_ASSIGNED = 'user-balance-order-assigned';
-    const USER_BALANCE_ORDER_CLOSED = 'user-blance-order-closed';
-    const USER_BALANCE_ORDER_CONFIRMED = 'user-blance-order-confirmed';
+    const USER_BALANCE_ORDER_CLOSED = 'user-balance-order-closed';
+    const USER_BALANCE_ORDER_CONFIRMED = 'user-balance-order-confirmed';
     const DRIVER_ORDER_DELAYED = 'driver-order-delayed';
     const DRIVER_ORDER_REASSIGNED = 'driver-order-reassigned';
     

@@ -580,6 +580,19 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="old_rate", type="decimal", precision=4, scale=2, nullable=true,options={"default": 0, "comment":"the old rating if user rerated"})
+     * @Assert\Regex(
+     *     pattern="/^[1-5]$/",
+     *     match=true,
+     *     message = "invalid_rate",
+     *     groups = {"rate"}
+     * )
+     */
+    private $oldRate;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="rate_comment", type="string", length=190, nullable=true,options={"comment":"value set by user for rating order"})
      * @Assert\Length(min = 3, max = 140, groups={"rate"}, maxMessage="comment_length_not_valid", minMessage="comment_length_not_valid", groups={"rate"})
      */
@@ -1163,6 +1176,30 @@ class Order implements PfTransactionInvoiceInterface
     }
 
     /**
+     * Set oldRate
+     *
+     * @param string $oldRate
+     *
+     * @return Order
+     */
+    public function setOldRate($oldRate)
+    {
+        $this->oldRate = $oldRate;
+
+        return $this;
+    }
+
+    /**
+     * Get oldRate
+     *
+     * @return string
+     */
+    public function getOldRate()
+    {
+        return $this->oldRate + 0;
+    }
+
+    /**
      * Set rateComment
      *
      * @param string $rateComment
@@ -1285,6 +1322,16 @@ class Order implements PfTransactionInvoiceInterface
     public function getVan()
     {
         return $this->van;
+    }
+
+    /**
+     * Get Van Type
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\VanType
+     */
+    public function getVanType()
+    {
+        return $this->getVan() && $this->getVan()->getType() ? $this->getVan()->getType() : NULL;
     }
 
     public function getStatuses()

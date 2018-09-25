@@ -51,6 +51,12 @@ class Van
     protected $vanDrivers;
 
     /**
+    * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\VanType")
+    * @ORM\JoinColumn(name="van_type_id", referencedColumnName="id", nullable=true)
+    */
+    protected $type;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -205,5 +211,20 @@ class Van
             $count += $vanItem->getCurrentCapacity();
         }
         return $count;
+    }
+    
+    /**
+     * @return Van
+     */
+    public function setType($type) {
+        $this->type = $type;
+        return $this;
+    }
+    
+    /**
+     * @return \Ibtikar\TaniaModelBundle\Entity\VanType
+     */
+    public function getType() {
+        return $this->type;
     }
 }
