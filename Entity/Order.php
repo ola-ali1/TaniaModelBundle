@@ -1268,6 +1268,23 @@ class Order implements PfTransactionInvoiceInterface
         return $this->driver;
     }
 
+    /**
+     * Set status and log status history
+     *
+     * @param string $status
+     *
+     * @return Order
+     */
+    public function setStatusAndLogStatusHistory($status)
+    {
+        $orderStatus = new OrderStatusHistory();
+        $orderStatus->setStatus($status);
+        $orderStatus->setOrder($this);
+        $orderStatus->setActionDoneBy($this->getDriver());
+        $this->addOrderStatus($orderStatus);
+        $this->status = $status;
+        return $this;
+    }
 
     /**
      * Set status
