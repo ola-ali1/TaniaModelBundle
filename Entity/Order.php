@@ -1275,12 +1275,13 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return Order
      */
-    public function setStatusAndLogStatusHistory($status)
+    public function setStatusAndLogStatusHistory($status, $createdBy = null)
     {
         $orderStatus = new OrderStatusHistory();
         $orderStatus->setStatus($status);
         $orderStatus->setOrder($this);
         $orderStatus->setActionDoneBy($this->getDriver());
+        $orderStatus->setCreatedBy($createdBy);
         $this->addOrderStatus($orderStatus);
         $this->status = $status;
         return $this;
@@ -1293,13 +1294,14 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return Order
      */
-    public function setStatus($status)
+    public function setStatus($status, $createdBy = null)
     {
         if ($status != $this->status) {
             $orderStatus = new OrderStatusHistory();
             $orderStatus->setStatus($status);
             $orderStatus->setOrder($this);
             $orderStatus->setActionDoneBy($this->getDriver());
+            $orderStatus->setCreatedBy($createdBy);
             $this->addOrderStatus($orderStatus);
         }
         $this->status = $status;

@@ -41,6 +41,10 @@ class OrderStatusHistory
      */
     private $actionDoneBy;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\User")
+     */
+    private $createdBy = null;
 
     /**
      * Constructor
@@ -131,4 +135,28 @@ class OrderStatusHistory
         return $this->actionDoneBy;
     }
 
+    /**
+     * Set createdBy
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\User $createdBy
+     *
+     * @return User
+     */
+    public function setCreatedBy(\Ibtikar\TaniaModelBundle\Entity\User $createdBy = null)
+    {
+        $this->$createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \Ibtikar\TaniaModelBundle\Entity\User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }    
+    
 }
