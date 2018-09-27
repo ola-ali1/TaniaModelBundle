@@ -144,7 +144,7 @@ class OrderStatusHistory
      */
     public function setCreatedBy(\Ibtikar\TaniaModelBundle\Entity\User $createdBy = null)
     {
-        $this->$createdBy = $createdBy;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
