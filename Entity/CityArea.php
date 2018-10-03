@@ -83,6 +83,11 @@ class CityArea
     private $driverCount = 0;
 
     /**
+     * @ORM\Column(name="excluded_item_count", type="integer", options={"default": 0})
+     */
+    private $excludedItemCount = 0;
+
+    /**
      * @var \DateTime $deletedAt
      *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
@@ -327,7 +332,43 @@ class CityArea
     }
 
     /**
-     * Set driverCount
+     * Set excludedItemCount
+     *
+     * @param string $excludedItemCount
+     *
+     * @return excludedItemCount
+     */
+    public function setExcludedItemCount($excludedItemCount)
+    {
+        $this->excludedItemCount = $excludedItemCount;
+
+        return $this;
+    }
+
+    /**
+     * Get excludedItemCount
+     *
+     * @return string
+     */
+    public function getExcludedItemCount()
+    {
+        return $this->excludedItemCount;
+    }
+
+    public function decrementExcludedItemCount()
+    {
+        if($this->excludedItemCount > 0)
+            $this->excludedItemCount = $this->excludedItemCount - 1;
+    }
+
+
+    public function incrementExcludedItemCount()
+    {
+        $this->excludedItemCount = $this->excludedItemCount + 1;
+    }
+
+    /**
+     * Set excludedItemCount
      *
      * @param string $driverCount
      *

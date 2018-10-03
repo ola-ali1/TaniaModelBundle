@@ -176,6 +176,12 @@ class Item
      */
     private $userItemPackages;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\ItemExcludedCityArea",mappedBy="item", cascade={"persist", "remove"})
+     */
+    protected $itemExcludedCityAreas;
+
     public function __toString() {
         return $this->name;
     }
@@ -321,6 +327,7 @@ class Item
         $this->offerBuyItems = new ArrayCollection();
         $this->offerGetItems = new ArrayCollection();
         $this->vanItems = new ArrayCollection();
+        $this->itemExcludedCityAreas = new ArrayCollection();
     }
 
     /**
@@ -886,5 +893,79 @@ class Item
     public function getTypeNameEn()
     {
         return $this->getType() ? $this->getType()->getNameEn() : "";
+    }
+
+    /**
+     * Add itemExcludedCityArea
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\ItemExcludedCityArea $itemExcludedCityArea
+     *
+     * @return Van
+     */
+    public function addItemExcludedCityArea(\Ibtikar\TaniaModelBundle\Entity\ItemExcludedCityArea $itemExcludedCityArea)
+    {
+        $this->itemExcludedCityAreas[] = $itemExcludedCityArea;
+
+        $itemExcludedCityArea->setItem($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove itemExcludedCityArea
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\ItemExcludedCityArea $itemExcludedCityArea
+     */
+    public function removeItemExcludedCityArea(\Ibtikar\TaniaModelBundle\Entity\ItemExcludedCityArea $itemExcludedCityArea)
+    {
+        $this->itemExcludedCityAreas->removeElement($itemExcludedCityArea);
+    }
+
+    /**
+     * Get itemExcludedCityAreas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItemExcludedCityAreas()
+    {
+        return $this->itemExcludedCityAreas;
+    }
+
+
+    public function getCityAreaNameEn()
+    {
+        if(isset($this->itemExcludedCityAreas[0]))
+            return $this->itemExcludedCityAreas[0]->getCityArea()->getNameEn();
+        return;
+    }
+
+    public function getCityAreaNameAr()
+    {
+        if(isset($this->itemExcludedCityAreas[0]))
+            return $this->itemExcludedCityAreas[0]->getCityArea()->getNameAr();
+        return;
+    }
+
+    public function getItemExcludedCityAreasEn()
+    {
+        if (count($this->itemExcludedCityAreas)) {
+            $areas = [];
+            foreach($this->itemExcludedCityAreas as $itemExcludedCityArea)
+                $areas[] = $itemExcludedCityArea->getCityArea()->getNameEn();
+            return implode(', ', $areas);
+        }
+
+        return 'unassigned';
+    }
+
+    public function getItemExcludedCityAreasAr()
+    {
+        if (count($this->itemExcludedCityAreas)) {
+            $areas = [];
+            foreach($this->itemExcludedCityAreas as $itemExcludedCityArea)
+                $areas[] = $itemExcludedCityArea->getCityArea()->getNameAr();
+            return implode('، ', $areas);
+        }
+        return 'غير مضاف';
     }
 }
