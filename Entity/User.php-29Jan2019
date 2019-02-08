@@ -171,6 +171,13 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     protected $deletedAt;
 
     /**
+     * @var string $fullName
+     *
+     * @ORM\Column(name="fullName", type="string", length=190, nullable=true)
+     */
+    protected $fullName;
+
+    /**
      * needed to disable the doctrine proxy __get as it trigger notice error
      * @param string $name
      */
@@ -710,5 +717,29 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
         return $diff > ( $passwordExpiryTime * 60 ) ? 0 : ( $passwordExpiryTime * 60 ) - $diff;
     }
 
+
+    /**
+     * Set fullName
+     *
+     * @param string $fullName
+     *
+     * @return User
+     */
+    public function setFullName($nameEn)
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * Get fullName
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
 
 }

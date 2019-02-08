@@ -8,7 +8,7 @@ class JawalySMS
 
     private $apiSecret;
     private $fromSender;
-    private $username;
+    private $userName;
     private $logger;
 
 
@@ -19,8 +19,9 @@ class JawalySMS
      */
     public function __construct($userName, $apiSecret, $fromSender, $logger)
     {
-        $this->baseUri = 'http://smpp1.4jawaly.net';
-        $this->username = $userName;
+        //$this->baseUri = 'http://smpp1.4jawaly.net';
+        $this->baseUri = 'http://api.unifonic.com/wrapper';
+        $this->userName = $userName;
         $this->apiSecret = $apiSecret;
         $this->fromSender = $fromSender;
         $this->logger = $logger;
@@ -34,7 +35,10 @@ class JawalySMS
      */
     protected function jsonRequest($url,$params=array()) {
 
-        $params['api_secret'] = $this->apiSecret;
+        /*$params['api_secret'] = $this->apiSecret;*/
+        //NeW on 29/11/2018
+        //$params['userid'] = $this->userName;
+        $params['appsid'] = $this->apiSecret;
 
         $request_url = $this->baseUri.'/'.$url.'?'.http_build_query($params);
 
@@ -62,20 +66,29 @@ class JawalySMS
         $number = str_ireplace('+','',$number);
         //$this->logger->debug("Send sms to $number with text '$text'");
 
-        $params = array(
+        /*$params = array(
             'from' => $this->fromSender,
             'to' => $number,
             'msg_type' => $unicode ? 2 : 0,
             'text' => $text,
             'type' => 'text',
+        );*/
+
+        $params = array(
+            'sender' => $this->fromSender,
+            'to' => $number,
+           // 'encoding' => $unicode ? 'UTF8' : 'UTF8',
+            'msg' => $text,
+            
         );
 
-        $responseMsg = $this->jsonRequest('Sendsms.aspx',$params);
+        //$responseMsg = $this->jsonRequest('Sendsms.aspx',$params);
+        $responseMsg = $this->jsonRequest('sendSMS.php',$params);
 
-        $response = explode(':', explode('|', $responseMsg)[0]);
+        /*$response = explode(':', explode('|', $responseMsg)[0]);
 
         if(isset($response[0]) && $response[0] == 'ERROR')
-            throw new \Exception($responseMsg);
+            throw new \Exception($responseMsg);*/
     }
 
 }

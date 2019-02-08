@@ -2924,44 +2924,6 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->createdByFullName;
     }
-    // ISPL 02Jan2019
-     /**
-     * Set addressVerified
-     *
-     * @param integer $addressVerified
-     *
-     * @return Order
-     */
-    public function setAddressVerified($addressVerified)
-    {
-        $this->AddressVerified = $AddressVerified;
 
-        return $this;
-    }
 
-    /**
-     * Get AddressVerified
-     *
-     * @return string
-     */
-    public function getAddressVerified()
-    {
-        return $this->AddressVerified;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOfferBuyItemsNamesAndQuantitiesEn()
-    {
-        $itemsString = '';
-        foreach ($this->offerBuyItems as $item) {
-            if (strlen($itemsString) !== 0) {
-                $itemsString .= '<br/>';
-            }
-            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
-        }
-        return $itemsString;
-    }
-    
 }
