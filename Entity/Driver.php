@@ -4,6 +4,7 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ibtikar\TaniaModelBundle\Entity\VanDriver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -105,11 +106,11 @@ class Driver extends User
     /**
      * Add vanDriver
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver
+     * @param VanDriver $vanDriver
      *
      * @return Van
      */
-    public function addVanDriver(\Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver)
+    public function addVanDriver(VanDriver $vanDriver)
     {
         $this->vanDrivers[] = $vanDriver;
 
@@ -121,9 +122,9 @@ class Driver extends User
     /**
      * Remove vanDriver
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\VanDrivers $vanDriver
+     * @param VanDriver $vanDriver
      */
-    public function removeVanDriver(\Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver)
+    public function removeVanDriver(VanDriver $vanDriver)
     {
         $this->vanDrivers->removeElement($vanDriver);
     }
