@@ -797,6 +797,12 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $isSynced;
 
+    /** @var integer
+     *
+     * @ORM\Column(type="integer",  options={"default": 1}, nullable=true)
+     */
+    private $addressVerified;
+
      /**
      * @var string
      *
@@ -2934,7 +2940,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function setAddressVerified($addressVerified)
     {
-        $this->AddressVerified = $AddressVerified;
+        $this->addressVerified = $addressVerified;
 
         return $this;
     }
@@ -2946,7 +2952,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getAddressVerified()
     {
-        return $this->AddressVerified;
+        return $this->addressVerified;
     }
 
     /**
