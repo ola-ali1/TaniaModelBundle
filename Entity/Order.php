@@ -420,7 +420,8 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\Column(name="created_by_fullName", type="string", length=190, nullable=true)
      *
      */
-    private $createdByFullName;
+
+    protected $createdByFullName;
 
     /**
      * Set nanaSyncData
@@ -805,11 +806,9 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $isSynced;
 
-
-     /**
-     * @var boolean
+    /** @var integer
      *
-     *  @ORM\Column(name="address_verified", type="string", length=190, nullable=true)
+     * @ORM\Column(type="integer",  options={"default": 1}, nullable=true)
      */
     private $addressVerified;
 
@@ -2957,7 +2956,7 @@ class Order implements PfTransactionInvoiceInterface
     }
 
     /**
-     * Get addressVerified
+     * Get AddressVerified
      *
      * @return string
      */
@@ -2967,6 +2966,7 @@ class Order implements PfTransactionInvoiceInterface
     }
 
     /**
+
      * Set userAddressId
      *
      * @param integer $addressVerified
@@ -2989,4 +2989,20 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->userAddressId;
     }    
+
+     * @return string
+     */
+    public function getOfferBuyItemsNamesAndQuantitiesEn()
+    {
+        $itemsString = '';
+        foreach ($this->offerBuyItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
+        }
+        return $itemsString;
+    }
+    
+
 }
