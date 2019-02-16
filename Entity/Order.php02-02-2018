@@ -420,7 +420,7 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\Column(name="created_by_fullName", type="string", length=190, nullable=true)
      *
      */
-    private $createdByFullName;
+    protected $createdByFullName;
 
     /**
      * Set nanaSyncData
@@ -429,14 +429,6 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return array
      */
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="user_address_id", type="integer", length=10, nullable=true)
-     */
-    protected $userAddressId;
-    
     public function setNanaSyncData($nanaSyncData)
     {
         $this->nanaSyncData = $nanaSyncData;
@@ -804,14 +796,6 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\Column(name="isSynced", type="boolean",  options={"default": 0}, nullable=true)
      */
     protected $isSynced;
-
-
-     /**
-     * @var boolean
-     *
-     *  @ORM\Column(name="address_verified", type="string", length=190, nullable=true)
-     */
-    private $addressVerified;
 
      /**
      * @var string
@@ -2940,53 +2924,6 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->createdByFullName;
     }
-    // ISPL 02Jan2019
-    
-      /**
-     * Set addressVerified
-     *
-     * @param string $addressVerified
-     *
-     * @return Order
-     */
-    public function setAddressVerified($addressVerified)
-    {
-        $this->addressVerified = $addressVerified;
 
-        return $this;
-    }
 
-    /**
-     * Get addressVerified
-     *
-     * @return string
-     */
-    public function getAddressVerified()
-    {
-        return $this->addressVerified;
-    }
-
-    /**
-     * Set userAddressId
-     *
-     * @param integer $addressVerified
-     *
-     * @return Order
-     */
-    public function setUserAddressId($userAddressId)
-    {
-        $this->userAddressId = $userAddressId;
-
-        return $this;
-    }
-
-    /**
-     * Get userAddressId
-     *
-     * @return integer
-     */
-    public function getUserAddressId()
-    {
-        return $this->userAddressId;
-    }    
 }
