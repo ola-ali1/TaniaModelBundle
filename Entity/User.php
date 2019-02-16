@@ -66,6 +66,15 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     /**
      * @var string
      *
+     * @ORM\Column(name="password", type="string", nullable=false)
+     * @Assert\NotBlank(message="fill_mandatory_field",)
+     * 
+     */
+    protected $password;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="longitude", type="float", options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
      */
@@ -366,6 +375,29 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     public function getAddress()
     {
         return $this->address;
+    }
+/**
+     * Set password
+     *
+     * @param string $address
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     /**
