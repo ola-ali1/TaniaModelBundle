@@ -53,9 +53,9 @@ class Driver extends User
     /**
      * @var bool
      *
-     * @ORM\Column(name="status", type="boolean", options={"default": true})
+     * @ORM\Column(name="status", type="integer", options={"default": 1})
      */
-    protected $status = true;
+    protected $status = 1;
 
     /**
      * Constructor
@@ -261,7 +261,7 @@ class Driver extends User
      */
     public function getStatusString()
     {
-        return self::$statuses[$this->status ? '1' : '0'];
+        return self::$statuses[$this->status];
     }
 
     public function getCityAreaNameEn()

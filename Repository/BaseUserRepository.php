@@ -2,6 +2,7 @@
 
 namespace Ibtikar\TaniaModelBundle\Repository;
 
+use DateTime;
 use Ibtikar\TaniaModelBundle\Entity\User;
 
 /**
@@ -29,8 +30,8 @@ class BaseUserRepository extends \Doctrine\ORM\EntityRepository
 
     public function countTodaysCodes($user)
     {
-        $firstOfToday    = new \DateTime('midnight');
-        $firstOfTomorrow = new \DateTime('tomorrow midnight');
+        $firstOfToday    = new DateTime('midnight');
+        $firstOfTomorrow = new DateTime('tomorrow midnight');
 
         return $this->createQueryBuilder('u')
                 ->leftJoin('u.phoneVerificationCodes', 'p')

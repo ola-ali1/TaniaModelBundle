@@ -66,15 +66,6 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", nullable=false)
-     * @Assert\NotBlank(message="fill_mandatory_field",)
-     * 
-     */
-    protected $password;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="longitude", type="float", options={"default": 0}, nullable=true)
      * @Assert\NotBlank(message="fill_mandatory_field", groups={"signup", "edit"})
      */
@@ -178,6 +169,13 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     protected $deletedAt;
+
+    /**
+     * @var string $fullName
+     *
+     * @ORM\Column(name="fullName", type="string", length=190, nullable=true)
+     */
+    protected $fullName;
 
     /**
      * needed to disable the doctrine proxy __get as it trigger notice error
@@ -375,29 +373,6 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
     public function getAddress()
     {
         return $this->address;
-    }
-/**
-     * Set password
-     *
-     * @param string $address
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -742,5 +717,29 @@ class User extends BaseUser implements PfPaymentMethodHolderInterface, DeviceUse
         return $diff > ( $passwordExpiryTime * 60 ) ? 0 : ( $passwordExpiryTime * 60 ) - $diff;
     }
 
+
+    /**
+     * Set fullName
+     *
+     * @param string $fullName
+     *
+     * @return User
+     */
+    public function setFullName($nameEn)
+    {
+        $this->fullName = $fullName;
+
+        return $this;
+    }
+
+    /**
+     * Get fullName
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
 
 }
