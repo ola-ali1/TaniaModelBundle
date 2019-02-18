@@ -173,10 +173,10 @@ class Order implements PfTransactionInvoiceInterface
       /**
      * @var string
      *
-     * @ORM\Column(name="second_payment_method", type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
-
     private $secondPaymentMethod;
+
     /**
      * @var text
      *
@@ -334,8 +334,8 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, options={"default": 0})
-     * @Assert\Type(type="numeric")
+     * @ORM\Column(type="decimal", precision=19, scale=4, options={"default" : 0})
+     * @Assert\Type(type="float")
      */
     protected $price;
 
@@ -421,6 +421,20 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\Column(name="user_address_id", type="integer", length=10, nullable=true)
      */
     protected $userAddressId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $appVersion;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $deviceInformation;
 
     public function setNanaSyncData($nanaSyncData)
     {
@@ -3205,35 +3219,7 @@ class Order implements PfTransactionInvoiceInterface
             }
             return $itemsString;
         }
-    // NEW-ISPL END on 31/12/2018
 
-    // NEW-ISPL START on 03/02/2019
-     /**
-     * Set addressVerified
-     *
-     * @param integer $addressVerified
-     *
-     * @return Order
-     */
-    public function setAddressVerified($addressVerified)
-    {
-        $this->addressVerified = $addressVerified;
-
-        return $this;
-    }
-
-    /**
-     * Get addressVerified
-     *
-     * @return string
-     */
-    public function getAddressVerified()
-    {
-        return $this->addressVerified;
-    }
-    // NEW-ISPL END on 03/02/2019
-
-     // NEW-ISPL START on 12/02/2019
      /**
      * Set closedByFullName
      *
@@ -3279,6 +3265,40 @@ class Order implements PfTransactionInvoiceInterface
     public function getClosedBy()
     {
         return $this->closedBy;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAppVersion()
+    {
+        return $this->appVersion;
+    }
+
+    /**
+     * @param int $appVersion
+     */
+    public function setAppVersion($appVersion)
+    {
+        $this->appVersion = $appVersion;
+    }
+
+    /**
+     * @param mixed $deviceInformation
+     * @return Order
+     */
+    public function setDeviceInformation($deviceInformation)
+    {
+        $this->deviceInformation = $deviceInformation;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeviceInformation()
+    {
+        return $this->deviceInformation;
     }
     // NEW-ISPL END on 12/02/2019
 
