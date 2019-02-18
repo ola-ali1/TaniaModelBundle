@@ -267,7 +267,7 @@ class Driver extends User
      */
     public function getStatusString()
     {
-        return self::$statuses[$this->status ? '1' : '0'];
+        return self::$statuses[$this->status];
     }
 
     public function getCityAreaNameEn()
