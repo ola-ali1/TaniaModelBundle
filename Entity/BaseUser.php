@@ -330,6 +330,15 @@ class BaseUser implements AdvancedUserInterface, EquatableInterface
         return $encoder->encodePassword($password, $this->getSalt());
     }
 
+    // New Change
+    public function hashPasswordV2($password)
+    {
+        //create an encoder object
+        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+        //return the hashed password
+        return $encoder->encodePassword($password, $this->getSalt());
+    }
+
     /**
      * Set image
      *
