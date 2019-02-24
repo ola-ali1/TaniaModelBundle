@@ -14,8 +14,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Driver extends User
 {
 
-    public static $statuses = array('0' => 'offline', '1' => 'online');
-
+    // public static $statuses = array('0' => 'offline', '1' => 'online');
+    public static $statuses = array('0' => 'offline', '1' => 'online','2'=> 'Idle','3' => 'Delivering','4' => 'Going to Warehouse','5' => 'Break');
     /**
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", mappedBy="driver")
      */
@@ -50,12 +50,18 @@ class Driver extends User
      */
     private $driverRate;
 
+    //  *
+    //  * @var bool
+    //  *
+    //  * @ORM\Column(name="status", type="boolean", options={"default": true})
+    // protected $status = true;
+
     /**
-     * @var bool
+     * @var integer
      *
-     * @ORM\Column(name="status", type="boolean", options={"default": true})
+     * @ORM\Column(name="status", type="integer", options={"default": 1})
      */
-    protected $status = true;
+    protected $status = 1;
 
     /**
      * Constructor
@@ -261,7 +267,7 @@ class Driver extends User
      */
     public function getStatusString()
     {
-        return self::$statuses[$this->status ? '1' : '0'];
+        return self::$statuses[$this->status];
     }
 
     public function getCityAreaNameEn()

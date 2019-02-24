@@ -11,4 +11,5 @@ class DefaultController extends Controller
 
         return $this->render('IbtikarTaniaModelBundle:Default:index.html.twig');
     }
+
 }
