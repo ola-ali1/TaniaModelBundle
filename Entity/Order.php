@@ -173,10 +173,10 @@ class Order implements PfTransactionInvoiceInterface
       /**
      * @var string
      *
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(name="second_payment_method", type="string")
      */
-    private $secondPaymentMethod;
 
+    private $secondPaymentMethod;
     /**
      * @var text
      *
@@ -334,7 +334,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="decimal", precision=19, scale=4, options={"default" : 0})
+     * @ORM\Column(name="price", type="decimal", precision=10, scale=2, options={"default": 0})
      * @Assert\Type(type="numeric")
      */
     protected $price;
@@ -407,29 +407,6 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $nanaSyncData;
 
-
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="user_address_id", type="integer", length=10, nullable=true)
-     */
-    protected $userAddressId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $appVersion;
-
-    /**
-     * @var
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $deviceInformation;
-
     /**
      * Set nanaSyncData
      *
@@ -480,7 +457,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", length=1, nullable=true)
+     * @ORM\Column(name="address_verified", type="integer", length=1, nullable=true)
      */
     protected $addressVerified;
 
@@ -489,7 +466,8 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @ORM\Column(name="closed_by", type="integer", length=1, nullable=true)
      */
-    protected $closedBy;
+    protected $closedBy;  
+  
 
      /**
      * @var int
@@ -2107,7 +2085,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->driverFullNameAr;
     }
-
+    
     /**
      * Get createdByFullName
      *
@@ -2698,7 +2676,7 @@ class Order implements PfTransactionInvoiceInterface
         }
         return $itemsString;
     }
-
+    
     /**
      * @return string
      */
@@ -2718,7 +2696,7 @@ class Order implements PfTransactionInvoiceInterface
     }
 
    /* public function getOfferBuyItemsNamesAndQuantitiesEn1()
-    {
+    { 
         return $this->getOfferBuyItemsNamesAndQuantities();
     }*/
     /**
@@ -3139,29 +3117,6 @@ class Order implements PfTransactionInvoiceInterface
         return $this->orderRatingTags;
     }
 
-    /**
-     * Set addressVerified
-     *
-     * @param string $addressVerified
-     *
-     * @return Order
-     */
-    public function setAddressVerified($addressVerified)
-    {
-        $this->addressVerified = $addressVerified;
-
-        return $this;
-    }
-
-    /**
-     * Get AddressVerified
-     *
-     * @return string
-     */
-    public function getAddressVerified()
-    {
-        return $this->addressVerified;
-    }
 
     public function getOrderReturnedBy(){
         if($this->getStatus() == self::$statuses['returned'] && $this->getOrderStatuses()->last()){
@@ -3220,7 +3175,35 @@ class Order implements PfTransactionInvoiceInterface
             }
             return $itemsString;
         }
+    // NEW-ISPL END on 31/12/2018    
 
+    // NEW-ISPL START on 03/02/2019
+     /**
+     * Set addressVerified
+     *
+     * @param integer $addressVerified
+     *
+     * @return Order
+     */
+    public function setAddressVerified($addressVerified)
+    {
+        $this->addressVerified = $addressVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get addressVerified
+     *
+     * @return string
+     */
+    public function getAddressVerified()
+    {
+        return $this->addressVerified;
+    }    
+    // NEW-ISPL END on 03/02/2019
+
+     // NEW-ISPL START on 12/02/2019
      /**
      * Set closedByFullName
      *
@@ -3267,6 +3250,55 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->closedBy;
     }
+    // NEW-ISPL END on 12/02/2019
+
+    // NEW-ISPL START on 16/02/2019
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="address_verified_cron_count", type="integer", length=10, nullable=true)
+     */
+    protected $addressVerifiedCronCount;
+     /**
+     * Set addressVerifiedCronCount
+     *
+     * @param integer $addressVerifiedCronCount
+     *
+     * @return Order
+     */
+    public function setAddressVerifiedCronCount($addressVerifiedCronCount)
+    {
+        $this->addressVerifiedCronCount = $addressVerifiedCronCount;
+
+        return $this;
+    }
+
+    /**
+     * Get addressVerifiedCronCount
+     *
+     * @return integer
+     */
+    public function getAddressVerifiedCronCount()
+    {
+        return $this->addressVerifiedCronCount;
+    }
+    // NEW-ISPL END on 16/02/2019
+
+    // NEW-ISPL START on 17/02/2019
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="app_version",type="string", nullable=true)
+     */
+    protected $appVersion;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="device_information",type="text", nullable=true)
+     */
+    protected $deviceInformation;
 
     /**
      * @return int
@@ -3301,6 +3333,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->deviceInformation;
     }
-    // NEW-ISPL END on 12/02/2019
+
+    // NEW-ISPL END on 17/02/2019
 
 }
