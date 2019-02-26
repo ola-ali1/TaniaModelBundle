@@ -4,6 +4,7 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransactionInvoiceInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Ibtikar\TaniaModelBundle\Entity\Offer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -1004,11 +1005,11 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * Set offer
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Offer $offer
+     * @param Offer $offer
      *
      * @return Offer
      */
-    public function setOffer(\Ibtikar\TaniaModelBundle\Entity\Offer $offer = null)
+    public function setOffer(Offer $offer = null)
     {
         $this->offer = $offer;
 
@@ -1018,7 +1019,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * Get offer
      *
-     * @return \Ibtikar\TaniaModelBundle\Entity\Offer
+     * @return Offer
      */
     public function getOffer()
     {
@@ -3099,7 +3100,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->orderOffers;
     }
-    
+
     /**
      * 
      * @param \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag $orderRatingTag
@@ -3134,8 +3135,8 @@ class Order implements PfTransactionInvoiceInterface
         */
          public function getOfferBuyItemsNamesEn()
          {
-            $itemsString = '';
-            //dump($this->orderOffers);exit;
+             $itemsString = '';
+             //dump($this->orderOffers);exit;
             foreach ($this->orderOffers as $orderOffer) {
                 $OrderOfferBuyItems = $orderOffer->getOrderOfferBuyItems();
                 // dump($OrderOfferBuyItems);exit;
