@@ -138,6 +138,22 @@ class OrderRepository extends EntityRepository
      */
     public function getOrdersCreatedAt($fromDate, $toDate){
         $query = $this->createQueryBuilder('o');
+        $from = new \DateTime($fromDate->format("Y-m-d")." 00:00:00");
+        $to   = new \DateTime($toDate->format("Y-m-d")." 23:59:59");
+
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                    ->andWhere('o.createdAt BETWEEN :from AND :to')
+                    ->setParameter('from', $from )
+                    ->setParameter('to', $to)
+                ->orderBy('o.id', 'DESC')
+                ->getQuery()
+                 ->getResult();
+
+        return $query;
+    }
+
+    public function getOrdersCreatedAtOld($fromDate, $toDate){
+        $query = $this->createQueryBuilder('o');
 
         $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
                 ->andWhere('o.createdAt >= :start')
