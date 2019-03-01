@@ -4,6 +4,7 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Ibtikar\TaniaModelBundle\Entity\VanDriver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -14,8 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Driver extends User
 {
 
-    public static $statuses = array('0' => 'offline', '1' => 'online');
-
+    // public static $statuses = array('0' => 'offline', '1' => 'online');
+    public static $statuses = array('0' => 'offline', '1' => 'online','2'=> 'Idle','3' => 'Delivering','4' => 'Going to Warehouse','5' => 'Break');
     /**
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\Order", mappedBy="driver")
      */
@@ -50,12 +51,18 @@ class Driver extends User
      */
     private $driverRate;
 
+    //  *
+    //  * @var bool
+    //  *
+    //  * @ORM\Column(name="status", type="boolean", options={"default": true})
+    // protected $status = true;
+
     /**
-     * @var bool
+     * @var integer
      *
-     * @ORM\Column(name="status", type="boolean", options={"default": true})
+     * @ORM\Column(name="status", type="integer", options={"default": 1})
      */
-    protected $status = true;
+    protected $status = 1;
 
     /**
      * Constructor
@@ -105,11 +112,11 @@ class Driver extends User
     /**
      * Add vanDriver
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver
+     * @param VanDriver $vanDriver
      *
      * @return Van
      */
-    public function addVanDriver(\Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver)
+    public function addVanDriver(VanDriver $vanDriver)
     {
         $this->vanDrivers[] = $vanDriver;
 
@@ -121,9 +128,9 @@ class Driver extends User
     /**
      * Remove vanDriver
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\VanDrivers $vanDriver
+     * @param VanDriver $vanDriver
      */
-    public function removeVanDriver(\Ibtikar\TaniaModelBundle\Entity\VanDriver $vanDriver)
+    public function removeVanDriver(VanDriver $vanDriver)
     {
         $this->vanDrivers->removeElement($vanDriver);
     }
@@ -261,7 +268,7 @@ class Driver extends User
      */
     public function getStatusString()
     {
-        return self::$statuses[$this->status ? '1' : '0'];
+        return self::$statuses[$this->status];
     }
 
     public function getCityAreaNameEn()

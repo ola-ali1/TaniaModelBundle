@@ -12,7 +12,7 @@ trait TrackableTrait
      * @var \DateTime $createdAt
      *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="created_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"}, nullable=true)
      */
     protected $createdAt;
 
@@ -20,7 +20,7 @@ trait TrackableTrait
      * @var \DateTime $updatedAt
      *
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="updated_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"}, nullable=true)
      */
     protected $updatedAt;
 

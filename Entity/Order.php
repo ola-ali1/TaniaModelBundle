@@ -171,7 +171,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $paymentMethod;
 
-    /**
+      /**
      * @var string
      *
      * @ORM\Column(name="second_payment_method", type="string")
