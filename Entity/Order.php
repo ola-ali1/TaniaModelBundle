@@ -4,10 +4,12 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransactionInvoiceInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Ibtikar\TaniaModelBundle\Entity\Offer;
 use Symfony\Component\Validator\Constraints as Assert;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Ibtikar\TaniaModelBundle\Entity\UserAddress;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -51,7 +53,7 @@ class Order implements PfTransactionInvoiceInterface
         'cancelled' => 'cancelled',
         'closed' => 'closed',
         'transaction-pending' => 'transaction-pending',
-        'confirmed' => 'confirmed'        
+        'confirmed' => 'confirmed'
     );
 
     public static $statusCategories = array(
@@ -169,6 +171,13 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $paymentMethod;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="second_payment_method", type="string")
+     */
+
+    private $secondPaymentMethod;
     /**
      * @var text
      *
@@ -312,6 +321,20 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="first_payment_price", type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $firstPaymentPrice;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="second_payment_price", type="decimal", precision=10, scale=2, nullable=true)
+     */
+    private $secondPaymentPrice;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2, options={"default": 0})
      * @Assert\Type(type="numeric")
      */
@@ -432,6 +455,34 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->isNanaSynced;
     }
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="address_verified", type="integer", length=1, nullable=true)
+     */
+    protected $addressVerified;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="closed_by", type="integer", length=1, nullable=true)
+     */
+    protected $closedBy;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", length=1, nullable=true)
+     */
+    protected $createdBy;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="closed_by_fullName", type="string", length=100, nullable=true)
+     */
+    protected $closedByFullName;
 
     /**
      * Set promoCode
@@ -602,7 +653,7 @@ class Order implements PfTransactionInvoiceInterface
      * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OrderRatingTag", mappedBy="order")
      */
     private $orderRatingTags;
-    
+
     /**
      * @var string
      *
@@ -725,6 +776,14 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="created_by_fullName", type="string", length=190, nullable=true)
+     *
+     */
+    protected $createdByFullName;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="city_area_name_en", type="string", length=15, nullable=true)
      *
      */
@@ -760,12 +819,28 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $isSynced;
 
-     /**
+    /**
      * @var string
      *
      * @ORM\Column(name="address_type", type="string", length=30, options={"default": "USER"})
      */
     private $addressType = self::TYPE_USER;
+
+
+    /**
+     *
+     * @Assert\NotBlank
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OfferBuyItem",mappedBy="offer")
+     */
+    protected $offerBuyItems;
+
+    /**
+     *
+     * @Assert\Expression("this.getType() != 'ITEM' or value != null", message="This value should not be blank.")
+     * @ORM\OneToMany(targetEntity="\Ibtikar\TaniaModelBundle\Entity\OfferGetItem",mappedBy="offer")
+     */
+    protected $offerGetItems;
+
 
     /**
      * Constructor
@@ -777,6 +852,11 @@ class Order implements PfTransactionInvoiceInterface
         $this->pfTransactions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orderOffers = new \Doctrine\Common\Collections\ArrayCollection();
 
+
+        // NEW-ISPL START
+        $this->offerBuyItems = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->offerGetItems = new \Doctrine\Common\Collections\ArrayCollection();
+        // NEW-ISPL END
         $this->setStatus($this::$statuses['new']);
     }
 
@@ -932,11 +1012,11 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * Set offer
      *
-     * @param \Ibtikar\TaniaModelBundle\Entity\Offer $offer
+     * @param Offer $offer
      *
      * @return Offer
      */
-    public function setOffer(\Ibtikar\TaniaModelBundle\Entity\Offer $offer = null)
+    public function setOffer(Offer $offer = null)
     {
         $this->offer = $offer;
 
@@ -946,7 +1026,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * Get offer
      *
-     * @return \Ibtikar\TaniaModelBundle\Entity\Offer
+     * @return Offer
      */
     public function getOffer()
     {
@@ -1066,6 +1146,76 @@ class Order implements PfTransactionInvoiceInterface
     public function getPaymentMethod()
     {
         return $this->paymentMethod;
+    }
+
+    /**
+     * Set secondPaymentMethod
+     *
+     * @param string $secondPaymentMethod
+     *
+     * @return Order
+     */
+    public function setSecondPaymentMethod($secondPaymentMethod)
+    {
+        $this->secondPaymentMethod = $secondPaymentMethod;
+
+        return $this;
+    }
+
+    /**
+     * Get secondPaymentMethod
+     *
+     * @return string
+     */
+    public function getSecondPaymentMethod()
+    {
+        return $this->secondPaymentMethod;
+    }
+
+    /**
+     * Set firstPaymentPrice
+     *
+     * @param string $firstPaymentPrice
+     *
+     * @return Order
+     */
+    public function setFirstPaymentPrice($firstPaymentPrice)
+    {
+        $this->firstPaymentPrice = $firstPaymentPrice;
+        return $this;
+    }
+
+    /**
+     * Get firstPaymentPrice
+     *
+     * @return string
+     */
+    public function getFirstPaymentPrice()
+    {
+        return $this->firstPaymentPrice;
+    }
+
+    /**
+     * Set secondPaymentPrice
+     *
+     * @param string $secondPaymentPrice
+     *
+     * @return Order
+     */
+    public function setSecondPaymentPrice($secondPaymentPrice)
+    {
+        $this->secondPaymentPrice = $secondPaymentPrice;
+        return $this;
+    }
+
+    /**
+     * Get secondPaymentPrice
+     *
+     * @return string
+     */
+    public function getSecondPaymentPrice()
+    {
+        return $this->secondPaymentPrice;
     }
 
     /**
@@ -1234,17 +1384,17 @@ class Order implements PfTransactionInvoiceInterface
     {
         $this->driver = $driver;
         if ($driver) {
-        $this->setDriverFullName($driver->getFullName());
-        $this->setDriverFullNameAr($driver->getFullNameAr());
-        if ($driver->getImage()) {
-            $this->setDriverImage($driver->getWebPath());
-        }
-        $this->setDriverPhone($driver->getPhone());
-        $this->setDriverRate($driver->getDriverRate());
-        $this->setDriverUsername($driver->getUsername());
-        foreach ($driver->getVanDrivers() as $vanDriver) {
-            $this->setVan($vanDriver->getVan());
-        }
+            $this->setDriverFullName($driver->getFullName());
+            $this->setDriverFullNameAr($driver->getFullNameAr());
+            if ($driver->getImage()) {
+                $this->setDriverImage($driver->getWebPath());
+            }
+            $this->setDriverPhone($driver->getPhone());
+            $this->setDriverRate($driver->getDriverRate());
+            $this->setDriverUsername($driver->getUsername());
+            foreach ($driver->getVanDrivers() as $vanDriver) {
+                $this->setVan($vanDriver->getVan());
+            }
         } else {
             $this->setDriverFullName(null);
             $this->setDriverFullNameAr(null);
@@ -1921,6 +2071,20 @@ class Order implements PfTransactionInvoiceInterface
     }
 
     /**
+     * Set createdByFullName
+     *
+     * @param string $createdByFullName
+     *
+     * @return Order
+     */
+    public function setCreatedByFullName($createdByFullName)
+    {
+        $this->createdByFullName = $createdByFullName;
+
+        return $this;
+    }
+
+    /**
      * Get driverFullNameAr
      *
      * @return string
@@ -1928,6 +2092,16 @@ class Order implements PfTransactionInvoiceInterface
     public function getDriverFullNameAr()
     {
         return $this->driverFullNameAr;
+    }
+
+    /**
+     * Get createdByFullName
+     *
+     * @return string
+     */
+    public function getCreatedByFullName()
+    {
+        return $this->createdByFullName;
     }
 
     /**
@@ -2460,10 +2634,10 @@ class Order implements PfTransactionInvoiceInterface
      * @return string
      */
     public function getItemsNamesAndQuantitiesEn()
-    { 
+    {
         return $this->getItemsNamesAndQuantities();
     }
-    
+
     /**
      * @return string
      */
@@ -2478,6 +2652,194 @@ class Order implements PfTransactionInvoiceInterface
         }
         return $itemsString;
     }
+
+    //NEW-ISPL START
+    /**
+     * @return string
+     */
+    public function getOfferGetItemsNamesAndQuantitiesEn()
+    {
+
+        $itemsString = '';
+        foreach ($this->offerGetItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
+        }
+        return $itemsString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferGetItemsNamesAndQuantitiesAr()
+    {
+        $itemsString = '';
+        foreach ($this->offerGetItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getName();
+        }
+        return $itemsString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferBuyItemsNamesAndQuantitiesEn()
+    {
+        // echo 'shailesh';exit;
+        $itemsString = '';
+        foreach ($this->offerBuyItems as $item) {
+            // echo '-----------------';
+            // print_r($item);exit;
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getNameEn();
+        }
+        return $itemsString;
+    }
+
+    /* public function getOfferBuyItemsNamesAndQuantitiesEn1()
+     {
+         return $this->getOfferBuyItemsNamesAndQuantities();
+     }*/
+    /**
+     * @return string
+     */
+    public function getOfferBuyItemsNamesAndQuantitiesAr()
+    {
+        $itemsString = '';
+        foreach ($this->offerBuyItems as $item) {
+            if (strlen($itemsString) !== 0) {
+                $itemsString .= '<br/>';
+            }
+            $itemsString .= '(' . $item->getCount() . ') '. $item->getName();
+        }
+        return $itemsString;
+    }
+
+
+    /**
+     * Add offerBuyItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OfferBuyItem $offerBuyItem
+     *
+     * @return OfferBuyItem
+     */
+    public function addOfferBuyItem(OfferBuyItem $offerBuyItem)
+    {
+        $this->offerBuyItems[] = $offerBuyItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove offerBuyItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OfferBuyItem $offerBuyItem
+     */
+    public function removeOfferBuyItem(OfferBuyItem $offerBuyItem)
+    {
+        $this->offerBuyItems->removeElement($offerBuyItem);
+    }
+
+    /**
+     * Get offerBuyItems
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getOfferBuyItems()
+    {
+        return $this->offerBuyItems;
+    }
+
+    /**
+     * Add offerGetItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OfferGetItem $offerGetItem
+     *
+     * @return OfferGetItem
+     */
+    public function addOfferGetItem(OfferGetItem $offerGetItem)
+    {
+        $this->offerGetItems[] = $offerGetItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove offerGetItem
+     *
+     * @param \Ibtikar\TaniaModelBundle\Entity\OfferGetItem $offerGetItem
+     */
+    public function removeOfferGetItem(OfferGetItem $offerGetItem)
+    {
+        $this->offerGetItems->removeElement($offerGetItem);
+    }
+
+    /**
+     * Get offerGetItems
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getOfferGetItems()
+    {
+        return $this->offerGetItems;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfUsedTimes()
+    {
+        return $this->numberOfUsedTimes;
+    }
+
+    /**
+     * @param int $numberOfUsedTimes
+     */
+    public function setNumberOfUsedTimes($numberOfUsedTimes)
+    {
+        $this->numberOfUsedTimes = $numberOfUsedTimes;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCashGetAmount()
+    {
+        return $this->cashGetAmount;
+    }
+
+    /**
+     * @param float $cashGetAmount
+     */
+    public function setCashGetAmount($cashGetAmount)
+    {
+        $this->cashGetAmount = $cashGetAmount;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPercentageGetAmount()
+    {
+        return $this->percentageGetAmount;
+    }
+
+    /**
+     * @param float $percentageGetAmount
+     */
+    public function setPercentageGetAmount($percentageGetAmount)
+    {
+        $this->percentageGetAmount = $percentageGetAmount;
+    }
+
+    //NEW-ISPL END
 
     /**
      * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
@@ -2570,10 +2932,14 @@ class Order implements PfTransactionInvoiceInterface
     {
         return array('android' => 'android',
             'ios'              => 'ios',
+            'cc-agent'         => 'cc-agent',
+            'driver-app'       => 'driver-app',
+            'Landing-Page'     => 'Landing-Page',
             'nana'             => 'nana',
             'tania-system'     => 'tania-system',
             'tania-website'    => 'tania-website',
-            'tania-order-now'    => 'tania-order-now'
+            'tania-order-now'  => 'tania-order-now',
+            'oxidane'          => 'oxidane'
         );
     }
 
@@ -2648,7 +3014,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->customerPhone;
     }
-   
+
     /**
      * Get addressType
      *
@@ -2656,7 +3022,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getAddressType() {
         return $this->addressType;
-    }        
+    }
 
     /**
      * Set addressType
@@ -2669,7 +3035,7 @@ class Order implements PfTransactionInvoiceInterface
         $this->addressType = $AddressType;
         return $this;
     }
-    
+
     /**
      * Get userAddress
      *
@@ -2695,7 +3061,7 @@ class Order implements PfTransactionInvoiceInterface
         return self::$addressTypes;
     }
 
-    
+
     public function getPromoCodeText()
     {
         return $this->getPromoCode()->getCode();
@@ -2741,9 +3107,9 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->orderOffers;
     }
-    
+
     /**
-     * 
+     *
      * @param \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag $orderRatingTag
      * @return Order
      */
@@ -2751,7 +3117,7 @@ class Order implements PfTransactionInvoiceInterface
         $this->orderRatingTags = $orderRatingTags;
         return $this;
     }
-    
+
     /**
      * @return \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag
      */
@@ -2766,7 +3132,232 @@ class Order implements PfTransactionInvoiceInterface
                 return $driver->getFullNameAr();
             }
         }
-        
+
         return "";
     }
+
+    // NEW-ISPL START on 31/12/2018
+    /*   *
+      * @return string
+      */
+    public function getOfferBuyItemsNamesEn()
+    {
+        $itemsString = '';
+        //dump($this->orderOffers);exit;
+        foreach ($this->orderOffers as $orderOffer) {
+            $OrderOfferBuyItems = $orderOffer->getOrderOfferBuyItems();
+            // dump($OrderOfferBuyItems);exit;
+            foreach ($OrderOfferBuyItems as $OrderOfferBuyItem) {
+                if (strlen($itemsString) !== 0) {
+                    $itemsString .= '<br/>';
+                }
+                $itemsString .= $orderOffer->getTitleEn().'&nbsp;&nbsp;&nbsp;<br/>'.'('.$OrderOfferBuyItem->getCount().') '.$OrderOfferBuyItem->getNameEn() .'&nbsp;&nbsp;&nbsp;<br/>'.'('.$orderOffer->getCount().') '.$OrderOfferBuyItem->getNameEn();
+            }
+        }
+        return $itemsString;
+
+        // foreach ($this->orderOffers as $orderOffer) {
+        // if (strlen($itemsString) !== 0) {
+        // $itemsString .= '<br/>';
+        // }
+        // $itemsString .= $orderOffer->getTitleEn();
+        // }
+        // return $itemsString;
+    }
+    /**
+     * @return string
+     */
+    public function getOfferBuyItemsNamesAr()
+    {
+        // echo 'Call Arbic';exit;
+        $itemsString = '';
+        foreach ($this->orderOffers as $orderOffer) {
+            $OrderOfferBuyItems = $orderOffer->getOrderOfferBuyItems();
+            // dump($OrderOfferBuyItems);exit;
+            foreach ($OrderOfferBuyItems as $OrderOfferBuyItem) {
+                if (strlen($itemsString) !== 0) {
+                    $itemsString .= '<br/>';
+                }
+                $itemsString .= $orderOffer->getTitle().'&nbsp;&nbsp;&nbsp;<br/>'.'('.$OrderOfferBuyItem->getCount().') '.$OrderOfferBuyItem->getName() .'&nbsp;&nbsp;&nbsp;<br/>'.'('.$orderOffer->getCount().') '.$OrderOfferBuyItem->getName();
+            }
+        }
+        return $itemsString;
+    }
+    // NEW-ISPL END on 31/12/2018
+
+    // NEW-ISPL START on 03/02/2019
+    /**
+     * Set addressVerified
+     *
+     * @param integer $addressVerified
+     *
+     * @return Order
+     */
+    public function setAddressVerified($addressVerified)
+    {
+        $this->addressVerified = $addressVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get addressVerified
+     *
+     * @return string
+     */
+    public function getAddressVerified()
+    {
+        return $this->addressVerified;
+    }
+    // NEW-ISPL END on 03/02/2019
+
+    // NEW-ISPL START on 12/02/2019
+    /**
+     * Set closedByFullName
+     *
+     * @param string $closedByFullName
+     *
+     * @return Order
+     */
+    public function setClosedByFullName($closedByFullName)
+    {
+        $this->closedByFullName = $closedByFullName;
+
+        return $this;
+    }
+
+    /**
+     * Get closedByFullName
+     *
+     * @return string
+     */
+    public function getClosedByFullName()
+    {
+        return $this->closedByFullName;
+    }
+    /**
+     * Set createdBy
+     *
+     * @param integer $createdBy
+     *
+     * @return Order
+     */
+    public function setClosedBy($closedBy)
+    {
+        $this->closedBy = $closedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return integer
+     */
+    public function getClosedBy()
+    {
+        return $this->closedBy;
+    }
+    // NEW-ISPL END on 12/02/2019
+
+    // NEW-ISPL START on 16/02/2019
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="address_verified_cron_count", type="integer", length=10, nullable=true)
+     */
+    protected $addressVerifiedCronCount;
+    /**
+     * Set addressVerifiedCronCount
+     *
+     * @param integer $addressVerifiedCronCount
+     *
+     * @return Order
+     */
+    public function setAddressVerifiedCronCount($addressVerifiedCronCount)
+    {
+        $this->addressVerifiedCronCount = $addressVerifiedCronCount;
+
+        return $this;
+    }
+
+    /**
+     * Get addressVerifiedCronCount
+     *
+     * @return integer
+     */
+    public function getAddressVerifiedCronCount()
+    {
+        return $this->addressVerifiedCronCount;
+    }
+    // NEW-ISPL END on 16/02/2019
+
+    // NEW-ISPL START on 17/02/2019
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="app_version",type="string", nullable=true)
+     */
+    protected $appVersion;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="device_information",type="text", nullable=true)
+     */
+    protected $deviceInformation;
+
+    /**
+     * @return int
+     */
+    public function getAppVersion()
+    {
+        return $this->appVersion;
+    }
+
+    /**
+     * @param int $appVersion
+     */
+    public function setAppVersion($appVersion)
+    {
+        $this->appVersion = $appVersion;
+    }
+
+    /**
+     * @param mixed $deviceInformation
+     * @return Order
+     */
+    public function setDeviceInformation($deviceInformation)
+    {
+        $this->deviceInformation = $deviceInformation;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeviceInformation()
+    {
+        return $this->deviceInformation;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * @param int $createdBy
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+    }
+
+    // NEW-ISPL END on 17/02/2019
+
 }
