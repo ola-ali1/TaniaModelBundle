@@ -12,6 +12,7 @@ class OrderRepository extends EntityRepository
      * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
      * @param integer $shiftId
      * @return array
+     * @throws \Exception
      */
     public function getShiftsOrdersCountToday($shiftId = null)
     {
@@ -136,7 +137,8 @@ class OrderRepository extends EntityRepository
      * @param datetime $toDate
      * @return Orders list
      */
-    public function getOrdersCreatedAt($fromDate, $toDate){
+    public function getOrdersCreatedAt($fromDate, $toDate)
+    {
         $query = $this->createQueryBuilder('o');
         $from = new \DateTime($fromDate->format("Y-m-d")." 00:00:00");
         $to   = new \DateTime($toDate->format("Y-m-d")." 23:59:59");
