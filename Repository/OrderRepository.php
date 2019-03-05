@@ -154,6 +154,20 @@ class OrderRepository extends EntityRepository
         return $query;
     }
 
+    public function getOrdersCreatedAtV2($fromDate, $toDate)
+    {
+        $start = new \DateTime($fromDate->format("Y-m-d")." 00:00:00");
+        $end   = new \DateTime($toDate->format("Y-m-d")." 23:59:59");
+
+        return $this->createQueryBuilder('o')
+            ->addOrderBy('o.createdAt', 'ASC')
+            ->andWhere('o.createdAt > :now')
+            ->andWhere('o.createdAt <= :end')
+            ->setParameter('now', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult();
+    }
     public function getOrdersCreatedAtOld($fromDate, $toDate){
         $query = $this->createQueryBuilder('o');
 
