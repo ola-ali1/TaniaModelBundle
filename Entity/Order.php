@@ -3347,6 +3347,10 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function setDeviceInformation($deviceInformation)
     {
+        if (preg_match("/<[^<]+>/",$deviceInformation,$m) == 0) {
+            $parts = explode(",", $deviceInformation);
+            $deviceInformation = implode('</br>', $parts);
+        }
         $this->deviceInformation = $deviceInformation;
         return $this;
     }
