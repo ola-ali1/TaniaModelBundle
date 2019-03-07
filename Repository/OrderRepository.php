@@ -12,6 +12,7 @@ class OrderRepository extends EntityRepository
      * @author Mahmoud Mostafa <mahmoud.mostafa@ibtikar.net.sa>
      * @param integer $shiftId
      * @return array
+     * @throws \Exception
      */
     public function getShiftsOrdersCountToday($shiftId = null)
     {
@@ -136,7 +137,38 @@ class OrderRepository extends EntityRepository
      * @param datetime $toDate
      * @return Orders list
      */
-    public function getOrdersCreatedAt($fromDate, $toDate){
+    public function getOrdersCreatedAt($fromDate, $toDate)
+    {
+        $query = $this->createQueryBuilder('o');
+        $from = new \DateTime($fromDate->format("Y-m-d")." 00:00:00");
+        $to   = new \DateTime($toDate->format("Y-m-d")." 23:59:59");
+
+        $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
+                    ->andWhere('o.createdAt BETWEEN :from AND :to')
+                    ->setParameter('from', $from )
+                    ->setParameter('to', $to)
+                ->orderBy('o.id', 'DESC')
+                ->getQuery()
+                 ->getResult();
+
+        return $query;
+    }
+
+    public function getOrdersCreatedAtV2($fromDate, $toDate)
+    {
+        $start = new \DateTime($fromDate->format("Y-m-d")." 00:00:00");
+        $end   = new \DateTime($toDate->format("Y-m-d")." 23:59:59");
+
+        return $this->createQueryBuilder('o')
+            ->addOrderBy('o.createdAt', 'ASC')
+            ->andWhere('o.createdAt > :now')
+            ->andWhere('o.createdAt <= :end')
+            ->setParameter('now', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult();
+    }
+    public function getOrdersCreatedAtOld($fromDate, $toDate){
         $query = $this->createQueryBuilder('o');
 
         $query = $query->andWhere("o INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order")
