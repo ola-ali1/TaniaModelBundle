@@ -27,6 +27,7 @@ class Order implements PfTransactionInvoiceInterface
     CONST BALANCE = 'BALANCE';
     CONST CREDIT = 'CREDIT';
     CONST POINTS = 'POINTS';
+    CONST MADA = 'MADA';
 
     CONST TYPE_MASAJED = 'MASAJED';
     CONST TYPE_USER = 'USER';
@@ -41,7 +42,8 @@ class Order implements PfTransactionInvoiceInterface
         self::SADAD => 'SADAD',
         self::CREDIT => 'Online With Card Id',
         self::BALANCE => 'Balance',
-        self::POINTS => 'Points'
+        self::POINTS => 'Points',
+        self::MADA => 'MADA CARD',
     );
 
     public static $paymentMethodNebrasListV2 = array(
@@ -57,8 +59,7 @@ class Order implements PfTransactionInvoiceInterface
         'CREDIT' => '2',
         'COUPON' => '3',
         'ANNUAL' => '4',
-        'Credit Card' => '5',
-        'BALANCE' => '7',
+        'MADA' => '9',
     );
 
     public static $statuses = array(
