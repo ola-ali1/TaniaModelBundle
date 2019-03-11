@@ -63,6 +63,23 @@ class Order implements PfTransactionInvoiceInterface
         'MADA' => '9',
     );
 
+    public static $paymentMethodNebrasListV2 = array(
+        'Cash' => '1',
+        'Credit' => '2',
+        'Coupon' => '3',
+        'Annual' => '4',
+        'Credit Card' => '5',
+        'SADAD' => '6',
+        'BALANCE' => '7',
+        'TC' => '8',
+        'CASH' => '1',
+        'CREDIT' => '2',
+        'COUPON' => '3',
+        'ANNUAL' => '4',
+        'Credit Card' => '5',
+        'BALANCE' => '7',
+    );
+
     public static $statuses = array(
         'new' => 'new',
         'verified' => 'verified',
