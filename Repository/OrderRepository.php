@@ -168,7 +168,6 @@ class OrderRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
-
     public function getOrdersCreatedAtOld($fromDate, $toDate){
         $query = $this->createQueryBuilder('o');
 
