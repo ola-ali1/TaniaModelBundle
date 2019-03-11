@@ -23,15 +23,15 @@ class Order implements PfTransactionInvoiceInterface
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
-    CONST CASH = 'CASH';
-    CONST SADAD = 'SADAD';
-    CONST BALANCE = 'BALANCE';
-    CONST CREDIT = 'CREDIT';
-    CONST POINTS = 'POINTS';
-    CONST MADA = 'MADA';
+    const CASH = 'CASH';
+    const SADAD = 'SADAD';
+    const BALANCE = 'BALANCE';
+    const CREDIT = 'CREDIT';
+    const POINTS = 'POINTS';
+    const MADA = 'MADA';
 
-    CONST TYPE_MASAJED = 'MASAJED';
-    CONST TYPE_USER = 'USER';
+    const TYPE_MASAJED = 'MASAJED';
+    const TYPE_USER = 'USER';
 
     public static $addressTypes = array(
         self::TYPE_MASAJED => 'Masjed',
@@ -61,23 +61,6 @@ class Order implements PfTransactionInvoiceInterface
         'COUPON' => '3',
         'ANNUAL' => '4',
         'MADA' => '9',
-    );
-
-    public static $paymentMethodNebrasListV2 = array(
-        'Cash' => '1',
-        'Credit' => '2',
-        'Coupon' => '3',
-        'Annual' => '4',
-        'Credit Card' => '5',
-        'SADAD' => '6',
-        'BALANCE' => '7',
-        'TC' => '8',
-        'CASH' => '1',
-        'CREDIT' => '2',
-        'COUPON' => '3',
-        'ANNUAL' => '4',
-        'Credit Card' => '5',
-        'BALANCE' => '7',
     );
 
     public static $statuses = array(
@@ -207,7 +190,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $paymentMethod;
 
-      /**
+    /**
      * @var string
      *
      * @ORM\Column(name="second_payment_method", type="string")
@@ -1553,7 +1536,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getVanType()
     {
-        return $this->getVan() && $this->getVan()->getType() ? $this->getVan()->getType() : NULL;
+        return $this->getVan() && $this->getVan()->getType() ? $this->getVan()->getType() : null;
     }
 
     public function getStatuses()
@@ -1563,10 +1546,11 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getUserName()
     {
-        if ($this->user)
+        if ($this->user) {
             return $this->user->getFullName();
+        }
 
-        if($userName = $this->getCustomerUsername()){
+        if ($userName = $this->getCustomerUsername()) {
             return $userName;
         }
 
@@ -1575,10 +1559,11 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getUserPhone()
     {
-        if ($this->user)
+        if ($this->user) {
             return $this->user->getPhone();
+        }
 
-        if($userPhone = $this->getCustomerPhone()){
+        if ($userPhone = $this->getCustomerPhone()) {
             return $userPhone;
         }
 
@@ -1587,8 +1572,9 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getUserBalance()
     {
-        if ($this->user)
+        if ($this->user) {
             return $this->user->getBalance();
+        }
 
         return '';
     }
@@ -2438,13 +2424,11 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function prePersist($event)
     {
-        if ($event instanceof  PreUpdateEventArgs ) {
-            if ( $event->hasChangedField('isAsynced') == true ) {
+        if ($event instanceof  PreUpdateEventArgs) {
+            if ($event->hasChangedField('isAsynced') == true) {
                 $this->isSynced= false;
             }
-        }
-        else
-        {
+        } else {
             $this->isSynced= false;
         }
     }
@@ -2712,7 +2696,6 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getOfferGetItemsNamesAndQuantitiesEn()
     {
-
         $itemsString = '';
         foreach ($this->offerGetItems as $item) {
             if (strlen($itemsString) !== 0) {
@@ -3074,7 +3057,8 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return string
      */
-    public function getAddressType() {
+    public function getAddressType()
+    {
         return $this->addressType;
     }
 
@@ -3085,7 +3069,8 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return Order
      */
-    public function setAddressType($AddressType) {
+    public function setAddressType($AddressType)
+    {
         $this->addressType = $AddressType;
         return $this;
     }
@@ -3095,7 +3080,8 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return UserAddress
      */
-    public function getUserAddress() {
+    public function getUserAddress()
+    {
         return $this->userAddress;
     }
 
@@ -3106,12 +3092,14 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return Order
      */
-    public function setUserAddress(UserAddress $userAddress = null) {
+    public function setUserAddress(UserAddress $userAddress = null)
+    {
         $this->userAddress = $userAddress;
         return $this;
     }
 
-    public function getAddressTypes(){
+    public function getAddressTypes()
+    {
         return self::$addressTypes;
     }
 
@@ -3124,7 +3112,8 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->getPromoCode()->getType();
     }
-    public function getDiscountAmountString(){
+    public function getDiscountAmountString()
+    {
         return $this->getPromoCode()->getDiscountAmountString();
     }
 
@@ -3167,7 +3156,8 @@ class Order implements PfTransactionInvoiceInterface
      * @param \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag $orderRatingTag
      * @return Order
      */
-    public function setOrderRatingTags($orderRatingTags) {
+    public function setOrderRatingTags($orderRatingTags)
+    {
         $this->orderRatingTags = $orderRatingTags;
         return $this;
     }
@@ -3175,14 +3165,16 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @return \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag
      */
-    public function getOrderRatingTags(){
+    public function getOrderRatingTags()
+    {
         return $this->orderRatingTags;
     }
 
 
-    public function getOrderReturnedBy(){
-        if($this->getStatus() == self::$statuses['returned'] && $this->getOrderStatuses()->last()){
-            if($driver = $this->getOrderStatuses()->last()->getActionDoneBy()){
+    public function getOrderReturnedBy()
+    {
+        if ($this->getStatus() == self::$statuses['returned'] && $this->getOrderStatuses()->last()) {
+            if ($driver = $this->getOrderStatuses()->last()->getActionDoneBy()) {
                 return $driver->getFullNameAr();
             }
         }
@@ -3384,7 +3376,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function setDeviceInformation($deviceInformation)
     {
-        if (preg_match("/<[^<]+>/",$deviceInformation,$m) == 0) {
+        if (preg_match("/<[^<]+>/", $deviceInformation, $m) == 0) {
             $parts = explode(",", $deviceInformation);
             $deviceInformation = implode('</br>', $parts);
         }
@@ -3429,7 +3421,7 @@ class Order implements PfTransactionInvoiceInterface
         if ($this->successImage) {
             //store the old name to delete on the update
             $this->temp = $this->successImage;
-            $this->successImage = NULL;
+            $this->successImage = null;
         } else {
             $this->successImage = 'initial';
         }
@@ -3459,7 +3451,7 @@ class Order implements PfTransactionInvoiceInterface
             //store the old name to delete on the update
             $this->temp = $this->successImage;
             //delete the current successImage
-            $this->successImage = NULL;
+            $this->successImage = null;
         }
     }
 
@@ -3472,7 +3464,7 @@ class Order implements PfTransactionInvoiceInterface
     {
         if (!@is_dir($directoryPath)) {
             $oldumask = umask(0);
-            $success = @mkdir($directoryPath, 0755, TRUE);
+            $success = @mkdir($directoryPath, 0755, true);
             umask($oldumask);
             if (!$success) {
                 throw new \Exception("Can not create the directory $directoryPath");
@@ -3482,7 +3474,7 @@ class Order implements PfTransactionInvoiceInterface
 
     public function upload()
     {
-        if (NULL !== $this->file && (NULL === $this->image || 'initial' === $this->image)) {
+        if (null !== $this->file && (null === $this->image || 'initial' === $this->image)) {
             //get the image extension
             $extension = $this->file->guessExtension();
             //generate a random image name
@@ -3506,14 +3498,14 @@ class Order implements PfTransactionInvoiceInterface
             // which the UploadedFile move() method does
             $this->file->move($this->getUploadRootDir(), $this->successImage);
 
-            $this->file = NULL;
+            $this->file = null;
         }
 
         if ($this->temp) {
             //try to delete the old image
 //            @unlink($this->getUploadRootDir() . '/' . $this->temp);
             //clear the temp image
-            $this->temp = NULL;
+            $this->temp = null;
         }
     }
 
@@ -3530,7 +3522,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getWebPath()
     {
-        return NULL === $this->successImage ? NULL : $this->getUploadDir() . '/' . $this->successImage;
+        return null === $this->successImage ? null : $this->getUploadDir() . '/' . $this->successImage;
     }
 
     /**
@@ -3565,5 +3557,4 @@ class Order implements PfTransactionInvoiceInterface
     {
         $this->successImage = $successImage;
     }
-
 }
