@@ -3474,7 +3474,7 @@ class Order implements PfTransactionInvoiceInterface
 
     public function upload()
     {
-        if (null !== $this->file && (null === $this->image || 'initial' === $this->image)) {
+        if (null !== $this->file && (null === $this->successImage || 'initial' === $this->successImage)) {
             //get the image extension
             $extension = $this->file->guessExtension();
             //generate a random image name
@@ -3484,15 +3484,18 @@ class Order implements PfTransactionInvoiceInterface
             if (!is_dir($uploadDir)) {
                 $this->createDirectory($uploadDir);
             }
-            //check that the file name does not exist
-            while (@file_exists("$uploadDir/$img.$extension")) {
+
+            $fileName = $img.".".$extension;
+            while (@file_exists("$uploadDir/$fileName")) {
                 //try to find a new unique name
                 $img = uniqid();
             }
 
-            $this->successImage = "$img.$extension";
+            $fileName = $img.".".$extension;
 
-            $this->setSuccessImage($img.$extension);
+            $this->successImage = $fileName;
+
+            $this->setSuccessImage($fileName);
             // you must throw an exception here if the file cannot be moved
             // so that the entity is not persisted to the database
             // which the UploadedFile move() method does
