@@ -863,7 +863,7 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @var string $successImage
      *
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $successImage;
 
