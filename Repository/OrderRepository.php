@@ -105,15 +105,11 @@ class OrderRepository extends EntityRepository
             ->setParameter('statusNew', 'new')
             ->setMaxResults($limit)->setFirstResult(($page -1)* $limit)
             ->orderBy('o.id', 'DESC')
-
             ->getQuery()
             ->getResult();
-//            ->getSQL();
-//        dump($query);exit;
         $returnArray = array();
         foreach ($queryOrder as $order) {
             $orderId = $order->getId();
-            echo $orderId . ' == ';
             $query = $this->createQueryBuilder('o')
                 ->select('distinct e')
                 ->from('IbtikarTaniaModelBundle:Driver', 'e');
@@ -141,15 +137,12 @@ class OrderRepository extends EntityRepository
              $activeStatuses = array(Order::$statuses['verified'], Order::$statuses['delivering']);
                $query->setParameter('receivingDate', $receivingDate)->setParameter('activeStatuses', $activeStatuses);
             $querys = $query->getQuery()->getResult();
-
             if(count($querys) > 0){
-                $returnArray[] = $querys[0];
+                $returnArray[] = $order;
             }
-            $querys = '';
+            unset($querys);
         }
-        dump($returnArray);exit;
-        echo 'Finish';exit;
-        return $query;
+        return $returnArray;
     }
 
     public function getYearlyOrdersCount($year = NULL)
