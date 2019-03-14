@@ -407,25 +407,26 @@ class Order implements PfTransactionInvoiceInterface
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="is_autoassigned", type="integer", length=190, nullable=true)
+     * @ORM\Column(type="integer", length=2, nullable=true, options={"default": 0})
      */
-    protected $isAutoassigned;
+     protected $isAutoAssigned;
+
+    /**
+     * @param int $isAutoAssigned
+     * @return Order
+     */
+     public function setIsAutoAssigned($isAutoAssigned)
+     {
+         $this->isAutoAssigned = $isAutoAssigned;
+         return $this;
+     }
 
     /**
      * @return int
      */
-    public function getisAutoassigned()
+    public function isAutoAssigned()
     {
-        return $this->isAutoassigned;
-    }
-
-    /**
-     * @param int $isAutoassigned
-     */
-    public function setIsAutoassigned($isAutoassigned)
-    {
-        $this->isAutoassigned = $isAutoassigned;
+        return $this->isAutoAssigned;
     }
 
     /**

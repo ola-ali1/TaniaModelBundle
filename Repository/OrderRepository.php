@@ -100,7 +100,7 @@ class OrderRepository extends EntityRepository
         $limit = 10;
         $queryOrder = $this->createQueryBuilder('o')
             ->select('o')
-            ->andWhere('o.isAutoassigned = 1')
+            ->andWhere('o.isAutoAssigned = 1')
 //            ->andWhere("o.status = :statusNew")
 //            ->setParameter('statusNew', 'new')
             ->andWhere("(o.addressVerified = '0' AND o.status='".Order::$statuses['new']."')")
