@@ -95,6 +95,57 @@ class OrderRepository extends EntityRepository
         return $query;
     }
 
+    public function getDriverListOrdersV2($driverId, $category, $page){
+
+        $limit = 10;
+        $queryOrder = $this->createQueryBuilder('o')
+            ->select('o')
+            ->andWhere('o.isAutoAssigned = 1')
+//            ->andWhere("o.status = :statusNew")
+//            ->setParameter('statusNew', 'new')
+            ->andWhere("(o.addressVerified = '0' AND o.status='".Order::$statuses['new']."')")
+            ->setMaxResults($limit)->setFirstResult(($page -1)* $limit)
+            ->orderBy('o.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+        $returnArray = array();
+        foreach ($queryOrder as $order) {
+            $orderId = $order->getId();
+            $query = $this->createQueryBuilder('o')
+                ->select('distinct e')
+                ->from('IbtikarTaniaModelBundle:Driver', 'e');
+            $query->join('e.vanDrivers', 'v', 'WITH', 'v.van IS NOT NULL');
+            $query->join('v.van', 'van');
+            $query->andWhere('e.id = '.$driverId);
+
+            if ($order) {
+                if (!$order->isOrderAssignableToOfflineDrivers()) {
+                    $query->andWhere('e.status = 1');
+                }
+                if ($order->getCityArea()) {
+                    $query->join('e.driverCityAreas', 'a', 'WITH', 'a.cityArea = ' . $order->getCityArea()->getId());
+                }
+            }
+            $receivingDate = (new \DateTime('@' . $order->getReceivingDate()))->format('Y-m-d');
+
+            $shiftFrom = $order->getShiftFrom()->format('H:i:s');
+            $shiftTo = $order->getShiftTo()->format('H:i:s');
+
+            $query->leftJoin('e.driverOrders', 'o1', 'WITH', "DATE_FORMAT(FROM_UNIXTIME(o1.receivingDate), '%Y-%m-%d') = :receivingDate AND (DATE_FORMAT(o1.shiftFrom, '%H:%m') BETWEEN :shiftFrom AND :shiftTo OR DATE_FORMAT(o1.shiftTo, '%H:%m') BETWEEN :shiftFrom AND :shiftTo) AND o1 INSTANCE OF Ibtikar\TaniaModelBundle\Entity\Order AND o1.status in (:activeStatuses)")
+                ->setParameter('shiftFrom', $shiftFrom)
+                ->setParameter('shiftTo', $shiftTo);
+
+            $activeStatuses = array(Order::$statuses['verified'], Order::$statuses['delivering']);
+            $query->setParameter('receivingDate', $receivingDate)->setParameter('activeStatuses', $activeStatuses);
+            $querys = $query->getQuery()->getResult();
+            if(count($querys) > 0){
+                $returnArray[] = $order;
+            }
+            unset($querys);
+        }
+        return $returnArray;
+    }
+
     public function getYearlyOrdersCount($year = NULL)
     {
         $start = date('Y-01-01 00:00:00');
