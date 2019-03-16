@@ -407,6 +407,29 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $customerPhone;
 
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", length=2, nullable=true, options={"default": 0})
+     */
+     protected $isAutoAssigned;
+
+    /**
+     * @param int $isAutoAssigned
+     * @return Order
+     */
+     public function setIsAutoAssigned($isAutoAssigned)
+     {
+         $this->isAutoAssigned = $isAutoAssigned;
+         return $this;
+     }
+
+    /**
+     * @return int
+     */
+    public function isAutoAssigned()
+    {
+        return $this->isAutoAssigned;
+    }
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\UserAddress")
