@@ -407,28 +407,6 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $customerPhone;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="is_autoassigned", type="integer", length=190, nullable=true)
-     */
-    protected $isAutoassigned;
-
-    /**
-     * @return int
-     */
-    public function getisAutoassigned()
-    {
-        return $this->isAutoassigned;
-    }
-
-    /**
-     * @param int $isAutoassigned
-     */
-    public function setIsAutoassigned($isAutoassigned)
-    {
-        $this->isAutoassigned = $isAutoassigned;
-    }
 
     /**
      * @ORM\ManyToOne(targetEntity="\Ibtikar\TaniaModelBundle\Entity\UserAddress")
@@ -899,6 +877,12 @@ class Order implements PfTransactionInvoiceInterface
      * @var UploadedFile $file
      */
     protected $file;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", length=2, nullable=true, options={"default": 0})
+     */
+    protected $isAutoAssigned;
 
     /**
      * Constructor
@@ -3581,5 +3565,23 @@ class Order implements PfTransactionInvoiceInterface
     public function setSuccessImage($successImage)
     {
         $this->successImage = $successImage;
+    }
+
+    /**
+     * @param int $isAutoAssigned
+     * @return Order
+     */
+    public function setIsAutoAssigned($isAutoAssigned)
+    {
+        $this->isAutoAssigned = $isAutoAssigned;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function isAutoAssigned()
+    {
+        return $this->isAutoAssigned;
     }
 }
