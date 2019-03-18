@@ -100,7 +100,7 @@ class OrderRepository extends EntityRepository
         $limit = 10;
         $queryOrder = $this->createQueryBuilder('o')
             ->select('o')
-            ->andWhere('o.isAutoAssigned = 1')
+            ->andWhere('o.isAutoassigned = 1')
 //            ->andWhere("o.status = :statusNew")
 //            ->setParameter('statusNew', 'new')
             ->andWhere("(o.addressVerified = '0' AND o.status='".Order::$statuses['new']."')")
@@ -135,8 +135,8 @@ class OrderRepository extends EntityRepository
                 ->setParameter('shiftFrom', $shiftFrom)
                 ->setParameter('shiftTo', $shiftTo);
 
-            $activeStatuses = array(Order::$statuses['verified'], Order::$statuses['delivering']);
-            $query->setParameter('receivingDate', $receivingDate)->setParameter('activeStatuses', $activeStatuses);
+             $activeStatuses = array(Order::$statuses['verified'], Order::$statuses['delivering']);
+               $query->setParameter('receivingDate', $receivingDate)->setParameter('activeStatuses', $activeStatuses);
             $querys = $query->getQuery()->getResult();
             if(count($querys) > 0){
                 $returnArray[] = $order;

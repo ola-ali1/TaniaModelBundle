@@ -5,6 +5,7 @@ namespace Ibtikar\TaniaModelBundle\Entity;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransactionInvoiceInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Ibtikar\TaniaModelBundle\Entity\Offer;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Ibtikar\ShareEconomyPayFortBundle\Entity\PfTransaction;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -22,14 +23,15 @@ class Order implements PfTransactionInvoiceInterface
 {
     use \Ibtikar\TaniaModelBundle\Entity\TrackableTrait;
 
-    CONST CASH = 'CASH';
-    CONST SADAD = 'SADAD';
-    CONST BALANCE = 'BALANCE';
-    CONST CREDIT = 'CREDIT';
-    CONST POINTS = 'POINTS';
+    const CASH = 'CASH';
+    const SADAD = 'SADAD';
+    const BALANCE = 'BALANCE';
+    const CREDIT = 'CREDIT';
+    const POINTS = 'POINTS';
+    const MADA = 'MADA';
 
-    CONST TYPE_MASAJED = 'MASAJED';
-    CONST TYPE_USER = 'USER';
+    const TYPE_MASAJED = 'MASAJED';
+    const TYPE_USER = 'USER';
 
     public static $addressTypes = array(
         self::TYPE_MASAJED => 'Masjed',
@@ -41,7 +43,8 @@ class Order implements PfTransactionInvoiceInterface
         self::SADAD => 'SADAD',
         self::CREDIT => 'Online With Card Id',
         self::BALANCE => 'Balance',
-        self::POINTS => 'Points'
+        self::POINTS => 'Points',
+        self::MADA => 'MADA CARD',
     );
 
     public static $paymentMethodNebrasListV2 = array(
@@ -57,8 +60,7 @@ class Order implements PfTransactionInvoiceInterface
         'CREDIT' => '2',
         'COUPON' => '3',
         'ANNUAL' => '4',
-        'Credit Card' => '5',
-        'BALANCE' => '7',
+        'MADA' => '9',
     );
 
     public static $statuses = array(
@@ -188,7 +190,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     private $paymentMethod;
 
-      /**
+    /**
      * @var string
      *
      * @ORM\Column(name="second_payment_method", type="string")
@@ -881,6 +883,29 @@ class Order implements PfTransactionInvoiceInterface
      */
     protected $offerGetItems;
 
+    /**
+     * @var string $successImage
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $successImage;
+
+    /**
+     * a temp variable for storing the old image name to delete the old image after the update
+     * @var string $temp
+     */
+    protected $temp;
+
+    /**
+     * @var UploadedFile $file
+     */
+    protected $file;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", length=2, nullable=true, options={"default": 0})
+     */
+    protected $isAutoAssigned;
 
     /**
      * Constructor
@@ -897,7 +922,7 @@ class Order implements PfTransactionInvoiceInterface
         $this->offerBuyItems = new \Doctrine\Common\Collections\ArrayCollection();
         $this->offerGetItems = new \Doctrine\Common\Collections\ArrayCollection();
         // NEW-ISPL END
-        $this->setStatus($this::$statuses['new']);
+        $this->setStatus(self::$statuses['new']);
     }
 
     /**
@@ -1540,7 +1565,7 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getVanType()
     {
-        return $this->getVan() && $this->getVan()->getType() ? $this->getVan()->getType() : NULL;
+        return $this->getVan() && $this->getVan()->getType() ? $this->getVan()->getType() : null;
     }
 
     public function getStatuses()
@@ -1550,10 +1575,11 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getUserName()
     {
-        if ($this->user)
+        if ($this->user) {
             return $this->user->getFullName();
+        }
 
-        if($userName = $this->getCustomerUsername()){
+        if ($userName = $this->getCustomerUsername()) {
             return $userName;
         }
 
@@ -1562,10 +1588,11 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getUserPhone()
     {
-        if ($this->user)
+        if ($this->user) {
             return $this->user->getPhone();
+        }
 
-        if($userPhone = $this->getCustomerPhone()){
+        if ($userPhone = $this->getCustomerPhone()) {
             return $userPhone;
         }
 
@@ -1574,8 +1601,9 @@ class Order implements PfTransactionInvoiceInterface
 
     public function getUserBalance()
     {
-        if ($this->user)
+        if ($this->user) {
             return $this->user->getBalance();
+        }
 
         return '';
     }
@@ -2425,13 +2453,11 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function prePersist($event)
     {
-        if ($event instanceof  PreUpdateEventArgs ) {
-            if ( $event->hasChangedField('isAsynced') == true ) {
+        if ($event instanceof  PreUpdateEventArgs) {
+            if ($event->hasChangedField('isAsynced') == true) {
                 $this->isSynced= false;
             }
-        }
-        else
-        {
+        } else {
             $this->isSynced= false;
         }
     }
@@ -2699,7 +2725,6 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function getOfferGetItemsNamesAndQuantitiesEn()
     {
-
         $itemsString = '';
         foreach ($this->offerGetItems as $item) {
             if (strlen($itemsString) !== 0) {
@@ -3061,7 +3086,8 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return string
      */
-    public function getAddressType() {
+    public function getAddressType()
+    {
         return $this->addressType;
     }
 
@@ -3072,7 +3098,8 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return Order
      */
-    public function setAddressType($AddressType) {
+    public function setAddressType($AddressType)
+    {
         $this->addressType = $AddressType;
         return $this;
     }
@@ -3082,7 +3109,8 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return UserAddress
      */
-    public function getUserAddress() {
+    public function getUserAddress()
+    {
         return $this->userAddress;
     }
 
@@ -3093,12 +3121,14 @@ class Order implements PfTransactionInvoiceInterface
      *
      * @return Order
      */
-    public function setUserAddress(UserAddress $userAddress = null) {
+    public function setUserAddress(UserAddress $userAddress = null)
+    {
         $this->userAddress = $userAddress;
         return $this;
     }
 
-    public function getAddressTypes(){
+    public function getAddressTypes()
+    {
         return self::$addressTypes;
     }
 
@@ -3111,7 +3141,8 @@ class Order implements PfTransactionInvoiceInterface
     {
         return $this->getPromoCode()->getType();
     }
-    public function getDiscountAmountString(){
+    public function getDiscountAmountString()
+    {
         return $this->getPromoCode()->getDiscountAmountString();
     }
 
@@ -3154,7 +3185,8 @@ class Order implements PfTransactionInvoiceInterface
      * @param \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag $orderRatingTag
      * @return Order
      */
-    public function setOrderRatingTags($orderRatingTags) {
+    public function setOrderRatingTags($orderRatingTags)
+    {
         $this->orderRatingTags = $orderRatingTags;
         return $this;
     }
@@ -3162,14 +3194,16 @@ class Order implements PfTransactionInvoiceInterface
     /**
      * @return \Ibtikar\TaniaModelBundle\Entity\OrderRatingTag
      */
-    public function getOrderRatingTags(){
+    public function getOrderRatingTags()
+    {
         return $this->orderRatingTags;
     }
 
 
-    public function getOrderReturnedBy(){
-        if($this->getStatus() == self::$statuses['returned'] && $this->getOrderStatuses()->last()){
-            if($driver = $this->getOrderStatuses()->last()->getActionDoneBy()){
+    public function getOrderReturnedBy()
+    {
+        if ($this->getStatus() == self::$statuses['returned'] && $this->getOrderStatuses()->last()) {
+            if ($driver = $this->getOrderStatuses()->last()->getActionDoneBy()) {
                 return $driver->getFullNameAr();
             }
         }
@@ -3371,6 +3405,10 @@ class Order implements PfTransactionInvoiceInterface
      */
     public function setDeviceInformation($deviceInformation)
     {
+        if (preg_match("/<[^<]+>/", $deviceInformation, $m) == 0) {
+            $parts = explode(",", $deviceInformation);
+            $deviceInformation = implode('</br>', $parts);
+        }
         $this->deviceInformation = $deviceInformation;
         return $this;
     }
@@ -3399,6 +3437,174 @@ class Order implements PfTransactionInvoiceInterface
         $this->createdBy = $createdBy;
     }
 
-    // NEW-ISPL END on 17/02/2019
+    /**
+     * Set file
+     *
+     * @param UploadedFile $file
+     * @return $this
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+        //check if we have an old image
+        if ($this->successImage) {
+            //store the old name to delete on the update
+            $this->temp = $this->successImage;
+            $this->successImage = null;
+        } else {
+            $this->successImage = 'initial';
+        }
 
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * this function is used to delete the current successImage
+     * the deleting of the current object will also delete the successImage and you do not need to call this function
+     * if you call this function before you remove the object the successImage will not be removed
+     */
+    public function removeImage()
+    {
+        //check if we have an old successImage
+        if ($this->successImage) {
+            //store the old name to delete on the update
+            $this->temp = $this->successImage;
+            //delete the current successImage
+            $this->successImage = null;
+        }
+    }
+
+    /**
+     * create the the directory if not found
+     * @param string $directoryPath
+     * @throws \Exception if the directory can not be created
+     */
+    private function createDirectory($directoryPath)
+    {
+        if (!@is_dir($directoryPath)) {
+            $oldumask = umask(0);
+            $success = @mkdir($directoryPath, 0755, true);
+            umask($oldumask);
+            if (!$success) {
+                throw new \Exception("Can not create the directory $directoryPath");
+            }
+        }
+    }
+
+    public function upload()
+    {
+        if (null !== $this->file && (null === $this->successImage || 'initial' === $this->successImage)) {
+            //get the image extension
+            $extension = $this->file->guessExtension();
+            //generate a random image name
+            $img = uniqid();
+            //get the image upload directory
+            $uploadDir = $this->getUploadRootDir();
+            if (!is_dir($uploadDir)) {
+                $this->createDirectory($uploadDir);
+            }
+
+            $fileName = $img.".".$extension;
+            while (@file_exists("$uploadDir/$fileName")) {
+                //try to find a new unique name
+                $img = uniqid();
+            }
+
+            $fileName = $img.".".$extension;
+
+            $this->successImage = $fileName;
+
+            $this->setSuccessImage($fileName);
+            // you must throw an exception here if the file cannot be moved
+            // so that the entity is not persisted to the database
+            // which the UploadedFile move() method does
+            $this->file->move($this->getUploadRootDir(), $this->successImage);
+
+            $this->file = null;
+        }
+
+        if ($this->temp) {
+            //try to delete the old image
+//            @unlink($this->getUploadRootDir() . '/' . $this->temp);
+            //clear the temp image
+            $this->temp = null;
+        }
+    }
+
+    /**
+     * @return string the path of successImage starting of root
+     */
+    public function getAbsolutePath()
+    {
+        return $this->getUploadRootDir() . '/' . $this->successImage;
+    }
+
+    /**
+     * @return string the relative path of image starting from web directory
+     */
+    public function getWebPath()
+    {
+        return null === $this->successImage ? null : $this->getUploadDir() . '/' . $this->successImage;
+    }
+
+    /**
+     * @return string the path of upload directory starting of root
+     */
+    public function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    /**
+     * @return string the document upload directory path starting from web folder
+     */
+    private function getUploadDir()
+    {
+        return 'uploads/orderSuccess';
+    }
+
+    /**
+     * @return string
+     */
+    public function getSuccessImage()
+    {
+        return $this->successImage;
+    }
+
+    /**
+     * @param string $successImage
+     */
+    public function setSuccessImage($successImage)
+    {
+        $this->successImage = $successImage;
+    }
+
+    /**
+     * @param int $isAutoAssigned
+     * @return Order
+     */
+    public function setIsAutoAssigned($isAutoAssigned)
+    {
+        $this->isAutoAssigned = $isAutoAssigned;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function isAutoAssigned()
+    {
+        return $this->isAutoAssigned;
+    }
 }
